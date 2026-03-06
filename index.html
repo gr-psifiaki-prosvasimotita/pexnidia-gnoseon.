@@ -7,22 +7,22 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-  /* ── Προεπιλεγμένο θέμα: Warm Slate (ξεκούραστο, μοντέρνο) ───── */
+  /* ── Προεπιλεγμένο θέμα: Deep Cosmos ───── */
   :root {
-    --bg:           #1e1e2e;
-    --surface:      #2a2a3e;
-    --surface2:     #313145;
-    --border:       #3d3d55;
-    --accent:       #a78bfa;
-    --accent2:      #f87171;
-    --accent-glow:  rgba(167,139,250,0.18);
-    --text:         #e2e2f0;
-    --muted:        #8888aa;
-    --green:        #6ee7b7;
-    --radius:       14px;
-    --shadow:       0 4px 24px rgba(0,0,0,0.45);
+    --bg:           #0d0d1a;
+    --surface:      #1c1c35;
+    --surface2:     #26264a;
+    --border:       #3e3e6a;
+    --accent:       #d4bcff;
+    --accent2:      #ff8aaa;
+    --accent-glow:  rgba(212,188,255,0.25);
+    --text:         #f0f0fc;
+    --muted:        #a0a0c8;
+    --green:        #6fffc0;
+    --radius:       16px;
+    --shadow:       0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4);
     --transition:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    --gradient:     linear-gradient(135deg, #a78bfa, #f472b6);
+    --gradient:     linear-gradient(135deg, #d4bcff 0%, #ff8aaa 60%, #ffb347 100%);
   }
 
   /* ── Μαύρο φόντο / Λευκά γράμματα ──────────────────────────── */
@@ -76,24 +76,7 @@
     body { display: none !important; }
   }
 
-  /* ── DevTools προειδοποίηση overlay ────────────────────────── */
-  #devtools-warning {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    z-index: 9999;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--accent2);
-    text-align: center;
-    padding: 2rem;
-  }
-  #devtools-warning.visible { display: flex; }
+
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -143,6 +126,7 @@
     -webkit-user-select: none;
     user-select: none;
   }
+  .sr-only {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -165,14 +149,14 @@
 
   /* ── Κρεμάλα SVG ─────────────────────────────────────────────── */
   .hangman-wrap {
-    background: rgba(42,42,62,0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1.5px solid rgba(167,139,250,0.15);
-    border-radius: 20px;
-    padding: 1rem;
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid var(--border);
+    border-radius: 24px;
+    padding: 1.2rem;
     margin-bottom: 1.5rem;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), 0 0 60px rgba(196,168,255,0.06);
     transition: background var(--transition), border-color var(--transition);
   }
 
@@ -187,22 +171,23 @@
 
   .hangman-part {
     stroke: var(--text);
-    stroke-width: 4;
+    stroke-width: 3.5;
     stroke-linecap: round;
+    stroke-linejoin: round;
     fill: none;
     opacity: 0;
-    transition: opacity 0.35s;
+    transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .hangman-part.visible { opacity: 1; }
-  .hangman-part.head  { stroke: var(--accent2); stroke-width: 4; }
-  .hangman-part.body  { stroke: var(--accent2); }
+  .hangman-part.head  { stroke: var(--accent2); stroke-width: 3.5; filter: drop-shadow(0 0 6px rgba(255,112,150,0.5)); }
+  .hangman-part.body  { stroke: var(--accent2); filter: drop-shadow(0 0 4px rgba(255,112,150,0.4)); }
 
   /* ── Μήνυμα αποτελέσματος ───────────────────────────────────── */
   .announce-box {
-    background: rgba(42,42,62,0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(167,139,250,0.15);
+    background: var(--surface);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid var(--border);
     border-left: 4px solid var(--accent);
     border-radius: var(--radius);
     padding: 1rem 1.5rem;
@@ -218,7 +203,7 @@
     justify-content: center;
     line-height: 1.5;
     outline: none;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), 0 0 30px rgba(196,168,255,0.05);
     transition: background var(--transition), border-color var(--transition);
   }
 
@@ -233,23 +218,23 @@
     letter-spacing: 1.5px;
     flex-wrap: wrap;
     justify-content: center;
-    background: rgba(42,42,62,0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(167,139,250,0.15);
+    background: var(--surface);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid var(--border);
     border-radius: 50px;
-    padding: 0.5rem 1.5rem;
+    padding: 0.55rem 1.8rem;
     box-shadow: var(--shadow);
     transition: background var(--transition), border-color var(--transition);
   }
-  .info-bar span { color: var(--accent); font-weight: 700; }
+  .info-bar span { color: var(--accent); font-weight: 800; font-size: 1rem; text-shadow: 0 0 12px rgba(196,168,255,0.4); }
 
   /* ── Υπόδειξη ────────────────────────────────────────────────── */
   .hint-box {
-    background: rgba(42,42,62,0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1.5px solid rgba(167,139,250,0.15);
+    background: var(--surface);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 0.9rem 1.4rem;
     font-size: 1rem;
@@ -273,21 +258,22 @@
 
   #word-display {
     font-size: clamp(2rem, 6vw, 3rem);
-    letter-spacing: 0.5em;
+    letter-spacing: 0.55em;
     font-weight: 800;
     color: var(--accent);
     display: inline-block;
-    transition: color 0.3s, transform 0.3s;
+    transition: color 0.3s, transform 0.3s, text-shadow 0.3s;
     overflow-wrap: break-word;
     font-family: 'Plus Jakarta Sans', sans-serif;
     border-bottom: 3px solid transparent;
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.25rem;
     animation: word-border-pulse 3s ease-in-out infinite;
+    text-shadow: 0 0 40px rgba(196,168,255,0.12);
   }
 
   @keyframes word-border-pulse {
-    0%, 100% { border-bottom-color: rgba(167,139,250,0.2); }
-    50%       { border-bottom-color: rgba(167,139,250,0.7); }
+    0%, 100% { border-bottom-color: rgba(196,168,255,0.2); text-shadow: 0 0 20px rgba(196,168,255,0.0); }
+    50%       { border-bottom-color: rgba(196,168,255,0.7); text-shadow: 0 0 30px rgba(196,168,255,0.15); }
   }
 
   /* 1. Fade-in εισόδου οθονών */
@@ -299,37 +285,43 @@
     animation: fadeSlideIn 0.45s cubic-bezier(0.4,0,0.2,1) both;
   }
 
-  /* 2. Bounce κουμπιών πληκτρολογίου */
+  /* 2. Elastic bounce κουμπιών πληκτρολογίου */
   @keyframes keyBounce {
     0%   { transform: scale(1); }
-    35%  { transform: scale(0.82); }
-    70%  { transform: scale(1.12); }
+    25%  { transform: scale(0.78); }
+    55%  { transform: scale(1.18); }
+    75%  { transform: scale(0.96); }
+    90%  { transform: scale(1.05); }
     100% { transform: scale(1); }
   }
-  .key-btn.bounce { animation: keyBounce 0.28s cubic-bezier(0.4,0,0.2,1); }
+  .key-btn.bounce { animation: keyBounce 0.38s cubic-bezier(0.34,1.56,0.64,1); }
 
-  /* 3. Shake κρεμάλας στο λάθος */
+  /* 3. Elastic shake κρεμάλας στο λάθος */
   @keyframes hangmanShake {
-    0%,100% { transform: translateX(0); }
-    18%     { transform: translateX(-7px) rotate(-1.5deg); }
-    36%     { transform: translateX(7px)  rotate(1.5deg); }
-    54%     { transform: translateX(-5px) rotate(-1deg); }
-    72%     { transform: translateX(5px)  rotate(1deg); }
-    90%     { transform: translateX(-2px); }
+    0%          { transform: translateX(0) rotate(0deg); }
+    12%         { transform: translateX(-9px) rotate(-2deg); }
+    24%         { transform: translateX(9px)  rotate(2deg); }
+    36%         { transform: translateX(-7px) rotate(-1.5deg); }
+    48%         { transform: translateX(7px)  rotate(1.5deg); }
+    64%         { transform: translateX(-4px) rotate(-0.8deg); }
+    78%         { transform: translateX(4px)  rotate(0.8deg); }
+    90%         { transform: translateX(-2px) rotate(-0.3deg); }
+    100%        { transform: translateX(0) rotate(0deg); }
   }
-  .hangman-wrap.shake { animation: hangmanShake 0.45s cubic-bezier(0.4,0,0.2,1); }
+  .hangman-wrap.shake { animation: hangmanShake 0.55s cubic-bezier(0.36,0.07,0.19,0.97); }
 
-  /* 4. Subtle noise texture στο φόντο */
+  /* 4. Atmospheric background layers */
   body::before {
     content: '' / '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    /* CSS-only subtle dot pattern — χωρίς SVG για να αποφύγουμε TalkBack image detection */
-    background-image: radial-gradient(rgba(167,139,250,0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-    opacity: 0.7;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(196,168,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 85%, rgba(255,112,150,0.06) 0%, transparent 55%),
+      radial-gradient(rgba(196,168,255,0.035) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 28px 28px;
     speak: none;
   }
 
@@ -342,10 +334,12 @@
   /* 6. Animation στον μετρητή λαθών */
   @keyframes countPop {
     0%   { transform: scale(1); }
-    40%  { transform: scale(1.5); color: var(--accent2); }
+    30%  { transform: scale(1.7); color: var(--accent2); text-shadow: 0 0 16px rgba(255,112,150,0.7); }
+    60%  { transform: scale(0.9); }
+    80%  { transform: scale(1.1); }
     100% { transform: scale(1); }
   }
-  #wrong-count.pop { display: inline-block; animation: countPop 0.4s cubic-bezier(0.4,0,0.2,1); }
+  #wrong-count.pop { display: inline-block; animation: countPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
 
   /* 7. Animated underline στο subtitle */
   .subtitle { position: relative; display: inline-block; }
@@ -368,6 +362,7 @@
     color: var(--green);
     transform: scale(1.06);
     border-bottom-color: var(--green);
+    text-shadow: 0 0 30px rgba(93,245,176,0.4);
     animation: none;
   }
 
@@ -384,27 +379,20 @@
   #status-live.lose { color: var(--accent2); }
 
   /* ── Πληκτρολόγιο ────────────────────────────────────────────── */
-  .keyboard {
+  #keyboard {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    margin-bottom: 2rem;
-    width: 95vw;
-    max-width: 560px;
-  }
-
-  .keyboard-row {
-    display: flex;
-    gap: 0.5rem;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 0.5rem;
+    width: 95vw;
+    max-width: 560px;
+    margin-bottom: 2rem;
   }
 
   .key-btn {
     width: clamp(40px, 9vw, 54px);
     height: clamp(40px, 9vw, 54px);
-    background: var(--surface);
+    background: linear-gradient(145deg, var(--surface2), var(--surface));
     border: 1.5px solid var(--border);
     border-radius: 50%;
     color: var(--text);
@@ -412,14 +400,14 @@
     font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background var(--transition), border-color var(--transition), transform 0.15s cubic-bezier(0.4,0,0.2,1), box-shadow var(--transition);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    transition: background var(--transition), border-color var(--transition), transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow var(--transition);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
   }
   .key-btn:hover:not([aria-disabled="true"]) {
-    background: var(--surface2);
+    background: linear-gradient(145deg, var(--surface2), rgba(196,168,255,0.15));
     border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px var(--accent-glow);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 28px var(--accent-glow), 0 4px 12px rgba(0,0,0,0.4);
   }
   .key-btn:focus-visible {
     outline: 3px solid var(--accent);
@@ -427,17 +415,54 @@
   }
   .key-btn[aria-disabled="true"] {
     cursor: not-allowed;
-    opacity: 0.42;
+    opacity: 0.35;
   }
   .key-btn.correct {
-    background: var(--green);
+    background: linear-gradient(145deg, #5df5b0, #2dd68a);
     border-color: var(--green);
-    color: var(--bg);
+    color: #0a2018;
     opacity: 1;
-    box-shadow: 0 0 14px rgba(110,231,183,0.7), 0 0 28px rgba(110,231,183,0.35);
+    box-shadow: 0 0 18px rgba(93,245,176,0.6), 0 0 36px rgba(93,245,176,0.25), inset 0 1px 0 rgba(255,255,255,0.3);
   }
   .key-btn.wrong {
-    opacity: 0.42;
+    opacity: 0.28;
+  }
+
+  /* ── Πληκτρολόγιο αφής ──────────────────────────────────────────── */
+  #touch-input-wrap {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: min(420px, 95vw);
+    margin: 0 auto 2rem;
+  }
+  #touch-input-wrap.visible { display: flex; }
+
+  #touch-letter-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: linear-gradient(145deg, var(--surface2), var(--surface));
+    border: 2px solid rgba(196,168,255,0.2);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: 0.3em;
+    caret-color: var(--accent);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+    text-transform: uppercase;
+  }
+  #touch-letter-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(196,168,255,0.2), var(--shadow);
+  }
+  #touch-letter-input:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
   }
 
   /* ── Μενού ρυθμίσεων ──────────────────────────────────────────── */
@@ -454,7 +479,7 @@
     border-radius: 2rem;
     min-width: clamp(44px, 7vw, 52px);
     height: clamp(44px, 7vw, 52px);
-    padding: 0 0.75rem;
+    padding: 0 0.85rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -466,10 +491,16 @@
     max-width: min(360px, 80vw);
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: border-color var(--transition), box-shadow var(--transition);
-    box-shadow: var(--shadow);
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+    box-shadow: var(--shadow), 0 0 20px rgba(196,168,255,0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
-  .settings-btn:hover { border-color: var(--accent); }
+  .settings-btn:hover {
+    border-color: var(--accent);
+    background: var(--surface2);
+    box-shadow: var(--shadow), 0 0 28px rgba(196,168,255,0.15);
+  }
   #settings-btn-text {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -485,7 +516,7 @@
     right: 0;
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 1.2rem;
     min-width: 260px;
     max-height: 80vh;
@@ -493,10 +524,12 @@
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(196,168,255,0.08);
     transition: background var(--transition), border-color var(--transition);
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
   .settings-menu[hidden] { display: none; }
 
@@ -521,11 +554,13 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    padding: 0.3rem 0;
+    padding: 0.35rem 0.4rem;
     font-family: inherit;
-    border-radius: 6px;
+    border-radius: 8px;
+    transition: background 0.18s;
   }
-  .toggle-row:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .toggle-row:hover { background: rgba(196,168,255,0.06); }
+  .toggle-row:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 
   .toggle-label {
     font-size: 0.95rem;
@@ -537,13 +572,18 @@
   .toggle-track {
     width: 48px;
     height: 26px;
-    background: var(--border);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 13px;
     position: relative;
-    transition: background var(--transition);
+    transition: background 0.3s, box-shadow 0.3s;
     flex-shrink: 0;
   }
-  .toggle-row[aria-checked="true"] .toggle-track { background: var(--accent); }
+  .toggle-row[aria-checked="true"] .toggle-track {
+    background: var(--accent);
+    box-shadow: 0 0 14px rgba(196,168,255,0.45);
+    border-color: transparent;
+  }
 
   .toggle-thumb {
     position: absolute;
@@ -551,12 +591,15 @@
     left: 3px;
     width: 20px;
     height: 20px;
-    background: #ffffff;
+    background: var(--bg);
     border-radius: 50%;
-    transition: transform 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
   }
-  .toggle-row[aria-checked="true"] .toggle-thumb { transform: translateX(22px); }
+  .toggle-row[aria-checked="true"] .toggle-thumb {
+    transform: translateX(22px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 6px rgba(196,168,255,0.3);
+  }
 
   .toggle-state-label {
     font-size: 0.82rem;
@@ -569,23 +612,23 @@
 
   /* ── Κουμπί Νέο παιχνίδι ─────────────────────────────────────── */
   .btn-new {
-    background: var(--surface);
+    background: linear-gradient(145deg, var(--surface2), var(--surface));
     color: var(--accent);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
     font-weight: 700;
-    padding: 0.75rem 2rem;
+    padding: 0.8rem 2rem;
     cursor: pointer;
     width: min(360px, 95vw);
     letter-spacing: 0.3px;
-    transition: background var(--transition), border-color var(--transition), transform 0.12s;
+    transition: background var(--transition), border-color var(--transition), transform 0.12s cubic-bezier(0.34,1.56,0.64,1), box-shadow var(--transition);
     margin-top: 0.5rem;
     text-align: center;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .btn-new:hover { border-color: var(--accent); background: var(--surface2); transform: translateY(-2px); }
+  .btn-new:hover { border-color: var(--accent); background: linear-gradient(145deg, rgba(196,168,255,0.12), var(--surface2)); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(196,168,255,0.2), var(--shadow); }
   .btn-new:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
   /* ── Visually hidden ─────────────────────────────────────────── */
@@ -644,10 +687,13 @@
     margin-bottom: 0.8rem;
     background: var(--surface);
     border: 1.5px solid var(--border);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 1.1rem 1.3rem;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow), 0 0 40px rgba(196,168,255,0.04);
     transition: background var(--transition), border-color var(--transition);
+  }
+  .start-section:hover {
+    border-color: var(--accent);
   }
 
 
@@ -676,25 +722,31 @@
   .picker-option {
     display: block;
     width: 100%;
-    padding: 0.55rem 0.8rem;
+    padding: 0.65rem 0.9rem;
     background: none;
     border: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(196,168,255,0.08);
     color: var(--text);
     font-family: inherit;
     font-size: 0.95rem;
     font-weight: 500;
     text-align: left;
     cursor: pointer;
-    border-radius: 0;
-    transition: background var(--transition);
+    border-radius: 8px;
+    transition: background 0.18s, color 0.18s, padding-left 0.18s;
+    margin-bottom: 2px;
   }
-  .picker-option:last-child { border-bottom: none; }
-  .picker-option:hover { background: var(--border); }
+  .picker-option:last-of-type { border-bottom: none; }
+  .picker-option:hover {
+    background: rgba(196,168,255,0.1);
+    color: var(--accent);
+    padding-left: 1.2rem;
+  }
   .picker-option:focus-visible { outline: 3px solid var(--accent); outline-offset: -2px; }
   .picker-option.selected {
     color: var(--accent);
     font-weight: 700;
+    background: rgba(196,168,255,0.08);
   }
   .picker-option.selected::before {
     content: "✓ ";
@@ -723,18 +775,19 @@
 
   .start-select {
     width: 100%;
-    padding: 0.75rem 1rem;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
+    padding: 0.78rem 1rem;
+    background: linear-gradient(145deg, rgba(20,20,40,0.9), rgba(14,14,28,0.95));
+    border: 1.5px solid rgba(196,168,255,0.16);
+    border-radius: 12px;
     color: var(--text);
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     margin-top: 0.3rem;
-    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+    transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
     text-align: left;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
   }
   .start-select:focus, .start-select:focus-visible {
     outline: 3px solid var(--accent);
@@ -744,6 +797,7 @@
   .start-select:hover {
     border-color: var(--accent);
     background: var(--surface2);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
   }
   .start-select option {
     background: var(--surface);
@@ -767,8 +821,8 @@
   .start-toggle-row:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
   .start-toggle-row + .start-toggle-row { border-top: 1px solid var(--border); }
 
-  .start-toggle-row[aria-checked="true"] .toggle-track  { background: var(--accent); }
-  .start-toggle-row[aria-checked="true"] .toggle-thumb  { transform: translateX(22px); }
+  .start-toggle-row[aria-checked="true"] .toggle-track  { background: var(--accent); box-shadow: 0 0 14px rgba(196,168,255,0.45); border-color: transparent; }
+  .start-toggle-row[aria-checked="true"] .toggle-thumb  { transform: translateX(22px); box-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 6px rgba(196,168,255,0.3); }
   .start-toggle-row[aria-checked="true"] .toggle-state-label { color: var(--accent); }
 
   /* Κατηγορίες checkboxes */
@@ -776,11 +830,14 @@
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    padding: 0.45rem 0.3rem;
-    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.4rem;
+    border-bottom: 1px solid rgba(196,168,255,0.07);
     cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.18s;
   }
   .cat-checkbox-row:last-child { border-bottom: none; }
+  .cat-checkbox-row:hover { background: rgba(196,168,255,0.07); }
   .cat-checkbox-row input[type="checkbox"] {
     width: 1.15rem;
     height: 1.15rem;
@@ -794,7 +851,9 @@
     font-weight: 500;
     font-size: 0.95rem;
     color: var(--text);
+    transition: color 0.18s;
   }
+  .cat-checkbox-row:hover label { color: var(--accent); }
 
   /* ── Κουμπί Έναρξης ──────────────────────────────────────────── */
   .btn-start {
@@ -805,16 +864,26 @@
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 1.1rem;
     font-weight: 800;
-    padding: 0.9rem 2.5rem;
+    padding: 0.95rem 2.5rem;
     cursor: pointer;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     width: min(420px, 95vw);
-    transition: opacity var(--transition), transform 0.15s cubic-bezier(0.4,0,0.2,1), box-shadow var(--transition);
+    transition: opacity var(--transition), transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow var(--transition);
     margin-top: 1rem;
     text-align: center;
-    box-shadow: 0 4px 24px rgba(167,139,250,0.35);
+    box-shadow: 0 6px 32px rgba(196,168,255,0.4), 0 2px 8px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
   }
-  .btn-start:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(167,139,250,0.5); }
+  .btn-start::after {
+    content: '' / '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+    speak: none;
+  }
+  .btn-start:hover { opacity: 0.92; transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 40px rgba(196,168,255,0.55), 0 4px 12px rgba(0,0,0,0.4); }
   .btn-start:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 
   /* ── Responsive breakpoints ──────────────────────────────────── */
@@ -827,7 +896,7 @@
     .btn-start { width: min(480px, 90vw); }
     .keyboard { max-width: 620px; }
     .key-btn { width: clamp(48px, 6vw, 58px); height: clamp(48px, 6vw, 58px); }
-    #touch-input-wrap { width: min(480px, 90vw); }
+
   }
 
   /* Πολύ μικρές οθόνες (<360px) */
@@ -839,7 +908,7 @@
     .announce-box { font-size: 0.95rem; padding: 0.8rem 1rem; }
     .info-bar { font-size: 0.75rem; gap: 1rem; padding: 0.4rem 1rem; }
     .settings-menu { max-height: 80vh; max-width: 92vw; }
-    #touch-letter-input { font-size: 1.3rem; }
+
     #game-screen { padding-top: 3rem; }
   }
 
@@ -867,99 +936,12 @@
     .settings-menu { max-height: 85vh; overflow-y: auto; }
   }
 
-  /* ── Πληκτρολόγιο με διάταξη QWERTY ──────────────────────── */
-  #touch-input-wrap {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    width: min(420px, 95vw);
-    margin: 0 auto 1.5rem;
-  }
-  #touch-input-wrap.visible { display: flex; }
 
-  #touch-letter-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0.9rem 1.2rem;
-    background: var(--surface);
-    border: 2px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 800;
-    text-align: center;
-    letter-spacing: 0.3em;
-    caret-color: var(--accent);
-    outline: none;
-    transition: border-color var(--transition), box-shadow var(--transition);
-    box-shadow: var(--shadow);
-    text-transform: uppercase;
-  }
-  #touch-letter-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-  }
-  #touch-letter-input:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-  #touch-letter-input::placeholder {
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0;
-    color: var(--muted);
-    opacity: 1;
-  }
-
-  /* Dropdown τύπου πληκτρολογίου */
-  .kbtype-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.8rem;
-    padding: 0.55rem 0;
-    border-top: 1px solid var(--border);
-  }
-  .kbtype-row label {
-    font-size: 0.93rem;
-    font-weight: 600;
-    color: var(--text);
-    flex-shrink: 0;
-    text-transform: none;
-    letter-spacing: 0;
-    margin: 0;
-  }
-  .kbtype-row select {
-    flex: 1;
-    padding: 0.4rem 0.7rem;
-    background: var(--bg);
-    border: 1.5px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 0.92rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: border-color var(--transition);
-    max-width: 200px;
-  }
-  .kbtype-row select:focus {
-    outline: 3px solid var(--accent);
-    border-color: var(--accent);
-  }
-  .kbtype-row select option { background: var(--surface); color: var(--text); }
 </style>
 </head>
 <body>
 
-<!-- ── DevTools προειδοποίηση ───────────────────────────────────── -->
-<div id="devtools-warning" role="alert" aria-live="assertive">
-  <span>🚫</span>
-  <span>Το παιχνίδι έχει σταματήσει.</span>
-  <span style="font-size:0.95rem; font-weight:500; color: var(--muted);">Κλείσε τα εργαλεία προγραμματιστή για να συνεχίσεις.</span>
-</div>
+
 
 <!-- ── Αρχική Οθόνη ─────────────────────────────────────────── -->
 <div id="start-screen" role="main" aria-label="Αρχική οθόνη παιχνιδιού Κρεμάλα">
@@ -1104,15 +1086,15 @@
         <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
         <span class="toggle-state-label" id="start-quips-state" aria-hidden="true">Ανενεργές</span>
       </button>
-      <div style="padding:0.6rem 0 0.2rem;font-weight:700;font-size:0.95rem;color:var(--muted);">Διάταξη πληκτρολογίου</div>
+      <div style="padding:0.6rem 0 0.2rem;font-weight:700;font-size:0.95rem;color:var(--muted);">Τύπος πληκτρολογίου</div>
 
       <button class="start-toggle-row" id="kbtype-buttons-toggle"
         role="switch" aria-checked="true"
         data-kbtype="buttons"
         data-default="true"
-        aria-label="Πληκτρολόγιο με αλφαβητική διάταξη"
+        aria-label="Πληκτρολόγιο με κουμπιά"
         onclick="selectKbType('buttons')">
-        <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με αλφαβητική διάταξη</span>
+        <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με κουμπιά</span>
         <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
         <span class="toggle-state-label" id="kbtype-buttons-state" aria-hidden="true">Ενεργό</span>
       </button>
@@ -1120,12 +1102,13 @@
       <button class="start-toggle-row" id="kbtype-touch-toggle"
         role="switch" aria-checked="false"
         data-kbtype="touch"
-        aria-label="Πληκτρολόγιο με διάταξη QWERTY"
+        aria-label="Πληκτρολόγιο αφής"
         onclick="selectKbType('touch')">
-        <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο με διάταξη QWERTY</span>
+        <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο αφής</span>
         <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
         <span class="toggle-state-label" id="kbtype-touch-state" aria-hidden="true">Ανενεργό</span>
       </button>
+
       <div style="padding:0.6rem 0 0.2rem;font-weight:700;font-size:0.95rem;color:var(--muted);">Επιλογές εμφάνισης παιχνιδιού</div>
 
       <button class="start-toggle-row" id="theme-default-toggle"
@@ -1190,7 +1173,7 @@
   </div>
 
   <!-- Κουμπί Έναρξης -->
-  <button class="btn-start" onclick="startGame()">
+  <button class="btn-start" aria-label="Έναρξη παιχνιδιού" onclick="startGame()">
     🎮 Έναρξη παιχνιδιού
   </button>
 
@@ -1200,7 +1183,7 @@
 
 </div>
 
-<div id="game-screen" hidden aria-label="Παιχνίδι Κρεμάλα">
+<div id="game-screen" role="main" hidden aria-label="Παιχνίδι Κρεμάλα">
 
 <h1><span class="h1-visual no-talkback-scan" aria-hidden="true" inert>Κρεμάλα</span><span class="sr-only">Κρεμάλα</span></h1>
 
@@ -1268,14 +1251,14 @@
     </button>
 
 
-    <div class="settings-title" style="margin-top:0.5rem;">Διάταξη πληκτρολογίου</div>
+    <div class="settings-title" style="margin-top:0.5rem;">Τύπος πληκτρολογίου</div>
 
     <button class="toggle-row" id="game-kbtype-buttons-toggle"
       role="switch" aria-checked="true"
       data-kbtype="buttons"
-      aria-label="Πληκτρολόγιο με αλφαβητική διάταξη"
+      aria-label="Πληκτρολόγιο με κουμπιά"
       onclick="selectKbType('buttons')">
-      <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με αλφαβητική διάταξη</span>
+      <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με κουμπιά</span>
       <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
       <span class="toggle-state-label" id="game-kbtype-buttons-state" aria-hidden="true">Ενεργό</span>
     </button>
@@ -1283,9 +1266,9 @@
     <button class="toggle-row" id="game-kbtype-touch-toggle"
       role="switch" aria-checked="false"
       data-kbtype="touch"
-      aria-label="Πληκτρολόγιο με διάταξη QWERTY"
+      aria-label="Πληκτρολόγιο αφής"
       onclick="selectKbType('touch')">
-      <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο με διάταξη QWERTY</span>
+      <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο αφής</span>
       <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
       <span class="toggle-state-label" id="game-kbtype-touch-state" aria-hidden="true">Ανενεργό</span>
     </button>
@@ -1404,15 +1387,10 @@
 <div id="status-live" aria-hidden="true"></div>
 
 <!-- Πληκτρολόγιο -->
-<div class="keyboard" id="keyboard"
-  aria-label="Πληκτρολόγιο γραμμάτων">
-  <div class="keyboard-row" id="row1" role="presentation"></div>
-  <div class="keyboard-row" id="row2" role="presentation"></div>
-  <div class="keyboard-row" id="row3" role="presentation"></div>
-</div>
+<div id="keyboard" role="group" aria-label="Πληκτρολόγιο γραμμάτων"></div>
 
-<!-- Πληκτρολόγιο με διάταξη QWERTY -->
-<div id="touch-input-wrap" role="group" aria-label="Περιοχή πληκτρολόγησης">
+<!-- Πληκτρολόγιο αφής -->
+<div id="touch-input-wrap" role="group" aria-label="Περιοχή πληκτρολόγησης αφής">
   <input
     id="touch-letter-input"
     type="text"
@@ -1493,10 +1471,6 @@ function soundNewGame() {
   playTone('triangle', 440, 0.12, 0.2);
   setTimeout(() => playTone('triangle', 550, 0.15, 0.2), 130);
 }
-function soundPop() {
-  if (!soundEnabled) return;
-  playTone('sine', 880, 0.06, 0.08);
-}
 function soundTick() {
   if (!soundEnabled) return;
   playTone('sine', 1000, 0.04, 0.10);
@@ -1530,12 +1504,22 @@ document.addEventListener('click', e => {
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    const menu = document.getElementById('settings-menu');
-    if (!menu.hidden) {
-      menu.hidden = true;
-      document.getElementById('settings-btn').setAttribute('aria-expanded', 'false');
-      document.getElementById('settings-btn').focus();
-    }
+    const toClose = [
+      { menuId: 'settings-menu',       btnId: 'settings-btn',      arrowId: null },
+      { menuId: 'difficulty-menu',     btnId: 'difficulty-btn',     arrowId: 'difficulty-btn-arrow' },
+      { menuId: 'maxwrong-menu',       btnId: 'maxwrong-btn',       arrowId: 'maxwrong-btn-arrow' },
+      { menuId: 'category-checkboxes', btnId: 'category-btn',       arrowId: 'category-btn-arrow' },
+      { menuId: 'start-options-menu',  btnId: 'start-options-btn',  arrowId: 'options-btn-arrow' },
+    ];
+    toClose.forEach(({ menuId, btnId, arrowId }) => {
+      const menu = document.getElementById(menuId);
+      const btn  = document.getElementById(btnId);
+      if (menu && !menu.hidden) {
+        menu.hidden = true;
+        if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.focus(); }
+        if (arrowId) { const arr = document.getElementById(arrowId); if (arr) arr.textContent = '▼'; }
+      }
+    });
   }
 });
 
@@ -1562,41 +1546,14 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ── DevTools Detection ───────────────────────────────────────────
-(function detectDevTools() {
-  const threshold = 160;
-  let devOpen = false;
 
-  function check() {
-    const widthDiff  = window.outerWidth  - window.innerWidth;
-    const heightDiff = window.outerHeight - window.innerHeight;
-    const isOpen = widthDiff > threshold || heightDiff > threshold;
-
-    if (isOpen !== devOpen) {
-      devOpen = isOpen;
-      const warning = document.getElementById('devtools-warning');
-      if (warning) warning.classList.toggle('visible', isOpen);
-    }
-  }
-
-  setInterval(check, 1000);
-})();
 
 // ── Console Warning (αποθάρρυνση χρήσης κονσόλας) ───────────────
 (function consoleWarning() {
   console.warn('Attention: The game is protected by copyright law and modification and distribution of the source code is strictly prohibited without the express consent of the creator.\nΠροσοχή: Το παιχνίδι προστατεύεται από τον νόμο πνευματικής ιδιοκτησίας και απαγορεύεται αυστηρά η τροποποίηση και η διανομή του πηγαίου κώδικα, χωρίς την ρητή συγκατάθεση του δημιουργού.');
 })();
 
-// ── Debugger Trap (παγώνει τα DevTools όταν είναι ανοιχτά) ──────
-(function debuggerTrap() {
-  function trap() {
-    // Ο debugger εκτελείται μόνο όταν τα DevTools είναι ανοιχτά
-    // και προκαλεί παύση — αποθαρρύνει την επιθεώρηση κώδικα
-    (function() {}.constructor('debugger')());
-    setTimeout(trap, 100);
-  }
-  setTimeout(trap, 100);
-})();
+
 
 // ── Απενεργοποίηση Ctrl+R / F5 (ανανέωση) ───────────────────────
 window.addEventListener('keydown', e => {
@@ -1817,6 +1774,11 @@ function loadSpeech() {
   const saved = localStorage.getItem('hangman_speech');
   if (saved !== null) speechEnabled = saved === '1';
   syncToggle('speech', speechEnabled, 'Ενεργή', 'Ανενεργή');
+  // Προ-φόρτωση φωνών ώστε να είναι έτοιμες όταν χρειαστούν
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.getVoices(), { once: true });
+  }
 }
 
 
@@ -1842,59 +1804,30 @@ function toggleHint() {
       hintBox.style.display = 'none';
     }
   }
-  hintBox.setAttribute('aria-hidden', 'true');
+  hintBox.setAttribute('aria-hidden', hintEnabled ? 'false' : 'true');
 }
 
-// ── Φωνητική καθοδήγηση (Google Translate TTS) ─────────────────
+// ── Φωνητική καθοδήγηση (Web Speech API — προεπιλεγμένη ελληνική φωνή) ──
 let speechEnabled = false;
-let ttsAudio = new Audio();
-let ttsQueue = [];
-let ttsPlaying = false;
 
 function speak(msg) {
   if (!speechEnabled) return;
-  // Ακύρωση τρέχουσας αναπαραγωγής και ουράς
+  if (!window.speechSynthesis) return;
   stopSpeech();
-  // Σπάμε το μήνυμα σε κομμάτια ≤200 χαρακτήρων (όριο Google TTS)
-  const chunks = splitText(msg, 200);
-  ttsQueue.push(...chunks);
-  playNext();
-}
-
-function splitText(text, maxLen) {
-  if (text.length <= maxLen) return [text];
-  const chunks = [];
-  const sentences = text.split(/(?<=[.;,])\s+/);
-  let current = '';
-  for (const s of sentences) {
-    if ((current + ' ' + s).trim().length <= maxLen) {
-      current = (current + ' ' + s).trim();
-    } else {
-      if (current) chunks.push(current);
-      current = s.length <= maxLen ? s : s.substring(0, maxLen);
-    }
-  }
-  if (current) chunks.push(current);
-  return chunks.length ? chunks : [text.substring(0, maxLen)];
-}
-
-function playNext() {
-  if (!ttsQueue.length) { ttsPlaying = false; return; }
-  ttsPlaying = true;
-  const chunk = ttsQueue.shift();
-  const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=el&client=tw-ob&q='
-              + encodeURIComponent(chunk);
-  ttsAudio = new Audio(url);
-  ttsAudio.onended = playNext;
-  ttsAudio.onerror = playNext;
-  ttsAudio.play().catch(() => { ttsPlaying = false; });
+  const utt = new SpeechSynthesisUtterance(msg);
+  utt.lang = 'el-GR';
+  // Χρήση προεπιλεγμένης ελληνικής φωνής του συστήματος
+  const voices = window.speechSynthesis.getVoices();
+  const greekVoice = voices.find(v => v.lang === 'el-GR' || v.lang === 'el_GR' || v.lang.startsWith('el'));
+  if (greekVoice) utt.voice = greekVoice;
+  utt.rate  = 1.0;
+  utt.pitch = 1.0;
+  window.speechSynthesis.speak(utt);
 }
 
 function stopSpeech() {
-  ttsQueue = [];
-  ttsPlaying = false;
-  ttsAudio.pause();
-  ttsAudio.src = '';
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
 }
 
 function toggleSpeech() {
@@ -1997,7 +1930,7 @@ const WORDS = [
   { word: "ΣΤΡΟΥΘΟΚΑΜΗΛΟΣ", category: "Ζώα", hint: "Μεγαλύτερο πουλί, δεν πετά" },
   { word: "ΖΕΒΡΑ", category: "Ζώα", hint: "Ριγέ ζώο της Αφρικής" },
   { word: "ΠΑΝΤΑ", category: "Ζώα", hint: "Μαυρόλευκη αρκούδα της Κίνας" },
-  { word: "ΣΚΟΡΠΙΟΣ", category: "Ζώα", hint: "Επικίνδυνο έντομο με κεντρί" },
+  { word: "ΣΚΟΡΠΙΟΣ", category: "Ζώα", hint: "Επικίνδυνο αραχνίδιο με κεντρί" },
   { word: "ΧΕΛΩΝΑ", category: "Ζώα", hint: "Αργό ζώο με καβούκι" },
   { word: "ΑΝΑΝΑΣ", category: "Φρούτα & Λαχανικά", hint: "Τροπικό φρούτο με κορώνα" },
   { word: "ΚΑΡΠΟΥΖΙ", category: "Φρούτα & Λαχανικά", hint: "Κόκκινο καλοκαιρινό φρούτο" },
@@ -2050,7 +1983,7 @@ const WORDS = [
   { word: "ΜΑΡΟΚΟ", category: "Χώρες & Πρωτεύουσες", hint: "Βορειοαφρικανική χώρα με Μαρακές" },
   { word: "ΝΕΑΠΟΛΗ", category: "Πόλεις του κόσμου", hint: "Ιταλική πόλη με πίτσα και Βεζούβιο" },
   { word: "ΒΑΡΚΕΛΩΝΗ", category: "Πόλεις του κόσμου", hint: "Ισπανική πόλη του Γκαουντί" },
-  { word: "ΣΑΓΚΑΗ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη της Κίνας" },
+  { word: "ΣΑΓΚΑΗ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερο λιμάνι και οικονομικό κέντρο Κίνας" },
   { word: "ΜΠΟΥΕΝΟΣΑΙΡΕΣ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα της Αργεντινής" },
   { word: "ΒΑΝΚΟΥΒΕΡ", category: "Πόλεις του κόσμου", hint: "Καναδική πόλη στον Ειρηνικό" },
   { word: "ΣΙΔΝΕΗ", category: "Πόλεις του κόσμου", hint: "Αυστραλιανή πόλη με Όπερα" },
@@ -2103,7 +2036,7 @@ const WORDS = [
   { word: "ΣΚΙΑΘΟΣ", category: "Ελληνικά Νησιά", hint: "Βορειοαιγαιακό νησί με Κουκουναριές" },
   { word: "ΣΚΟΠΕΛΟΣ", category: "Ελληνικά Νησιά", hint: "Πράσινο νησί Mamma Mia" },
   { word: "ΛΗΜΝΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί του Ηφαίστου" },
-  { word: "ΘΑΣΟΣ", category: "Ελληνικά Νησιά", hint: "Βορειότερο ελληνικό νησί" },
+  { word: "ΘΑΣΟΣ", category: "Ελληνικά Νησιά", hint: "Βορειότερο νησί του Αιγαίου" },
   { word: "ΙΚΑΡΙΑ", category: "Ελληνικά Νησιά", hint: "Νησί μακροζωίας" },
   { word: "ΑΜΟΡΓΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί του Luc Besson" },
   { word: "ΚΑΡΠΑΘΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί με παράδοση στα Δωδεκάνησα" },
@@ -2131,7 +2064,7 @@ const WORDS = [
   { word: "ΚΙΘΑΡΑ", category: "Μουσικά Όργανα", hint: "Έγχορδο με έξι χορδές" },
   { word: "ΠΙΑΝΟ", category: "Μουσικά Όργανα", hint: "Πληκτροφόρο με 88 πλήκτρα" },
   { word: "ΤΡΟΜΠΕΤΑ", category: "Μουσικά Όργανα", hint: "Χάλκινο πνευστό της τζαζ" },
-  { word: "ΣΑΞΟΦΩΝΟ", category: "Μουσικά Όργανα", hint: "Ξύλινο πνευστό με κλαρινόηχο" },
+  { word: "ΣΑΞΟΦΩΝΟ", category: "Μουσικά Όργανα", hint: "Ξύλινο πνευστό με μεταλλικό σώμα" },
   { word: "ΤΥΜΠΑΝΟ", category: "Μουσικά Όργανα", hint: "Κρουστό όργανο" },
   { word: "ΑΡΠΑ", category: "Μουσικά Όργανα", hint: "Μεγάλο τριγωνικό έγχορδο" },
   { word: "ΚΛΑΡΙΝΕΤΟ", category: "Μουσικά Όργανα", hint: "Ξύλινο πνευστό του ρεμπέτικου" },
@@ -2150,7 +2083,6 @@ const WORDS = [
   { word: "ΨΥΓΕΙΟ", category: "Αντικείμενα Σπιτιού", hint: "Κρατάει τα τρόφιμα κρύα" },
   { word: "ΠΛΥΝΤΗΡΙΟ", category: "Αντικείμενα Σπιτιού", hint: "Πλένει ρούχα" },
   { word: "ΦΟΥΡΝΟΣ", category: "Αντικείμενα Σπιτιού", hint: "Μαγειρεύει φαγητό" },
-  { word: "ΗΛΕΚΤΡΙΚΗ ΣΚΟΥΠΑ", category: "Αντικείμενα Σπιτιού", hint: "Καθαρίζει το πάτωμα" },
   { word: "ΣΙΔΕΡΟ", category: "Αντικείμενα Σπιτιού", hint: "Ισιώνει τα ρούχα" },
   { word: "ΤΟΣΤΙΕΡΑ", category: "Αντικείμενα Σπιτιού", hint: "Κάνει τοστ" },
   { word: "ΜΠΛΕΝΤΕΡ", category: "Αντικείμενα Σπιτιού", hint: "Αναμιγνύει υλικά" },
@@ -2186,7 +2118,6 @@ const WORDS = [
   { word: "ΑΛΓΟΡΙΘΜΟΣ", category: "Επιστήμη", hint: "Σειρά βημάτων για λύση προβλήματος" },
   { word: "ΕΜΒΟΛΙΟ", category: "Επιστήμη", hint: "Προστατεύει από ασθένειες" },
   { word: "ΚΒΑΝΤΟΜΗΧΑΝΙΚΗ", category: "Επιστήμη", hint: "Φυσική του υπο-ατομικού κόσμου" },
-  { word: "ΗΛΙΑΚΟ ΣΥΣΤΗΜΑ", category: "Επιστήμη", hint: "Ήλιος και πλανήτες του" },
   { word: "ΧΕΙΡΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Κάνει εγχειρήσεις" },
   { word: "ΑΣΤΡΟΝΟΜΟΣ", category: "Επαγγέλματα", hint: "Μελετά αστέρια" },
   { word: "ΑΡΧΙΤΕΚΤΟΝΑΣ", category: "Επαγγέλματα", hint: "Σχεδιάζει κτίρια" },
@@ -2215,7 +2146,7 @@ const WORDS = [
   { word: "ΠΥΓΜΑΧΙΑ", category: "Αθλήματα", hint: "Μάχη με γάντια" },
   { word: "ΤΖΟΥΝΤΟ", category: "Αθλήματα", hint: "Ιαπωνική πολεμική τέχνη" },
   { word: "ΓΥΜΝΑΣΤΙΚΗ", category: "Αθλήματα", hint: "Ασκήσεις σώματος" },
-  { word: "ΣΚΙΑΤΖΟ", category: "Αθλήματα", hint: "Αγώνισμα σε χιόνι με φόρα" },
+  { word: "ΣΚΙΑΤΖΟ", category: "Αθλήματα", hint: "Αγώνισμα κατάβασης με σκι — slalom" },
   { word: "ΟΡΕΙΒΑΣΙΑ", category: "Αθλήματα", hint: "Ανάβαση σε βουνά" },
   { word: "ΒΟΛΕΪ", category: "Αθλήματα", hint: "Μπάλα πάνω από δίχτυ" },
   { word: "ΠΟΔΗΛΑΣΙΑ", category: "Αθλήματα", hint: "Αγώνες με ποδήλατο" },
@@ -2225,7 +2156,6 @@ const WORDS = [
   { word: "ΜΑΡΑΘΩΝΙΟΣ", category: "Αθλήματα", hint: "Αγώνας δρόμου 42 χιλιομέτρων" },
   { word: "ΤΡΙΑΘΛΟ", category: "Αθλήματα", hint: "Κολύμβηση, ποδηλασία, τρέξιμο" },
   { word: "ΣΕΡΦ", category: "Αθλήματα", hint: "Ιππασία κυμάτων" },
-  { word: "ΑΡΣΗ ΒΑΡΩΝ", category: "Αθλήματα", hint: "Σήκωμα βαριών αλτήρων" },
   { word: "ΠΑΛΗ", category: "Αθλήματα", hint: "Αρχαίο ολυμπιακό άθλημα" },
   { word: "ΗΡΑΚΛΗΣ", category: "Μυθολογία", hint: "Ημίθεος με δώδεκα άθλους" },
   { word: "ΑΧΙΛΛΕΑΣ", category: "Μυθολογία", hint: "Ήρωας Τρωικού πολέμου με τρωτή φτέρνα" },
@@ -2259,7 +2189,7 @@ const WORDS = [
   { word: "ΜΠΕΤΟΒΕΝ", category: "Διάσημες Προσωπικότητες", hint: "Μεγάλος συνθέτης που έχασε ακοή" },
   { word: "ΜΟΤΣΑΡΤ", category: "Διάσημες Προσωπικότητες", hint: "Παιδί θαύμα της κλασικής μουσικής" },
   { word: "ΛΕΟΝΑΡΝΤΟ", category: "Διάσημες Προσωπικότητες", hint: "Ζωγράφος της Μόνα Λίζα" },
-  { word: "ΑΝΤΙΓΟΝΗ", category: "Διάσημες Προσωπικότητες", hint: "Γνωστή Ελληνίδα τραγουδίστρια, η Μαντώ" },
+  { word: "ΑΝΤΙΓΟΝΗ", category: "Διάσημες Προσωπικότητες", hint: "Τραγικό πρόσωπο Σοφοκλή — κόρη του Οιδίποδα" },
   { word: "ΚΑΖΑΝΤΖΑΚΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Συγγραφέας του Ζορμπά" },
   { word: "ΕΛΥΤΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Νομπελίστας Έλληνας ποιητής" },
   { word: "ΣΕΦΕΡΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Ελληνας ποιητής Νόμπελ 1963" },
@@ -2308,7 +2238,6 @@ const WORDS = [
   { word: "ΕΚΣΚΑΦΕΑΣ", category: "Οχήματα", hint: "Σκάβει με τεράστιο κουβά" },
   { word: "ΥΠΟΛΟΓΙΣΤΗΣ", category: "Τεχνολογία", hint: "Επεξεργάζεται δεδομένα" },
   { word: "ΔΙΑΔΙΚΤΥΟ", category: "Τεχνολογία", hint: "Παγκόσμιο δίκτυο υπολογιστών" },
-  { word: "ΤΕΧΝΗΤΗ ΝΟΗΜΟΣΥΝΗ", category: "Τεχνολογία", hint: "Μηχανές που σκέφτονται" },
   { word: "ΔΟΡΥΦΟΡΟΣ", category: "Τεχνολογία", hint: "Τεχνητό σώμα σε τροχιά" },
   { word: "ΡΟΜΠΟΤ", category: "Τεχνολογία", hint: "Μηχανή που εκτελεί εργασίες" },
   { word: "ΚΡΥΠΤΟΓΡΑΦΗΣΗ", category: "Τεχνολογία", hint: "Κωδικοποίηση δεδομένων" },
@@ -2334,9 +2263,9 @@ const WORDS = [
   { word: "ΛΟΥΚΟΥΜΑΔΕΣ", category: "Φαγητά & Ποτά", hint: "Τηγανητά γλυκά με μέλι" },
   { word: "ΧΑΛΒΑΣ", category: "Φαγητά & Ποτά", hint: "Γλυκό από ταχίνι" },
   { word: "ΜΠΑΚΛΑΒΑ", category: "Φαγητά & Ποτά", hint: "Γλυκό με φύλλο και καρύδια" },
-  { word: "ΡΕΤΣΙΝΑ", category: "Φαγητά & Ποτά", hint: "Ελληνικό ρητινίτες κρασί" },
+  { word: "ΡΕΤΣΙΝΑ", category: "Φαγητά & Ποτά", hint: "Ελληνικό ρητινωμένο κρασί" },
   { word: "ΟΥΖΟ", category: "Φαγητά & Ποτά", hint: "Ελληνικό αλκοολούχο με γλυκάνισο" },
-  { word: "ΦΡΑΠΕ", category: "Φαγητά & Ποτά", hint: "Ελληνικός παγωτός καφές" },
+  { word: "ΦΡΑΠΕ", category: "Φαγητά & Ποτά", hint: "Ελληνικός παγωμένος καφές" },
   { word: "ΧΩΡΙΑΤΙΚΗ", category: "Φαγητά & Ποτά", hint: "Ελληνική σαλάτα με φέτα" },
   { word: "ΤΥΡΟΠΙΤΑ", category: "Φαγητά & Ποτά", hint: "Ελληνική πίτα με τυρί" },
   { word: "ΣΟΚΟΛΑΤΑ", category: "Φαγητά & Ποτά", hint: "Γλυκό από κακάο" },
@@ -2375,11 +2304,9 @@ const WORDS = [
   { word: "ΑΝΑΓΕΝΝΗΣΗ", category: "Ιστορία", hint: "Πολιτισμική ανανέωση 14ου-17ου αιώνα" },
   { word: "ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "1821, ελληνική ανεξαρτησία" },
   { word: "ΟΛΟΚΑΥΤΩΜΑ", category: "Ιστορία", hint: "Γενοκτονία Εβραίων Β' ΠΠ" },
-  { word: "ΨΥΧΡΟΣ ΠΟΛΕΜΟΣ", category: "Ιστορία", hint: "ΗΠΑ εναντίον ΕΣΣΔ μετά τον Β' ΠΠ" },
   { word: "ΠΑΡΘΕΝΩΝΑΣ", category: "Ιστορία", hint: "Ναός Αθηνάς στην Ακρόπολη" },
   { word: "ΚΟΛΟΣΣΑΙΟ", category: "Ιστορία", hint: "Ρωμαϊκό αμφιθέατρο" },
   { word: "ΑΚΡΟΠΟΛΗ", category: "Ιστορία", hint: "Ιερός βράχος της Αθήνας" },
-  { word: "ΜΕΓΑΣ ΑΛΕΞΑΝΔΡΟΣ", category: "Ιστορία", hint: "Κατέκτησε την Ασία τον 4ο π.Χ. αι." },
   { word: "ΠΕΡΙΚΛΗΣ", category: "Ιστορία", hint: "Αθηναίος ηγέτης Χρυσού Αιώνα" },
   { word: "ΛΕΩΝΙΔΑΣ", category: "Ιστορία", hint: "Βασιλιάς Σπάρτης στις Θερμοπύλες" },
   { word: "ΑΛΩΣΗ", category: "Ιστορία", hint: "Πτώση Κωνσταντινούπολης 1453" },
@@ -2417,7 +2344,6 @@ const WORDS = [
   { word: "ΔΗΜΟΤΙΚΗ", category: "Μουσική", hint: "Παραδοσιακή ελληνική μουσική" },
   { word: "ΗΛΕΚΤΡΟΝΙΚΗ", category: "Μουσική", hint: "Μουσική με ηλεκτρονικά όργανα" },
   { word: "ΠΟΠ", category: "Μουσική", hint: "Δημοφιλές μουσικό ιδίωμα" },
-  { word: "ΧΙΠ ΧΟΠ", category: "Μουσική", hint: "Ιδίωμα με rap και beats" },
   { word: "ΣΟΝΑΤΑ", category: "Μουσική", hint: "Κλασικό μουσικό είδος για σόλο" },
   { word: "ΚΟΝΤΣΕΡΤΟ", category: "Μουσική", hint: "Σολίστ με ορχήστρα" },
   { word: "ΣΟΝΓΚ", category: "Μουσική", hint: "Τραγούδι, κομμάτι" },
@@ -2458,10 +2384,8 @@ const WORDS = [
   { word: "ΑΝΤΙΣΦΑΙΡΙΣΗ", category: "Αθλήματα", hint: "Επίσημη ονομασία του τένις" },
   { word: "ΚΑΛΑΘΟΣΦΑΙΡΙΣΗ", category: "Αθλήματα", hint: "Επίσημη ονομασία του μπάσκετ" },
   { word: "ΠΟΔΟΣΦΑΙΡΑΚΙ", category: "Αθλήματα", hint: "Επιτραπέζιο ποδόσφαιρο" },
-  { word: "ΠΙΝΓΚ ΠΟΝΓΚ", category: "Αθλήματα", hint: "Επιτραπέζια αντισφαίριση" },
   { word: "ΞΙΦΑΣΚΙΑ", category: "Αθλήματα", hint: "Αγώνισμα με σπαθί" },
   { word: "ΙΠΠΙΚΗ", category: "Αθλήματα", hint: "Αγώνισμα με άλογα" },
-  { word: "ΣΚΟΤΣΕΖΙΚΗ ΠΑΛΗ", category: "Αθλήματα", hint: "Παραδοσιακό αγώνισμα Σκοτίας" },
   { word: "ΑΚΡΟΒΑΤΙΚΑ", category: "Αθλήματα", hint: "Εκτελέσεις ισορροπίας και ευλυγισίας" },
   { word: "ΒΑΘΥΣΚΑΦΑΝΔΡΑ", category: "Αθλήματα", hint: "Κατάδυση με εξοπλισμό" },
   { word: "ΣΑΝΙΔΑ", category: "Αθλήματα", hint: "Ιστιοσανίδα στη θάλασσα" },
@@ -2469,45 +2393,33 @@ const WORDS = [
   { word: "ΔΡΟΜΟΣ", category: "Αθλήματα", hint: "Αγώνισμα ταχύτητας" },
   { word: "ΑΛΜΑ", category: "Αθλήματα", hint: "Αγώνισμα στίβου — μήκος ή ύψος" },
   { word: "ΣΦΥΡΟΒΟΛΙΑ", category: "Αθλήματα", hint: "Αγώνισμα ρίψης σφύρας" },
-  { word: "ΚΟΝΤΙΝΙ", category: "Αθλήματα", hint: "Αγώνισμα άλματος με κοντάρι" },
+  { word: "ΚΟΝΤΙΝΙ", category: "Αθλήματα", hint: "Στίβος — άλμα επί κοντώ" },
   { word: "ΑΚΟΝΤΙΟ", category: "Αθλήματα", hint: "Αγώνισμα ρίψης δόρατος" },
   { word: "ΔΙΣΚΟΒΟΛΙΑ", category: "Αθλήματα", hint: "Αγώνισμα ρίψης δίσκου" },
   { word: "ΣΦΑΙΡΟΒΟΛΙΑ", category: "Αθλήματα", hint: "Αγώνισμα ρίψης σφαίρας" },
   { word: "ΤΑΕΚΒΟΝΤΟ", category: "Αθλήματα", hint: "Κορεατική πολεμική τέχνη" },
   { word: "ΑΘΛΗΤΙΣΜΟΣ", category: "Αθλήματα", hint: "Σύνολο σωματικών δραστηριοτήτων" },
-  { word: "ΣΚΟΤΣΕΖΙΚΗ ΡΙΨΗ", category: "Αθλήματα", hint: "Highland Games — ρίξιμο κορμού" },
   { word: "ΣΟΥΜΟ", category: "Αθλήματα", hint: "Ιαπωνική πάλη βαρέων παλαιστών" },
   { word: "ΚΑΠΟΕΪΡΑ", category: "Αθλήματα", hint: "Βραζιλιάνικη πολεμική τέχνη-χορός" },
   { word: "ΤΑΙΤΣΙ", category: "Αθλήματα", hint: "Κινεζική αργή πολεμική τέχνη" },
-  { word: "ΚΟΥΝΓΚ ΦΟΥ", category: "Αθλήματα", hint: "Κινεζική πολεμική τέχνη" },
   { word: "ΑΪΚΙΝΤΟ", category: "Αθλήματα", hint: "Ιαπωνική τέχνη — χρήση δύναμης αντιπάλου" },
-  { word: "ΧΑΠ ΚΙΝ ΝΤΟ", category: "Αθλήματα", hint: "Τέχνη Μπρους Λι — μεγάλη ευελιξία" },
   { word: "ΝΙΝΤΖΙΤΣΟΥ", category: "Αθλήματα", hint: "Ιαπωνική τέχνη νίντζα" },
   { word: "ΣΑΜΠΟ", category: "Αθλήματα", hint: "Ρωσική πολεμική τέχνη" },
   { word: "ΠΑΓΚΑΛΜΑ", category: "Αθλήματα", hint: "Ελληνική αρχαία πάλη εδάφους" },
-  { word: "ΠΕΝΤΑΤΛΟ", category: "Αθλήματα", hint: "Πέντε αθλήματα — μοντέρνο" },
-  { word: "ΑΛΜΑ ΕΠΙ ΚΟΝΤΩ", category: "Αθλήματα", hint: "Άλμα ύψους με βοήθεια κοντού" },
-  { word: "ΤΡΙΠΛΟΥΝ ΑΛΜΑ", category: "Αθλήματα", hint: "Τρία βήματα πριν την προσγείωση" },
   { word: "ΑΜΑΞΟΔΡΟΜΙΑ", category: "Αθλήματα", hint: "Αγώνες αρμάτων — αρχαία Ολυμπία" },
   { word: "ΙΠΠΟΔΡΟΜΙΑ", category: "Αθλήματα", hint: "Αγώνας αλόγων σε πίστα" },
-  { word: "ΣΚΑΚΙΣΤΙΚΟ ΤΟΥΡΝΟΥΑ", category: "Αθλήματα", hint: "Διαγωνισμός σκακιστικής ικανότητας" },
   { word: "ΣΚΑΛΙΣΤΗΡΙ", category: "Αθλήματα", hint: "Ελεύθερη αναρρίχηση βράχων" },
   { word: "ΒΑΘΥΚΑΤΑΔΥΣΗ", category: "Αθλήματα", hint: "Κατάδυση σε μεγάλα βάθη" },
   { word: "ΑΠΝΟΙΑ", category: "Αθλήματα", hint: "Κατάδυση κρατώντας ανάσα" },
-  { word: "ΥΠΟΒΡΥΧΙΑ ΥΠΑΡΞΗ", category: "Αθλήματα", hint: "Αθλητισμός με φιάλη οξυγόνου" },
   { word: "ΠΑΡΚΟΥΡ", category: "Αθλήματα", hint: "Αστική αναρρίχηση — ελεύθερη κίνηση" },
   { word: "ΑΚΡΟΒΑΤΙΑ", category: "Αθλήματα", hint: "Ισορροπία και ευλυγισία στον αέρα" },
   { word: "ΤΣΙΡΚΟ", category: "Αθλήματα", hint: "Ακροβατικές τέχνες και ισορροπία" },
-  { word: "ΧΟΡΔΑ ΑΔΡΕΝΑΛΙΝΗΣ", category: "Αθλήματα", hint: "Bungee jumping — πτώση με λάστιχο" },
   { word: "ΓΚΟΛΦ", category: "Αθλήματα", hint: "Χτυπώ μπαλάκι σε τρύπα με μπαστούνι" },
   { word: "ΚΡΙΚΕΤ", category: "Αθλήματα", hint: "Αγγλικό άθλημα με μπάτα και μπαλάκι" },
   { word: "ΡΟΥΓΚΜΠΙ", category: "Αθλήματα", hint: "Αθλητισμός με οβάλ μπάλα — επαφή" },
-  { word: "ΑΜΕΡΙΚΑΝΙΚΟ ΠΟΔΟΣΦΑΙΡΟ", category: "Αθλήματα", hint: "NFL — οβάλ μπάλα και touchdown" },
   { word: "ΜΠΕΪΣΜΠΟΛ", category: "Αθλήματα", hint: "Αμερικανικό άθλημα με μπαστούνι" },
-  { word: "ΧΟΚΕΙ ΕΠΙ ΠΑΓΟΥ", category: "Αθλήματα", hint: "Αθλητισμός σε παγοδρόμιο με στικ" },
 
 
-  { word: "ΚΑΤΟΛΙΣΘΗΣΗ", category: "Αθλήματα", hint: "Luge — κατάβαση σε έλκηθρο" },
   { word: "ΣΚΕΛΕΤΟΝ", category: "Αθλήματα", hint: "Κατάβαση με κεφάλι μπροστά σε παγωμένη πίστα" },
   { word: "ΒΟΜΠΣΛΕΪ", category: "Αθλήματα", hint: "Αγώνας κατάβασης σε εμπρόσθια έλκηθρο" },
   { word: "ΣΝΟΟΥΜΠΟΡΝΤ", category: "Αθλήματα", hint: "Χιονοδρομία σε σανίδα" },
@@ -2518,7 +2430,6 @@ const WORDS = [
 
   { word: "ΖΟΥΜΠΑ", category: "Αθλήματα", hint: "Λατινική χορευτική γυμναστική" },
   { word: "ΠΙΛΑΤΕΣ", category: "Αθλήματα", hint: "Μέθοδος ενδυνάμωσης πυρήνα" },
-  { word: "ΚΑΤΕΔΑΦΙΣΤΙΚΗ ΚΟΛΥΜΒΗΣΗ", category: "Αθλήματα", hint: "Freediving — κατάδυση χωρίς εξοπλισμό" },
 
 
 
@@ -2541,7 +2452,6 @@ const WORDS = [
   { word: "ΜΠΑΝΙΟ", category: "Αντικείμενα Σπιτιού", hint: "Δωμάτιο υγιεινής" },
   { word: "ΣΑΛΟΝΙ", category: "Αντικείμενα Σπιτιού", hint: "Κύριο δωμάτιο διαμονής" },
   { word: "ΠΛΑΚΑΚΙΑ", category: "Αντικείμενα Σπιτιού", hint: "Επικάλυψη δαπέδου ή τοίχου" },
-  { word: "ΧΡΩΜΑ ΤΟΙΧΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Βάφουμε με αυτό τους τοίχους" },
   { word: "ΒΙΒΛΙΟΘΗΚΗ", category: "Αντικείμενα Σπιτιού", hint: "Έπιπλο για βιβλία" },
   { word: "ΓΡΑΦΕΙΟ", category: "Αντικείμενα Σπιτιού", hint: "Έπιπλο για δουλειά" },
   { word: "ΚΑΡΕΚΛΑ", category: "Αντικείμενα Σπιτιού", hint: "Καθόμαστε σε αυτήν" },
@@ -2555,8 +2465,6 @@ const WORDS = [
   { word: "ΤΗΓΑΝΙ", category: "Αντικείμενα Σπιτιού", hint: "Τηγανίζουμε σε αυτό" },
   { word: "ΓΚΑΖΑΚΙ", category: "Αντικείμενα Σπιτιού", hint: "Φορητή εστία υγραερίου" },
   { word: "ΨΗΣΤΑΡΙΑ", category: "Αντικείμενα Σπιτιού", hint: "Grill — για μπάρμπεκιου" },
-  { word: "ΑΝΤΙΚΟΛΛΗΤΙΚΟ ΤΗΓΑΝΙ", category: "Αντικείμενα Σπιτιού", hint: "Non-stick pan — τίποτα δεν κολλά" },
-  { word: "ΧΥΤΟΣΙΔΗΡΟ ΣΚΕΥΟΣ", category: "Αντικείμενα Σπιτιού", hint: "Cast iron — πολύ βαριά κατσαρόλα" },
   { word: "ΓΑΣΤΡΑ", category: "Αντικείμενα Σπιτιού", hint: "Πήλινο σκεύος φούρνου" },
   { word: "ΜΠΟΛ", category: "Αντικείμενα Σπιτιού", hint: "Στρογγυλό βαθύ σκεύος" },
   { word: "ΣΟΥΡΩΤΗΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Σουρώνει ζυμαρικά" },
@@ -2564,53 +2472,33 @@ const WORDS = [
   { word: "ΚΟΥΤΣΟΥΝΑ", category: "Αντικείμενα Σπιτιού", hint: "Ξύλινο κουτάλι ανακατώματος" },
   { word: "ΣΠΑΤΟΥΛΑ", category: "Αντικείμενα Σπιτιού", hint: "Αναποδογυρίζει τηγανίτες" },
   { word: "ΑΝΑΔΕΥΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Σύρμα για χτύπημα αυγών" },
-  { word: "ΖΥΓΟΣ ΚΟΥΖΙΝΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Ζυγίζει υλικά για συνταγές" },
   { word: "ΧΡΟΝΟΔΙΑΚΟΠΤΗΣ", category: "Αντικείμενα Σπιτιού", hint: "Μετρά χρόνο μαγειρέματος" },
-  { word: "ΘΕΡΜΟΜΕΤΡΟ ΦΑΓΗΤΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Μετρά θερμοκρασία κρέατος" },
   { word: "ΚΛΕΙΔΩΤΡΙΑ", category: "Αντικείμενα Σπιτιού", hint: "Κλειδαριά πόρτας" },
   { word: "ΠΑΡΑΘΥΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Άνοιγμα τοίχου για φως" },
   { word: "ΣΙΤΑ", category: "Αντικείμενα Σπιτιού", hint: "Σουρώνει αλεύρι ή υγρά" },
   { word: "ΓΟΥΔΙ", category: "Αντικείμενα Σπιτιού", hint: "Πέτρινο σκεύος — αλέθει μπαχαρικά" },
   { word: "ΑΡΤΟΠΛΑΣΤΗΣ", category: "Αντικείμενα Σπιτιού", hint: "Bread machine — φτιάχνει ψωμί αυτόματα" },
   { word: "ΕΙΣΠΝΕΥΣΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Αποσμητικό χώρου — diffuser" },
-  { word: "ΗΧΕΙΟ BLUETOOTH", category: "Αντικείμενα Σπιτιού", hint: "Ασύρματο ηχείο" },
   { word: "ΡΟΜΠΑ", category: "Αντικείμενα Σπιτιού", hint: "Robot ηλεκτρική σκούπα" },
-  { word: "ΙΜΑΝΤΑΣ ΑΕΡΟΣ", category: "Αντικείμενα Σπιτιού", hint: "Air purifier — καθαρίζει αέρα" },
   { word: "ΥΓΡΑΝΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Αυξάνει υγρασία δωματίου" },
-  { word: "ΥΓΡΟ ΣΑΠΟΥΝΙ", category: "Αντικείμενα Σπιτιού", hint: "Αντλία υγρού σαπουνιού στο μπάνιο" },
   { word: "ΠΕΤΣΕΤΑ", category: "Αντικείμενα Σπιτιού", hint: "Υφασμάτινο μέσο στεγνώματος" },
-  { word: "ΡΟΜΠΟΤΙΚΗ ΣΚΟΥΠΑ", category: "Αντικείμενα Σπιτιού", hint: "Αυτόματη σκούπα δαπέδου" },
 
-  { word: "ΦΙΛΤΡΟ ΝΕΡΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Συσκευή καθαρισμού πόσιμου νερού" },
   { word: "ΥΓΡΑΕΡΙΟ", category: "Αντικείμενα Σπιτιού", hint: "Φιάλη καύσιμου αερίου για μαγείρεμα" },
   { word: "ΜΠΟΪΛΕΡ", category: "Αντικείμενα Σπιτιού", hint: "Θερμοσίφωνας ζεστού νερού" },
   { word: "ΓΕΝΝΗΤΡΙΑ", category: "Αντικείμενα Σπιτιού", hint: "Παράγει ηλεκτρισμό σε διακοπή ρεύματος" },
-  { word: "ΗΛΙΑΚΟΣ ΘΕΡΜΟΣΙΦΩΝΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Ηλιακή ενέργεια για ζεστό νερό" },
   { word: "ΠΥΡΟΣΒΕΣΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Συσκευή κατάσβεσης μικρής φωτιάς" },
-  { word: "ΑΝΙΧΝΕΥΤΗΣ ΚΑΠΝΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Συναγερμός για καπνό" },
-  { word: "ΑΝΙΧΝΕΥΤΗΣ ΜΟΝΟΞΕΙΔΙΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Ανιχνεύει επικίνδυνα αέρια" },
-  { word: "ΑΣΦΑΛΕΙΑ ΘΕΩΡΗΤΡΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Κλειδαριά πόρτας εισόδου" },
-  { word: "ΘΕΩΡΗΤΡΟ ΠΟΡΤΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Ματάκι για να βλέπεις ποιος χτυπά" },
   { word: "ΣΚΑΛΟΠΑΤΙ", category: "Αντικείμενα Σπιτιού", hint: "Σκαλοπάτι — σκαλί" },
   { word: "ΚΙΓΚΛΙΔΩΜΑ", category: "Αντικείμενα Σπιτιού", hint: "Κάγκελα σκάλας για ασφάλεια" },
   { word: "ΓΛΑΣΤΡΑ", category: "Αντικείμενα Σπιτιού", hint: "Δοχείο για φυτά εσωτερικού χώρου" },
   { word: "ΑΝΑΠΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Μηχανισμός ανάφλεξης" },
   { word: "ΣΠΙΡΤΟΚΟΥΤΟ", category: "Αντικείμενα Σπιτιού", hint: "Κουτί με σπίρτα για ανάφλεξη" },
-  { word: "ΚΕΡΙ ΑΡΩΜΑΤΙΚΟ", category: "Αντικείμενα Σπιτιού", hint: "Φωτιστικό με άρωμα για ατμόσφαιρα" },
-  { word: "ΧΑΡΤΙ ΚΟΥΖΙΝΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Απορροφητικό χαρτί για σκούπισμα" },
-  { word: "ΞΥΣΤΡΑ ΤΥΡΙΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Εργαλείο τριψίματος τυριού" },
   { word: "ΑΝΟΙΧΤΗΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Εργαλείο ανοίγματος κονσερβών" },
   { word: "ΣΤΟΥΠΩΤΗΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Βουλώνει μπουκάλια — τιρμπουσόν" },
-  { word: "ΚΟΦΤΗΣ ΨΩΜΙΟΥ", category: "Αντικείμενα Σπιτιού", hint: "Μαχαίρι οδοντωτό για ψωμί" },
   { word: "ΜΑΡΚΟΠΟΛΟ", category: "Διάσημες Προσωπικότητες", hint: "Βενετός εξερευνητής της Ανατολής" },
   { word: "ΚΟΛΟΜΒΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Ανακάλυψε την Αμερική το 1492" },
   { word: "ΜΑΓΓΕΛΑΝΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Πρώτος περίπλους της γης" },
   { word: "ΝΑΠΟΛΕΩΝ", category: "Διάσημες Προσωπικότητες", hint: "Γάλλος αυτοκράτορας και στρατηγός" },
   { word: "ΣΕΞΠΙΡ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός θεατρικός συγγραφέας" },
-  { word: "ΝΕΛΣΟΝ ΜΑΝΤΕΛΑ", category: "Διάσημες Προσωπικότητες", hint: "Νοτιοαφρικανός ηγέτης κατά του απαρτχάιντ" },
-  { word: "ΤΣΑΡΛΣ ΔΙΚΕΝΣ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός συγγραφέας του Όλιβερ Τουίστ" },
-  { word: "ΝΙΚΟΛΑ ΤΕΣΛΑ", category: "Διάσημες Προσωπικότητες", hint: "Εφευρέτης εναλλασσόμενου ρεύματος" },
-  { word: "ΜΑΡΙ ΚΙΟΥΡΙ", category: "Διάσημες Προσωπικότητες", hint: "Πρώτη γυναίκα με Νόμπελ Φυσικής" },
   { word: "ΦΡΑΝΚΛΙΝΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Αμερικανός εφευρέτης και πολιτικός" },
   { word: "ΙΠΠΟΚΡΑΤΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Πατέρας της ιατρικής" },
   { word: "ΘΟΥΚΥΔΙΔΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Αρχαίος Έλληνας ιστορικός" },
@@ -2672,7 +2560,7 @@ const WORDS = [
   { word: "ΔΟΝΟΥΣΑ", category: "Ελληνικά Νησιά", hint: "Μικρή Κυκλάδα" },
   { word: "ΗΡΑΚΛΕΙΑ", category: "Ελληνικά Νησιά", hint: "Μικρή Κυκλάδα" },
   { word: "ΤΗΝΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί της Παναγίας Ευαγγελίστριας" },
-  { word: "ΑΝΔΡΟΣ", category: "Ελληνικά Νησιά", hint: "Μεγαλύτερο νησί Κυκλάδων" },
+  { word: "ΑΝΔΡΟΣ", category: "Ελληνικά Νησιά", hint: "Βορειότερο νησί των Κυκλάδων" },
   { word: "ΚΥΘΝΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί με θερμά λουτρά" },
   { word: "ΣΚΥΡΟΣ", category: "Ελληνικά Νησιά", hint: "Βόρειο Αιγαιακό νησί" },
   { word: "ΣΑΜΟΘΡΑΚΗ", category: "Ελληνικά Νησιά", hint: "Νησί της Νίκης της Σαμοθράκης" },
@@ -2754,17 +2642,14 @@ const WORDS = [
 
 
   { word: "ΒΑΡΗ", category: "Ελληνικές Πόλεις", hint: "Παραθαλάσσια Αττική — θαλασσινά" },
-  { word: "ΠΟΡΤΟ ΡΑΦΤΗ", category: "Ελληνικές Πόλεις", hint: "Τουριστική Αττική με φυσικό λιμάνι" },
   { word: "ΛΑΥΡΙΟ", category: "Ελληνικές Πόλεις", hint: "Αττική πόλη — αρχαία μεταλλεία αργύρου" },
   { word: "ΣΟΥΝΙΟ", category: "Ελληνικές Πόλεις", hint: "Ακρωτήριο Αττικής — ναός Ποσειδώνα" },
   { word: "ΜΕΓΑΡΑ", category: "Ελληνικές Πόλεις", hint: "Πόλη στα σύνορα Αττικής-Κορινθίας" },
 
   { word: "ΑΜΦΙΛΟΧΙΑ", category: "Ελληνικές Πόλεις", hint: "Πόλη Αιτωλοακαρνανίας" },
   { word: "ΝΑΥΠΑΚΤΟΣ", category: "Ελληνικές Πόλεις", hint: "Πόλη με ενετικό κάστρο — Ληπαντό" },
-  { word: "ΖΑΚΥΝΘΟΣ ΠΟΛΗ", category: "Ελληνικές Πόλεις", hint: "Πρωτεύουσα του νησιού Ζάκυνθος" },
   { word: "ΑΡΓΟΣΤΟΛΙ", category: "Ελληνικές Πόλεις", hint: "Πρωτεύουσα Κεφαλονιάς" },
   { word: "ΛΗΞΟΥΡΙ", category: "Ελληνικές Πόλεις", hint: "Δεύτερη πόλη Κεφαλονιάς" },
-  { word: "ΛΕΥΚΑΔΑ ΠΟΛΗ", category: "Ελληνικές Πόλεις", hint: "Πρωτεύουσα του νησιού Λευκάδα" },
   { word: "ΑΜΑΛΙΑΔΑ", category: "Ελληνικές Πόλεις", hint: "Πόλη Ηλείας" },
   { word: "ΖΑΧΑΡΩ", category: "Ελληνικές Πόλεις", hint: "Πόλη Ηλείας κοντά στην Ολυμπία" },
   { word: "ΚΥΠΑΡΙΣΣΙΑ", category: "Ελληνικές Πόλεις", hint: "Παράλια πόλη Μεσσηνίας" },
@@ -2825,22 +2710,16 @@ const WORDS = [
   { word: "ΦΥΣΙΚΟΣ", category: "Επαγγέλματα", hint: "Μελετά φυσικά φαινόμενα" },
   { word: "ΠΛΗΡΟΦΟΡΙΚΟΣ", category: "Επαγγέλματα", hint: "Ασχολείται με υπολογιστές" },
   { word: "ΝΟΜΙΚΟΣ", category: "Επαγγέλματα", hint: "Ασχολείται με το δίκαιο" },
-  { word: "ΚΟΙΝΩΝΙΚΟΣ ΛΕΙΤΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Βοηθά ευπαθείς ομάδες" },
   { word: "ΔΙΚΑΣΤΗΣ", category: "Επαγγέλματα", hint: "Αποφαίνεται για νομικές υποθέσεις" },
   { word: "ΕΙΣΑΓΓΕΛΕΑΣ", category: "Επαγγέλματα", hint: "Ασκεί την ποινική δίωξη" },
   { word: "ΣΥΜΒΟΛΑΙΟΓΡΑΦΟΣ", category: "Επαγγέλματα", hint: "Πιστοποιεί νομικά έγγραφα" },
-  { word: "ΔΙΚΗΓΟΡΟΣ ΥΠΕΡΑΣΠΙΣΗΣ", category: "Επαγγέλματα", hint: "Υπερασπίζεται κατηγορούμενους" },
   { word: "ΣΩΦΡΟΝΙΣΤΙΚΟΣ", category: "Επαγγέλματα", hint: "Εργάζεται σε φυλακή" },
-  { word: "ΚΟΙΝΟΤΙΚΟΣ ΑΣΤΥΝΟΜΟΣ", category: "Επαγγέλματα", hint: "Φυλάει τη γειτονιά" },
   { word: "ΤΕΛΩΝΕΙΑΚΟΣ", category: "Επαγγέλματα", hint: "Ελέγχει εισαγωγές-εξαγωγές" },
   { word: "ΕΦΟΡΙΑΚΟΣ", category: "Επαγγέλματα", hint: "Ελέγχει φορολογικές δηλώσεις" },
-  { word: "ΕΛΕΓΚΤΗΣ ΛΟΓΑΡΙΑΣΜΩΝ", category: "Επαγγέλματα", hint: "Ελέγχει οικονομικές καταστάσεις" },
   { word: "ΧΡΗΜΑΤΙΣΤΗΣ", category: "Επαγγέλματα", hint: "Αγοράζει και πουλά μετοχές" },
-  { word: "ΑΝΑΛΥΤΗΣ ΑΓΟΡΩΝ", category: "Επαγγέλματα", hint: "Αναλύει οικονομικές τάσεις" },
   { word: "ΑΣΦΑΛΙΣΤΗΣ", category: "Επαγγέλματα", hint: "Πουλά ασφαλιστήρια συμβόλαια" },
   { word: "ΑΚΤΟΥΑΡΙΟΣ", category: "Επαγγέλματα", hint: "Υπολογίζει ασφαλιστικούς κινδύνους" },
   { word: "ΝΑΥΠΗΓΟΣ", category: "Επαγγέλματα", hint: "Σχεδιάζει και κατασκευάζει πλοία" },
-  { word: "ΕΜΠΟΡΙΚΟΣ ΝΑΥΤΙΛΟΣ", category: "Επαγγέλματα", hint: "Εργάζεται σε εμπορικά πλοία" },
   { word: "ΑΛΙΕΥΤΗΣ", category: "Επαγγέλματα", hint: "Επαγγελματίας ψαράς" },
   { word: "ΑΜΠΕΛΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Φροντίζει αμπέλια και κάνει κρασί" },
   { word: "ΕΛΑΙΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Παράγει ελαιόλαδο" },
@@ -2874,7 +2753,6 @@ const WORDS = [
   { word: "ΓΗΡΙΑΤΡΟΣ", category: "Επαγγέλματα", hint: "Γιατρός για ηλικιωμένους" },
   { word: "ΟΣΤΕΟΠΑΘΗΤΙΚΟΣ", category: "Επαγγέλματα", hint: "Ειδικός σκελετού και μυών" },
   { word: "ΦΥΣΙΚΟΘΕΡΑΠΕΥΤΗΣ", category: "Επαγγέλματα", hint: "Αποκαθιστά κινητικά προβλήματα" },
-  { word: "ΕΠΑΓΓΕΛΜΑΤΙΑΣ ΑΘΛΗΤΗΣ", category: "Επαγγέλματα", hint: "Αθλείται επαγγελματικά" },
   { word: "ΑΤΟΜΟ", category: "Επιστήμη", hint: "Βασική μονάδα της ύλης" },
   { word: "ΜΟΡΙΟ", category: "Επιστήμη", hint: "Ομάδα ατόμων ενωμένων" },
   { word: "ΗΛΕΚΤΡΟΝΙΟ", category: "Επιστήμη", hint: "Αρνητικά φορτισμένο σωματίδιο" },
@@ -2888,7 +2766,6 @@ const WORDS = [
   { word: "ΟΠΤΙΚΗ", category: "Επιστήμη", hint: "Επιστήμη του φωτός" },
   { word: "ΑΚΟΥΣΤΙΚΗ", category: "Επιστήμη", hint: "Επιστήμη του ήχου" },
   { word: "ΕΞΙΣΩΣΗ", category: "Επιστήμη", hint: "Μαθηματική ισότητα" },
-  { word: "ΠΕΡΙΟΔΙΚΟΣ ΠΙΝΑΚΑΣ", category: "Επιστήμη", hint: "Πίνακας χημικών στοιχείων" },
   { word: "ΟΞΥ", category: "Επιστήμη", hint: "Χημική ένωση με pH κάτω του 7" },
   { word: "ΒΑΣΗ", category: "Επιστήμη", hint: "Χημική ένωση με pH πάνω από 7" },
   { word: "ΠΡΩΤΕΪΝΗ", category: "Επιστήμη", hint: "Μακρομόριο από αμινοξέα" },
@@ -2900,7 +2777,6 @@ const WORDS = [
   { word: "ΒΑΚΤΗΡΙΟ", category: "Επιστήμη", hint: "Μονοκύτταρος μικροοργανισμός" },
   { word: "ΠΑΘΟΓΟΝΟΣ", category: "Επιστήμη", hint: "Μικροοργανισμός που προκαλεί ασθένεια" },
   { word: "ΟΙΚΟΣΥΣΤΗΜΑ", category: "Επιστήμη", hint: "Σύνολο οργανισμών και περιβάλλοντος" },
-  { word: "ΚΛΙΜΑΤΙΚΗ ΑΛΛΑΓΗ", category: "Επιστήμη", hint: "Μεταβολή παγκόσμιου κλίματος" },
   { word: "ΘΕΩΡΙΑ", category: "Επιστήμη", hint: "Επιστημονική εξήγηση φαινομένου" },
   { word: "ΠΕΙΡΑΜΑ", category: "Επιστήμη", hint: "Επιστημονική δοκιμή υπόθεσης" },
   { word: "ΜΙΚΡΟΣΚΟΠΙΟ", category: "Επιστήμη", hint: "Μεγεθύνει μικροσκοπικά αντικείμενα" },
@@ -2926,13 +2802,10 @@ const WORDS = [
   { word: "ΥΔΡΟΔΥΝΑΜΙΚΗ", category: "Επιστήμη", hint: "Μελέτη κίνησης υγρών" },
   { word: "ΘΕΡΜΟΧΗΜΕΙΑ", category: "Επιστήμη", hint: "Χημεία ενέργειας σε αντιδράσεις" },
   { word: "ΗΛΕΚΤΡΟΧΗΜΕΙΑ", category: "Επιστήμη", hint: "Σχέση χημείας και ηλεκτρισμού" },
-  { word: "ΠΟΣΟΤΙΚΗ ΑΝΑΛΥΣΗ", category: "Επιστήμη", hint: "Μέτρηση ποσότητας ουσιών" },
   { word: "ΦΩΤΟΧΗΜΕΙΑ", category: "Επιστήμη", hint: "Χημικές αντιδράσεις με φως" },
   { word: "ΚΥΒΕΡΝΗΤΙΚΗ", category: "Επιστήμη", hint: "Επιστήμη ελέγχου και επικοινωνίας συστημάτων" },
   { word: "ΑΣΤΡΟΦΥΣΙΚΗ", category: "Επιστήμη", hint: "Φυσική αστεριών και γαλαξιών" },
   { word: "ΚΟΣΜΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη σύμπαντος και προέλευσης του" },
-  { word: "ΘΕΩΡΙΑ ΧΑΟΥΣ", category: "Επιστήμη", hint: "Μελέτη χαοτικών συστημάτων" },
-  { word: "ΘΕΩΡΙΑ ΠΑΙΓΝΙΩΝ", category: "Επιστήμη", hint: "Μαθηματική μελέτη στρατηγικών αποφάσεων" },
   { word: "ΚΡΥΠΤΟΓΡΑΦΙΑ", category: "Επιστήμη", hint: "Κωδικοποίηση πληροφοριών" },
   { word: "ΑΛΓΕΒΡΑ", category: "Επιστήμη", hint: "Κλάδος μαθηματικών με σύμβολα" },
   { word: "ΤΟΠΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη γεωμετρικών ιδιοτήτων" },
@@ -2943,16 +2816,7 @@ const WORDS = [
   { word: "ΠΑΛΑΙΟΚΛΙΜΑΤΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη αρχαίων κλιμάτων" },
   { word: "ΑΣΤΡΟΒΙΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Αναζήτηση ζωής στο σύμπαν" },
   { word: "ΒΙΟΠΛΗΡΟΦΟΡΙΚΗ", category: "Επιστήμη", hint: "Υπολογιστική ανάλυση βιολογικών δεδομένων" },
-  { word: "ΝΕΥΡΟΤΕΧΝΗΤΗ ΝΟΗΜΟΣΥΝΗ", category: "Επιστήμη", hint: "ΑΙ εμπνευσμένο από τον εγκέφαλο" },
-  { word: "ΚΒΑΝΤΙΚΗ ΠΛΗΡΟΦΟΡΙΑ", category: "Επιστήμη", hint: "Κβαντική επεξεργασία δεδομένων" },
-  { word: "ΣΚΟΤΕΙΝΗ ΥΛΗ", category: "Επιστήμη", hint: "Αόρατη ύλη που αποτελεί 27% σύμπαντος" },
-  { word: "ΣΚΟΤΕΙΝΗ ΕΝΕΡΓΕΙΑ", category: "Επιστήμη", hint: "Δύναμη επιτάχυνσης διαστολής σύμπαντος" },
-  { word: "ΜΕΓΑ ΕΚΡΗΞΗ", category: "Επιστήμη", hint: "Big Bang — προέλευση σύμπαντος" },
   { word: "ΕΝΤΡΟΠΙΑ", category: "Επιστήμη", hint: "Μέτρο αταξίας συστήματος" },
-  { word: "ΚΒΑΝΤΙΚΗ ΥΠΕΡΑΓΩΓΙΜΟΤΗΤΑ", category: "Επιστήμη", hint: "Μηδενική αντίσταση σε χαμηλές θερμοκρασίες" },
-  { word: "ΦΥΣΙΚΗ ΠΛΑΣΜΑΤΟΣ", category: "Επιστήμη", hint: "Μελέτη ιονισμένων αερίων" },
-  { word: "ΟΠΤΙΚΗ ΙΝΑ", category: "Επιστήμη", hint: "Μετάδοση φωτός για επικοινωνία" },
-  { word: "ΑΚΤΙΝΕΣ Χ", category: "Επιστήμη", hint: "Ηλεκτρομαγνητική ακτινοβολία για ιατρική" },
   { word: "ΤΙΓΡΗΣ", category: "Ζώα", hint: "Μεγαλύτερο γατόμορφο αιλουροειδές" },
   { word: "ΛΕΟΠΑΡΔΑΛΗ", category: "Ζώα", hint: "Στικτό αιλουροειδές της Αφρικής" },
   { word: "ΤΣΙΤΑ", category: "Ζώα", hint: "Γρηγορότερο ζώο στη γη" },
@@ -2960,7 +2824,7 @@ const WORDS = [
   { word: "ΧΙΜΠΑΝΤΖΗΣ", category: "Ζώα", hint: "Πλησιέστερος συγγενής ανθρώπου" },
   { word: "ΟΥΡΑΚΟΤΑΓΚΟΣ", category: "Ζώα", hint: "Πορτοκαλί πίθηκος Βορνέου" },
   { word: "ΓΚΙΜΠΟΝ", category: "Ζώα", hint: "Πίθηκος με μακριά χέρια" },
-  { word: "ΓΑΖΕΛΑ", category: "Ζώα", hint: "Ελαφρύ και γρήγορο αντιλόπη" },
+  { word: "ΓΑΖΕΛΑ", category: "Ζώα", hint: "Γρήγορο αφρικανικό θηλαστικό" },
   { word: "ΜΠΙΖΟΝ", category: "Ζώα", hint: "Αμερικανικό άγριο βόδι" },
   { word: "ΑΝΑΚΟΝΤΑ", category: "Ζώα", hint: "Μεγαλύτερο φίδι στον κόσμο" },
   { word: "ΚΟΜΟΔΟ", category: "Ζώα", hint: "Γίγαντας σαύρα νησιού Κόμοντο" },
@@ -2992,7 +2856,6 @@ const WORDS = [
   { word: "ΜΠΑΡΑΚΟΥΝΤΑ", category: "Ζώα", hint: "Αρπακτικό τροπικό ψάρι" },
   { word: "ΤΟΝΟΣ", category: "Ζώα", hint: "Μεγάλο ωκεάνιο ψάρι — αγαπημένο στο κουτί" },
   { word: "ΞΙΦΙΑΣ", category: "Ζώα", hint: "Ψάρι με μακριά μύτη — ξίφος" },
-  { word: "ΜΠΑΛΑΙΝΑ", category: "Ζώα", hint: "Μεγαλύτερο θηλαστικό — ωκεάνιο" },
 
   { word: "ΦΩΚΙΑ", category: "Ζώα", hint: "Θαλάσσιο θηλαστικό με βατραχοπέδιλα" },
   { word: "ΝΤΟΥΓΚΟΝΓΚ", category: "Ζώα", hint: "Θαλάσσιο θηλαστικό — γοργόνα της φύσης" },
@@ -3004,7 +2867,6 @@ const WORDS = [
   { word: "ΝΥΧΤΕΡΙΔΑ", category: "Ζώα", hint: "Το μόνο πετούμενο θηλαστικό" },
   { word: "ΞΕΧΕΙΛΟΤΗΣ", category: "Ζώα", hint: "Αρκούδα Αμερικής με λευκό στήθος" },
   { word: "ΟΥΑΛΑΜΠΙ", category: "Ζώα", hint: "Μικρό καγκουρό Αυστραλίας" },
-  { word: "ΤΑΖΜΑΝΙΑΚΟΣ ΔΙΑΒΟΛΟΣ", category: "Ζώα", hint: "Σαρκοφάγο αυστραλιανό θηλαστικό" },
 
 
   { word: "ΑΡΜΑΔΙΛΛΟ", category: "Ζώα", hint: "Ζώο με θωράκιση από οστεοδερμικές πλάκες" },
@@ -3031,18 +2893,9 @@ const WORDS = [
   { word: "ΟΡΥΚΤΗΡΗΓΟΣ", category: "Ζώα", hint: "Αφρικανικό νυκτόβιο με μακριά γλώσσα" },
 
   { word: "ΦΕΟΥΔΑΡΧΙΑ", category: "Ιστορία", hint: "Μεσαιωνικό σύστημα γης και υποτέλειας" },
-  { word: "ΑΓΓΛΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Ανατροπή βασιλιά το 1649" },
-  { word: "ΓΑΛΛΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Κατάλυση μοναρχίας το 1789" },
-  { word: "ΒΙΟΜΗΧΑΝΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Μετάβαση σε εργοστασιακή παραγωγή" },
-  { word: "ΡΩΜΑΪΚΗ ΑΥΤΟΚΡΑΤΟΡΙΑ", category: "Ιστορία", hint: "Αρχαία αυτοκρατορία από τη Ρώμη" },
-  { word: "ΟΘΩΜΑΝΙΚΗ ΑΥΤΟΚΡΑΤΟΡΙΑ", category: "Ιστορία", hint: "Αυτοκρατορία που κατέλαβε Κωνσταντινούπολη" },
-  { word: "ΧΑΡΤΑ MAGNA", category: "Ιστορία", hint: "Βρετανικό κείμενο δικαιωμάτων 1215" },
-  { word: "ΕΙΡΗΝΗ ΒΕΣΤΦΑΛΙΑΣ", category: "Ιστορία", hint: "Συνθήκη που έληξε Τριακονταετή Πόλεμο" },
-  { word: "ΑΜΕΡΙΚΑΝΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Ανεξαρτησία ΗΠΑ το 1776" },
   { word: "ΜΠΟΛΣΕΒΙΚΟΙ", category: "Ιστορία", hint: "Επαναστάτες του 1917 στη Ρωσία" },
   { word: "ΝΑΖΙΣΜΟΣ", category: "Ιστορία", hint: "Ιδεολογία του Τρίτου Ράιχ" },
   { word: "ΦΑΣΙΣΜΟΣ", category: "Ιστορία", hint: "Ολοκληρωτική εθνικιστική ιδεολογία" },
-  { word: "ΨΥΧΡΗ ΕΙΡΗΝΗ", category: "Ιστορία", hint: "Σχετικά ήρεμη περίοδος μεταξύ πολέμων" },
   { word: "ΑΠΟΙΚΙΟΚΡΑΤΙΑ", category: "Ιστορία", hint: "Κυριαρχία ισχυρών χωρών σε αδύναμες" },
   { word: "ΑΠΕΛΕΥΘΕΡΩΣΗ", category: "Ιστορία", hint: "Τέλος κατοχής ή δουλείας" },
   { word: "ΚΑΤΟΧΗ", category: "Ιστορία", hint: "Ξένη στρατιωτική επικράτηση" },
@@ -3053,58 +2906,23 @@ const WORDS = [
   { word: "ΑΓΟΡΑ", category: "Ιστορία", hint: "Κεντρική πλατεία αρχαιοελληνικής πόλης" },
   { word: "ΠΟΛΙΣ", category: "Ιστορία", hint: "Αρχαία ελληνική πόλη-κράτος" },
   { word: "ΔΗΜΟΣ", category: "Ιστορία", hint: "Βασική διοικητική μονάδα πόλης-κράτους" },
-  { word: "ΕΚΚΛΗΣΙΑ ΤΟΥ ΔΗΜΟΥ", category: "Ιστορία", hint: "Αρχαία αθηναϊκή λαϊκή συνέλευση" },
   { word: "ΒΟΥΛΗ", category: "Ιστορία", hint: "Συμβουλευτικό σώμα αρχαίας Αθήνας" },
   { word: "ΟΛΥΜΠΙΑΚΟΙ", category: "Ιστορία", hint: "Αρχαίοι αγώνες κάθε τέσσερα χρόνια" },
-  { word: "ΠΕΡΣΙΚΟΙ ΠΟΛΕΜΟΙ", category: "Ιστορία", hint: "Σύγκρουση Ελλάδας με Περσία" },
   { word: "ΠΕΛΟΠΟΝΝΗΣΙΑΚΟΣ", category: "Ιστορία", hint: "Πόλεμος Αθήνας-Σπάρτης 431-404 π.Χ." },
   { word: "ΕΛΛΗΝΙΣΜΟΣ", category: "Ιστορία", hint: "Διάδοση ελληνικού πολιτισμού" },
   { word: "ΑΝΑΡΧΙΣΜΟΣ", category: "Ιστορία", hint: "Πολιτική θεωρία κατά της εξουσίας" },
   { word: "ΡΕΦΟΡΜΑΤΣΙΟΝ", category: "Ιστορία", hint: "Θρησκευτική Μεταρρύθμιση — Λούθηρος" },
-  { word: "ΤΡΙΑΚΟΝΤΑΕΤΗΣ ΠΟΛΕΜΟΣ", category: "Ιστορία", hint: "Ευρωπαϊκός θρησκευτικός πόλεμος 1618-48" },
-  { word: "ΒΑΡΘΟΛΟΜΑΙΟΣ ΝΥΧΤΑ", category: "Ιστορία", hint: "Σφαγή Ουγενότων Γαλλία 1572" },
-  { word: "ΕΠΑΝΑΣΤΑΣΗ ΑΓΓΛΙΑΣ", category: "Ιστορία", hint: "Κρόμγουελ — εκτέλεση βασιλιά" },
-  { word: "ΝΑΠΟΛΕΟΝΤΕΙΟΙ ΠΟΛΕΜΟΙ", category: "Ιστορία", hint: "Γαλλικές εκστρατείες 1803-1815" },
-  { word: "ΒΙΕΝΝΗ ΣΥΝΕΔΡΙΟ", category: "Ιστορία", hint: "Αναδιάταξη Ευρώπης 1815" },
-  { word: "ΕΑΡΙΝΑ ΕΘΝΗ", category: "Ιστορία", hint: "Επαναστάσεις 1848 σε Ευρώπη" },
-  { word: "ΠΑΡΙΣΙΝΗ ΚΟΜΜΟΥΝΑ", category: "Ιστορία", hint: "Λαϊκή εξέγερση Παρισιού 1871" },
-  { word: "ΠΡΩΤΟΣ ΠΑΓΚΟΣΜΙΟΣ", category: "Ιστορία", hint: "Μεγάλος Πόλεμος 1914-1918" },
-  { word: "ΟΚΤΩΒΡΙΑΝΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Μπολσεβίκοι — Ρωσία 1917" },
-  { word: "ΒΑΙΜΑΡΗ ΔΗΜΟΚΡΑΤΙΑ", category: "Ιστορία", hint: "Γερμανική δημοκρατία 1919-1933" },
-  { word: "ΜΕΓΑΛΗ ΥΦΕΣΗ", category: "Ιστορία", hint: "Οικονομική κατάρρευση 1929" },
-  { word: "ΝΥΡΕΜΒΕΡΓΗ ΔΙΚΗ", category: "Ιστορία", hint: "Δίκη ναζί εγκληματιών 1945-46" },
-  { word: "ΣΧΕΔΙΟ ΜΑΡΣΑΛ", category: "Ιστορία", hint: "Αμερικανική βοήθεια Ευρώπης μετά WWII" },
   { word: "ΑΠΟΑΠΟΙΚΙΟΠΟΙΗΣΗ", category: "Ιστορία", hint: "Ανεξαρτησία αποικιών μετά WWII" },
-  { word: "ΚΡΙΣΗ ΚΟΥΒΑΣ", category: "Ιστορία", hint: "Πυρηνική κρίση 1962 Ψυχρός Πόλεμος" },
-  { word: "ΤΕΙΧΟΣ ΒΕΡΟΛΙΝΟΥ", category: "Ιστορία", hint: "Ανεγέρθη 1961, κατεδαφίστηκε 1989" },
-  { word: "ΧΟΡΟΣ ΜΑΓΙΣΣΩΝ", category: "Ιστορία", hint: "Εκτελέσεις Σάλεμ 1692" },
-  { word: "ΙΣΠΑΝΙΚΗ ΙΕΡΟΕΞΕΤΑΣΗ", category: "Ιστορία", hint: "Βασανιστήρια για θρησκευτική υπακοή" },
   { word: "ΑΝΤΙΜΕΤΑΡΡΥΘΜΙΣΗ", category: "Ιστορία", hint: "Καθολική απάντηση στη Μεταρρύθμιση" },
-  { word: "ΤΡΙΤΟΣ ΚΟΣΜΟΣ", category: "Ιστορία", hint: "Αναπτυσσόμενες χώρες Ψυχρού Πολέμου" },
-  { word: "ΑΡΧΑΙΑ ΕΛΛΑΔΑ", category: "Ιστορία", hint: "Πολιτισμός βάση δυτικής σκέψης" },
-  { word: "ΡΩΜΑΪΚΗ ΔΗΜΟΚΡΑΤΙΑ", category: "Ιστορία", hint: "Πολιτικό σύστημα πριν την αυτοκρατορία" },
 
   { word: "ΟΘΩΜΑΝΟΙ", category: "Ιστορία", hint: "Τουρκική αυτοκρατορία 600 χρόνων" },
   { word: "ΜΟΓΓΟΛΟΙ", category: "Ιστορία", hint: "Αυτοκρατορία Τζένγκης Χαν" },
   { word: "ΣΤΑΛΙΝ", category: "Ιστορία", hint: "Σοβιετικός ηγέτης μετά τον Λένιν" },
   { word: "ΛΕΝΙΝ", category: "Ιστορία", hint: "Ηγέτης Ρωσικής Επανάστασης 1917" },
-  { word: "ΡΩΣΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Ανατροπή Τσάρου — 1917" },
 
-  { word: "ΚΙΝΕΖΙΚΗ ΕΠΑΝΑΣΤΑΣΗ", category: "Ιστορία", hint: "Μάο Τσε Τουνγκ — 1949" },
-  { word: "ΕΠΑΝΑΣΤΑΣΗ ΤΩΝ ΓΑΡΙΦΑΛΩΝ", category: "Ιστορία", hint: "Πορτογαλική επανάσταση 1974" },
-  { word: "ΜΑΡΤΙΟΣ 1821", category: "Ιστορία", hint: "Ελληνική Επανάσταση — Θεόδωρος Κολοκοτρώνης" },
 
-  { word: "ΜΑΡΣΑΛ ΠΛΑΝ", category: "Ιστορία", hint: "Αμερικανικό σχέδιο ανοικοδόμησης Ευρώπης" },
   { word: "ΝΑΤΟ", category: "Ιστορία", hint: "Βορειοατλαντική Συμμαχία — 1949" },
   { word: "ΟΗΕ", category: "Ιστορία", hint: "Οργανισμός Ηνωμένων Εθνών — 1945" },
-  { word: "ΣΥΝΘΗΚΗ ΒΕΡΣΑΛΛΙΩΝ", category: "Ιστορία", hint: "Τέλος Α Παγκοσμίου — 1919" },
-  { word: "ΜΑΧΗ ΒΑΤΕΡΛΟΟ", category: "Ιστορία", hint: "Τελευταία ήττα Ναπολέοντα 1815" },
-  { word: "ΠΟΛΕΜΟΣ 100 ΕΤΩΝ", category: "Ιστορία", hint: "Αγγλογαλλική σύγκρουση 1337-1453" },
-  { word: "ΜΑΥΡΟΣ ΘΑΝΑΤΟΣ", category: "Ιστορία", hint: "Πανδημία βουβωνικής πανώλης 14ου αι." },
-  { word: "ΚΑΤΑΚΤΗΣΗ ΑΜΕΡΙΚΗΣ", category: "Ιστορία", hint: "Ισπανοί κατακτητές — κονκισταδόρες" },
-  { word: "ΑΦΡΙΚΑΝΙΚΗ ΑΠΟΑΠΟΙΚΙΟΠΟΙΗΣΗ", category: "Ιστορία", hint: "Ανεξαρτησία αφρικανικών χωρών 20ου αι." },
-  { word: "ΠΟΛΕΜΟΣ ΒΙΕΤΝΑΜ", category: "Ιστορία", hint: "Αμερικανική εμπλοκή 1955-1975" },
-  { word: "ΚΟΡΕΑΤΙΚΟΣ ΠΟΛΕΜΟΣ", category: "Ιστορία", hint: "Διαίρεση Βόρεας-Νότιας Κορέας" },
   { word: "ΔΕΡΜΑ", category: "Μέρη του Σώματος", hint: "Εξωτερικό περίβλημα του σώματος" },
   { word: "ΝΕΥΡΟ", category: "Μέρη του Σώματος", hint: "Αγωγός σήματος νευρικού συστήματος" },
   { word: "ΑΡΤΗΡΙΑ", category: "Μέρη του Σώματος", hint: "Αιμοφόρο αγγείο από καρδιά" },
@@ -3154,11 +2972,9 @@ const WORDS = [
 
   { word: "ΜΠΑΓΚΠΑΪΠ", category: "Μουσικά Όργανα", hint: "Σκωτσέζικη φυσαρμόνικα με σάκο" },
   { word: "ΜΠΑΛΑΛΑΪΚΑ", category: "Μουσικά Όργανα", hint: "Ρωσικό τριγωνικό έγχορδο" },
-  { word: "ΚΙΘΑΡΑ ΜΠΑΣΟ", category: "Μουσικά Όργανα", hint: "Χαμηλόφωνη ηλεκτρική κιθάρα" },
   { word: "ΝΤΡΑΜΣ", category: "Μουσικά Όργανα", hint: "Σύνολο τυμπάνων και κυμβάλων" },
   { word: "ΚΥΜΒΑΛΟ", category: "Μουσικά Όργανα", hint: "Μεταλλικό κρουστό δίσκος" },
   { word: "ΞΥΛΟΤΥΜΠΑΝΟ", category: "Μουσικά Όργανα", hint: "Κρουστό με ξύλινες ή μεταλλικές λωρίδες" },
-  { word: "ΤΥΜΠΑΝΟ ΜΠΑΣΟ", category: "Μουσικά Όργανα", hint: "Μεγάλο τύμπανο ορχήστρας" },
   { word: "ΤΑΜΠΟΥΡΙΝΟ", category: "Μουσικά Όργανα", hint: "Μικρό κρουστό με κουδουνάκια" },
   { word: "ΚΑΣΤΑΝΙΕΤΕΣ", category: "Μουσικά Όργανα", hint: "Ισπανικό κρουστό από ξύλο" },
   { word: "ΜΑΡΑΚΕΣ", category: "Μουσικά Όργανα", hint: "Λατινοαμερικάνικο κρουστό-σείστρο" },
@@ -3169,7 +2985,6 @@ const WORDS = [
   { word: "ΣΑΜΠΟΥΚΑ", category: "Μουσικά Όργανα", hint: "Αρχαίο τετράχορδο" },
   { word: "ΒΙΟΛΑ", category: "Μουσικά Όργανα", hint: "Μεσαίο εγχορδο μεταξύ βιολιού και τσέλου" },
   { word: "ΜΑΝΤΟΛΙΝΟ", category: "Μουσικά Όργανα", hint: "Μικρό λαουτόσχημο έγχορδο" },
-  { word: "ΜΠΟΥΖΟΥΚΙ ΤΡΙΧΟΡΔΟ", category: "Μουσικά Όργανα", hint: "Παραδοσιακή μορφή μπουζουκιού" },
   { word: "ΤΖΟΥΡΑΣ", category: "Μουσικά Όργανα", hint: "Μικρό μπουζούκι" },
   { word: "ΒΑΓΛΑΜΑΣ", category: "Μουσικά Όργανα", hint: "Πολύ μικρό λαϊκό έγχορδο" },
   { word: "ΛΥΡΑ", category: "Μουσικά Όργανα", hint: "Παραδοσιακό κρητικό έγχορδο" },
@@ -3185,7 +3000,6 @@ const WORDS = [
   { word: "ΦΟΡΤΕΠΙΑΝΟ", category: "Μουσικά Όργανα", hint: "Pianoforte — αρχικό όνομα πιάνου" },
   { word: "ΡΗΓΚΑΛ", category: "Μουσικά Όργανα", hint: "Μικρό φορητό εκκλησιαστικό όργανο" },
   { word: "ΠΟΡΤΑΤΙΦ", category: "Μουσικά Όργανα", hint: "Μεσαιωνικό μικρό φορητό αρμόνιο" },
-  { word: "ΝΤΟΥΛΤΣΙΜΕΡ ΣΦΥΡΩΤΟ", category: "Μουσικά Όργανα", hint: "Hammered dulcimer — κρουστό έγχορδο" },
   { word: "ΑΥΤΟΑΡΠΑ", category: "Μουσικά Όργανα", hint: "Autoharp — εύκολη άρπα με κουμπιά" },
   { word: "ΤΣΑΝΤΕΡΕΦΟΝ", category: "Μουσικά Όργανα", hint: "Αρχαίο Ευρωπαϊκό κρουστό" },
   { word: "ΣΑΛΤΕΡΙΟ", category: "Μουσικά Όργανα", hint: "Μεσαιωνικό έγχορδο — psaltery" },
@@ -3295,8 +3109,6 @@ const WORDS = [
 
   { word: "ΕΙΣΑΓΩΓΗ", category: "Μουσική", hint: "Αρχή τραγουδιού ή ορχηστρικού έργου" },
   { word: "ΦΙΝΑΛΕ", category: "Μουσική", hint: "Κατακλείδα μουσικού έργου" },
-  { word: "ΚΩΜΙΚΗ ΟΠΕΡΑ", category: "Μουσική", hint: "Opera buffa — ελαφρά κωμική όπερα" },
-  { word: "ΛΥΡΙΚΗ ΤΡΑΓΩΔΙΑ", category: "Μουσική", hint: "Σοβαρή όπερα με τραγικό θέμα" },
   { word: "ΒΑΡΥΤΟΝΟΣ", category: "Μουσική", hint: "Ανδρική φωνή μεταξύ τενόρου και μπάσου" },
   { word: "ΤΕΝΟΡΟΣ", category: "Μουσική", hint: "Ψηλότερη ανδρική κλασική φωνή" },
   { word: "ΜΠΑΣΟΣ", category: "Μουσική", hint: "Χαμηλότερη ανδρική κλασική φωνή" },
@@ -3307,7 +3119,6 @@ const WORDS = [
   { word: "ΚΕΛΤΙΚΗ", category: "Μουσική", hint: "Παραδοσιακή μουσική Ιρλανδίας-Σκωτίας" },
   { word: "ΚΛΕΖΜΕΡ", category: "Μουσική", hint: "Εβραϊκή παραδοσιακή μουσική" },
   { word: "ΓΚΟΣΠΕΛ", category: "Μουσική", hint: "Αφροαμερικανική θρησκευτική μουσική" },
-  { word: "ΑΡΧΑΙΟ ΜΕΛΟΣ", category: "Μουσική", hint: "Βυζαντινή μουσική παράδοση" },
   { word: "ΖΕΥΣ", category: "Μυθολογία", hint: "Βασιλιάς των θεών του Ολύμπου" },
   { word: "ΗΡΑ", category: "Μυθολογία", hint: "Βασίλισσα θεών, σύζυγος Δία" },
   { word: "ΔΑΙΔΑΛΟΣ", category: "Μυθολογία", hint: "Αρχιτέκτονας λαβυρίνθου και φτερών" },
@@ -3340,7 +3151,6 @@ const WORDS = [
   { word: "ΑΧΕΡΩΝ", category: "Μυθολογία", hint: "Ποταμός θλίψης στον Κάτω Κόσμο" },
   { word: "ΣΤΥΓΑ", category: "Μυθολογία", hint: "Ποταμός μίσους — ορκίζονταν οι θεοί" },
   { word: "ΛΗΤΗ", category: "Μυθολογία", hint: "Ποταμός λησμονιάς στον Άδη" },
-  { word: "ΗΛΥΣΙΑ ΠΕΔΙΑ", category: "Μυθολογία", hint: "Παράδεισος ψυχών στον Άδη" },
   { word: "ΤΑΡΤΑΡΑ", category: "Μυθολογία", hint: "Βαθύτατο σκοτεινό βασίλειο" },
   { word: "ΑΣΦΟΔΕΛΟΣ", category: "Μυθολογία", hint: "Λιβάδι κοινών ψυχών στον Άδη" },
 
@@ -3462,28 +3272,18 @@ const WORDS = [
   { word: "ΘΩΡΗΚΤΟ", category: "Οχήματα", hint: "Μεγάλο θωρακισμένο πολεμικό πλοίο" },
   { word: "ΑΕΡΟΠΛΑΝΟΦΟΡΟ", category: "Οχήματα", hint: "Πλοίο που μεταφέρει αεροπλάνα" },
   { word: "ΜΟΝΟΤΡΟΧΟΣ", category: "Οχήματα", hint: "Μονόροδο σκούτερ ισορροπίας" },
-  { word: "ΑΕΡΟΣΚΑΦΟΣ STEALTH", category: "Οχήματα", hint: "Αόρατο στο ραντάρ πολεμικό αεροσκάφος" },
-  { word: "ΤΖΕΤ ΣΚΙ", category: "Οχήματα", hint: "Μηχανοκίνητο σκάφος νερού" },
   { word: "ΧΟΒΕΡΚΡΑΦΤ", category: "Οχήματα", hint: "Όχημα που αιωρείται πάνω από επιφάνεια" },
   { word: "ΜΟΝΟΡΟΧΟΣ", category: "Οχήματα", hint: "Μονόροχο — unicycle" },
   { word: "ΤΡΙΚΥΚΛΟ", category: "Οχήματα", hint: "Τρίτροχο όχημα για παιδιά" },
-  { word: "ΚΙΚΙ ΣΚΟΥΤΕΡ", category: "Οχήματα", hint: "Πατίνι με πεντάλ" },
-  { word: "ΗΛΕΚΤΡΙΚΟ ΠΟΔΗΛΑΤΟ", category: "Οχήματα", hint: "Ποδήλατο με ηλεκτρικό κινητήρα" },
-  { word: "ΕΝΕΡΓΟΒΟΡΟ ΑΥΤΟΚΙΝΗΤΟ", category: "Οχήματα", hint: "Υβριδικό αυτοκίνητο βενζίνης-ηλεκτρισμού" },
   { word: "ΣΕΔΑΝ", category: "Οχήματα", hint: "Κλασικό κλειστό αυτοκίνητο τεσσάρων θυρών" },
   { word: "ΧΑΤΣΜΠΑΚ", category: "Οχήματα", hint: "Αυτοκίνητο με πίσω πόρτα" },
   { word: "ΚΟΥΠΕ", category: "Οχήματα", hint: "Δίθυρο σπορ αυτοκίνητο" },
   { word: "ΚΑΜΠΡΙΟΛΕ", category: "Οχήματα", hint: "Αυτοκίνητο με ανοιγόμενη οροφή" },
   { word: "ΠΙΚΑΠ", category: "Οχήματα", hint: "Φορτηγάκι με ανοιχτή καρότσα" },
 
-  { word: "ΣΠΟΡΤ ΑΥΤΟΚΙΝΗΤΟ", category: "Οχήματα", hint: "Υψηλών επιδόσεων αυτοκίνητο" },
-  { word: "ΦΟΡΜΟΥΛΑ 1", category: "Οχήματα", hint: "Πιο γρήγορο αγωνιστικό αυτοκίνητο" },
-  { word: "ΑΜΦΙΒΙΟ ΟΧΗΜΑ", category: "Οχήματα", hint: "Κινείται σε ξηρά και νερό" },
   { word: "ΓΕΩΤΡΗΠΑΝΟ", category: "Οχήματα", hint: "Τεράστιο μηχάνημα εξόρυξης" },
-  { word: "ΑΛΩΝΙΣΤΙΚΗ ΜΗΧΑΝΗ", category: "Οχήματα", hint: "Μηχάνημα συγκομιδής σιτηρών" },
   { word: "ΦΟΡΤΩΤΗΣ", category: "Οχήματα", hint: "Βαρύ μηχάνημα ανύψωσης υλικών" },
 
-  { word: "ΕΞΕΔΡΑ ΓΕΩΤΡΗΣΗΣ", category: "Οχήματα", hint: "Offshore πλατφόρμα εξόρυξης πετρελαίου" },
   { word: "ΜΟΣΧΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ρωσίας" },
   { word: "ΠΕΚΙΝΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Κίνας" },
   { word: "ΜΟΥΜΠΑΙ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη Ινδίας" },
@@ -3500,12 +3300,9 @@ const WORDS = [
   { word: "ΜΠΟΓΚΟΤΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Κολομβίας" },
   { word: "ΜΕΞΙΚΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Μεξικού" },
   { word: "ΤΟΡΕΝΤΟ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη Καναδά" },
-  { word: "ΛΟΣ ΑΝΤΖΕΛΕΣ", category: "Πόλεις του κόσμου", hint: "Πόλη του κινηματογράφου" },
   { word: "ΣΙΚΑΓΟ", category: "Πόλεις του κόσμου", hint: "Πόλη του ανέμου" },
   { word: "ΜΙΑΜΙ", category: "Πόλεις του κόσμου", hint: "Παραθαλάσσια πόλη Φλόριδας" },
-  { word: "ΝΕΑ ΥΟΡΚΗ", category: "Πόλεις του κόσμου", hint: "Η μεγαλύτερη πόλη των ΗΠΑ" },
   { word: "ΣΙΑΤΛ", category: "Πόλεις του κόσμου", hint: "Πόλη της βροχής στις ΗΠΑ" },
-  { word: "ΣΑΝ ΦΡΑΝΣΙΣΚΟ", category: "Πόλεις του κόσμου", hint: "Πόλη της Χρυσής Πύλης" },
   { word: "ΟΥΑΣΙΓΚΤΟΝ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα ΗΠΑ" },
   { word: "ΒΑΡΣΟΒΙΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Πολωνίας" },
   { word: "ΒΟΥΚΟΥΡΕΣΤΙ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ρουμανίας" },
@@ -3514,10 +3311,8 @@ const WORDS = [
   { word: "ΣΚΟΠΙΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Βόρειας Μακεδονίας" },
   { word: "ΤΙΡΑΝΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Αλβανίας" },
   { word: "ΛΟΥΑΝΤΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Αγκόλας" },
-  { word: "ΑΝΤΙΣ ΑΜΠΕΜΠΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Αιθιοπίας" },
   { word: "ΑΚΡΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Γκάνας" },
   { word: "ΑΜΠΙΤΖΑΝ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη Ακτής Ελεφαντοστού" },
-  { word: "ΝΤΑΡ ΕΣ ΣΑΛΑΑΜ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη Τανζανίας" },
   { word: "ΛΟΥΣΑΚΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ζάμπιας" },
   { word: "ΧΑΡΑΡΕ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ζιμπάμπουε" },
   { word: "ΜΑΠΟΥΤΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Μοζαμβίκης" },
@@ -3558,142 +3353,68 @@ const WORDS = [
   { word: "ΛΑΓΚΟΣ", category: "Πόλεις του κόσμου", hint: "Οικονομική πρωτεύουσα Νιγηρίας" },
 
 
-  { word: "ΣΙΩΠΗ", category: "Ταινίες & Σειρές", hint: "Θρίλερ του Ντέμι Μουρ με αρνιά" },
   { word: "ΝΤΙΟΥΝ", category: "Ταινίες & Σειρές", hint: "Επική επιστημονική φαντασία στην έρημο" },
   { word: "ΑΛΙΕΝ", category: "Ταινίες & Σειρές", hint: "Τρόμος στο διάστημα" },
-  { word: "ΧΑΡΙ ΠΟΤΕΡ", category: "Ταινίες & Σειρές", hint: "Νεαρός μάγος στο Χόγκουαρτς" },
-  { word: "ΣΤΑΡ ΤΡΕΚ", category: "Ταινίες & Σειρές", hint: "Επιστημονική φαντασία στο διάστημα" },
   { word: "ΣΙΝΔΡΕΛΛΑ", category: "Ταινίες & Σειρές", hint: "Κλασική ταινία κινουμένων σχεδίων" },
   { word: "ΕΛΕΦΑΝΤΑΚΙ", category: "Ταινίες & Σειρές", hint: "ΝΤΟΥΜΠΟ — ελεφαντάκι με μεγάλα αυτιά" },
   { word: "ΠΙΝΟΚΙΟ", category: "Ταινίες & Σειρές", hint: "Ξύλινο αγοράκι που θέλει να γίνει αληθινό" },
   { word: "ΧΙΟΝΑΤΗ", category: "Ταινίες & Σειρές", hint: "Η ωραιότερη της χώρας" },
   { word: "ΑΛΑΔΙΝΟΣ", category: "Ταινίες & Σειρές", hint: "Νέος με μαγικό λυχνάρι" },
   { word: "ΤΕΤΑΡΤΗ", category: "Ταινίες & Σειρές", hint: "Σειρά για την Τετάρτη Άντικας" },
-  { word: "ΓΚΑΜΕ ΟΦ ΘΡΟΝΣ", category: "Ταινίες & Σειρές", hint: "Σειρά φαντασίας για θρόνους" },
   { word: "ΦΙΛΑΡΑΚΙΑ", category: "Ταινίες & Σειρές", hint: "Αμερικάνικη σιτκόμ δεκαετίας 90" },
   { word: "ΣΑΙΝΤΦΕΛΝΤ", category: "Ταινίες & Σειρές", hint: "Κλασική αμερικάνικη σιτκόμ" },
   { word: "ΣΟΠΡΑΝΟΣ", category: "Ταινίες & Σειρές", hint: "Σειρά για μαφία στη Νέα Υόρκη" },
   { word: "ΟΖΑΡΚ", category: "Ταινίες & Σειρές", hint: "Σειρά ξεπλύματος χρήματος" },
-  { word: "ΜΠΡΕΚΙΝΓΚ ΜΠΑΝΤ", category: "Ταινίες & Σειρές", hint: "Χημικός που φτιάχνει ναρκωτικά" },
   { word: "ΝΑΡΚΟΣ", category: "Ταινίες & Σειρές", hint: "Σειρά για τον Πάμπλο Εσκομπάρ" },
   { word: "ΙΝΤΕΡΣΕΛΛΑΡ", category: "Ταινίες & Σειρές", hint: "Επιστημονική φαντασία για διαστρικό ταξίδι" },
   { word: "ΙΝΣΕΠΣΙΟΝ", category: "Ταινίες & Σειρές", hint: "Ταινία μέσα σε όνειρα" },
   { word: "ΑΦΘΑΡΣΙΑ", category: "Ταινίες & Σειρές", hint: "Σειρά για αθάνατους πολεμιστές" },
   { word: "ΚΡΥΦΤΟ", category: "Ταινίες & Σειρές", hint: "Ελληνική τηλεοπτική σειρά" },
-  { word: "ΠΑΠΕΡ ΧΑΟΥΣ", category: "Ταινίες & Σειρές", hint: "Ισπανική σειρά ληστείας" },
   { word: "ΛΟΥΠΙΝ", category: "Ταινίες & Σειρές", hint: "Γαλλική σειρά με κλέφτη" },
-  { word: "ΣΚΟΥΙΝΤ ΓΚΕΪΜ", category: "Ταινίες & Σειρές", hint: "Κορεατική σειρά επιβίωσης" },
-  { word: "ΤΟ ΠΑΝΙ", category: "Ταινίες & Σειρές", hint: "Ταινία Κιούμπρικ — ψυχολογική φρίκη" },
-  { word: "ΕΞΩ ΑΠΟ ΤΗΝ ΑΦΡΙΚΗ", category: "Ταινίες & Σειρές", hint: "Ταινία Μέριλ Στριπ στην Κένυα" },
   { word: "ΦΙΛΑΔΕΛΦΕΙΑ", category: "Ταινίες & Σειρές", hint: "Ταινία Χανκς — δικαστική δράμα AIDS" },
-  { word: "ΚΑΣΤΕ ΓΟΥΪ́ΛΣΟΝ", category: "Ταινίες & Σειρές", hint: "Cast Away — Χανκς σε ερημονήσι" },
-  { word: "ΤΟ ΠΝΕΥΜΑ ΤΟΥ ΜΕΛΛΟΝΤΟΣ", category: "Ταινίες & Σειρές", hint: "Ghost — μυστήριο με αγάπη μετά θάνατον" },
-  { word: "ΝΤΙΡΤΙ ΝΤΑΝΣΙΝΓΚ", category: "Ταινίες & Σειρές", hint: "Ταινία χορού δεκαετίας '80" },
   { word: "ΠΟΛΤΕΡΓΚΑΪΣΤ", category: "Ταινίες & Σειρές", hint: "Ταινία φρίκης — οικογένεια και φαντάσματα" },
-  { word: "ΤΟ ΕΚΤΟ ΑΙΣΘΗΜΑ", category: "Ταινίες & Σειρές", hint: "Sixth Sense — βλέπω νεκρούς ανθρώπους" },
-  { word: "ΠΑΙΧΝΙΔΙ ΚΥΝΗΓΟΥ", category: "Ταινίες & Σειρές", hint: "The Game — Μάικλ Ντάγκλας" },
-  { word: "ΤΕΛΙΚΗ ΜΟΙΡΑ", category: "Ταινίες & Σειρές", hint: "Final Destination — ο Χάρος κυνηγά" },
-  { word: "ΤΡΕΛΗ ΠΛΩΤΗ ΜΟΝΑΔΑ", category: "Ταινίες & Σειρές", hint: "Apocalypse Now — Βιετνάμ" },
-  { word: "ΠΑΡΚΙΝ ΣΟΝ", category: "Ταινίες & Σειρές", hint: "Parkinsons — House MD νόσος" },
-  { word: "ΤΟ ΤΕΛΟΣ ΑΡΧΙΖΕΙ", category: "Ταινίες & Σειρές", hint: "Dark — γερμανική σειρά χρονοταξίδιο" },
-  { word: "ΛΕΥΚΗ ΛΩΤΟΣ", category: "Ταινίες & Σειρές", hint: "White Lotus — σατιρική σειρά ξενοδοχείου" },
   { word: "ΣΑΚΟΣ", category: "Ταινίες & Σειρές", hint: "The Bear — σεφ σε σικαγέζικη ταβέρνα" },
   { word: "ΕΥΦΟΡΙΑ", category: "Ταινίες & Σειρές", hint: "Euphoria — εφηβεία και εθισμός" },
   { word: "ΣΟΥΚΕΣΙΟΝ", category: "Ταινίες & Σειρές", hint: "Succession — οικογένεια μιντιακής αυτοκρατορίας" },
 
-  { word: "ΜΩΡΟ ΡΕΜΑ", category: "Ταινίες & Σειρές", hint: "Babygirl — δραματική σειρά" },
   { word: "ΨΕΥΔΑΙΣΘΗΣΗ", category: "Ταινίες & Σειρές", hint: "Illusion — ταινία ψυχολογικής αγωνίας" },
-  { word: "ΑΟΠΕΝΤΧΑΪΜΕΡ", category: "Ταινίες & Σειρές", hint: "Oppenheimer — πατέρας ατομικής βόμβας" },
+  { word: "ΟΠΕΝΧΑΪΜΕΡ", category: "Ταινίες & Σειρές", hint: "Oppenheimer — πατέρας ατομικής βόμβας" },
   { word: "ΜΠΑΡΜΠΙ", category: "Ταινίες & Σειρές", hint: "Barbie — Μαργκό Ρόμπι 2023" },
-  { word: "ΑΡΧΟΝΤΑΣ ΔΑΧΤΥΛΙΔΙΩΝ", category: "Ταινίες & Σειρές", hint: "Φαντασία του Τόλκιν" },
   { word: "ΧΟΜΠΙΤ", category: "Ταινίες & Σειρές", hint: "Προκάτοχος Lord of the Rings" },
-  { word: "ΣΤΑΡ ΓΟΥΟΡΣ", category: "Ταινίες & Σειρές", hint: "Διαστημική επική φαντασία" },
   { word: "ΠΟΚΕΜΟΝ", category: "Ταινίες & Σειρές", hint: "Anime — συλλογή τεράτων" },
-  { word: "ΝΤΡΑΓΚΟΝ ΜΠΟΛ", category: "Ταινίες & Σειρές", hint: "Ιαπωνικό anime — Son Goku" },
-  { word: "ΔΕΣΜΩΤΗΣ ΤΟΥ ΚΑΥΚΑΣΟΥ", category: "Ταινίες & Σειρές", hint: "Σπαγγετί-γουέστερν — Clint Eastwood" },
 
 
-  { word: "ΝΥΧΤΕΣ ΚΑΙ ΑΥΓΕΣ", category: "Ταινίες & Σειρές", hint: "Ελληνική επιτυχία" },
   { word: "ΨΥΧΩ", category: "Ταινίες & Σειρές", hint: "Hitchcock — φρικιαστικό κλασικό" },
   { word: "ΕΞΟΡΚΙΣΤΗΣ", category: "Ταινίες & Σειρές", hint: "Κλασικό τρόμου" },
   { word: "ΣΑΓΟΥΑΡ", category: "Ταινίες & Σειρές", hint: "JAWS — Σπίλμπεργκ" },
-  { word: "ΙΝΔΙΑΝΑ ΤΖΟΥΝΣ", category: "Ταινίες & Σειρές", hint: "Αρχαιολόγος περιπέτειας — Χάρισον Φορντ" },
-  { word: "ΝΕΟΙ ΤΙΤΑΝΕΣ", category: "Ταινίες & Σειρές", hint: "Superhero σειρά κινουμένων σχεδίων" },
-  { word: "ΠΕΠΛΑΤΣΜΕΝΤ", category: "Ταινίες & Σειρές", hint: "Επιστημονική φαντασία" },
-  { word: "ΣΤΡΕΝΤΖΕΡ ΘΙΝΓΚΣ", category: "Ταινίες & Σειρές", hint: "Υπερφυσικό δράμα δεκαετίας 80" },
   { word: "ΧΑΟΥΣ", category: "Ταινίες & Σειρές", hint: "House MD — ιατρική σειρά" },
-  { word: "ΦΙΛΟΣ", category: "Ταινίες & Σειρές", hint: "LOST — αεροπορικό δυστύχημα" },
-  { word: "ΣΚΑΠΑΘΕΙΣ", category: "Ταινίες & Σειρές", hint: "Prison Break — απόδραση από φυλακή" },
   { word: "ΝΤΕΞΤΕΡ", category: "Ταινίες & Σειρές", hint: "Δολοφόνος που σκοτώνει δολοφόνους" },
   { word: "ΣΟΥΙΤ", category: "Ταινίες & Σειρές", hint: "Suits — νομική δραματική σειρά" },
-  { word: "ΜΠΛΑΚ ΜΙΡΟΡ", category: "Ταινίες & Σειρές", hint: "Σειρά τεχνολογικής δυστοπίας" },
-  { word: "ΑΛΤΕΡΝΤ ΚΑΡΜΠΟΝ", category: "Ταινίες & Σειρές", hint: "Κυβερνοπάνκ sci-fi σειρά" },
-  { word: "ΨΗΦΙΑΚΗ ΦΩΤΟΓΡΑΦΙΑ", category: "Τεχνολογία", hint: "Καταγραφή εικόνων ψηφιακά" },
-  { word: "ΗΛΙΑΚΗ ΕΝΕΡΓΕΙΑ", category: "Τεχνολογία", hint: "Παραγωγή ηλεκτρισμού από τον ήλιο" },
   { word: "ΑΝΕΜΟΣΤΡΟΒΙΛΟΣ", category: "Τεχνολογία", hint: "Αιολική ανεμογεννήτρια" },
-  { word: "ΗΛΕΚΤΡΙΚΟ ΑΥΤΟΚΙΝΗΤΟ", category: "Τεχνολογία", hint: "Αυτοκίνητο με ηλεκτρική ενέργεια" },
-  { word: "ΤΡΙΣΔΙΑΣΤΑΤΗ ΕΚΤΥΠΩΣΗ", category: "Τεχνολογία", hint: "Δημιουργία 3D αντικειμένων" },
-  { word: "ΕΠΑΥΞΗΜΕΝΗ ΠΡΑΓΜΑΤΙΚΟΤΗΤΑ", category: "Τεχνολογία", hint: "Επικάλυψη ψηφιακού στον πραγματικό κόσμο" },
   { word: "ΒΙΟΜΕΤΡΙΑ", category: "Τεχνολογία", hint: "Ταυτοποίηση από βιολογικά χαρακτηριστικά" },
-  { word: "ΑΝΑΓΝΩΡΙΣΗ ΠΡΟΣΩΠΟΥ", category: "Τεχνολογία", hint: "Τεχνολογία εντοπισμού ταυτότητας" },
-  { word: "ΜΗΧΑΝΙΚΗ ΜΑΘΗΣΗ", category: "Τεχνολογία", hint: "Εκμάθηση μοτίβων από δεδομένα" },
-  { word: "ΝΕΥΡΩΝΙΚΟ ΔΙΚΤΥΟ", category: "Τεχνολογία", hint: "Μοντέλο εμπνευσμένο από τον εγκέφαλο" },
-  { word: "ΜΕΓΑΛΑ ΔΕΔΟΜΕΝΑ", category: "Τεχνολογία", hint: "Ανάλυση τεράστιων δεδομένων" },
-  { word: "ΑΛΥΣΙΔΑ ΜΠΛΟΚ", category: "Τεχνολογία", hint: "Αποκεντρωμένο ψηφιακό μητρώο" },
-  { word: "ΔΙΑΔΙΚΤΥΟ ΠΡΑΓΜΑΤΩΝ", category: "Τεχνολογία", hint: "Σύνδεση καθημερινών αντικειμένων στο ίντερνετ" },
   { word: "ΕΥΡΥΖΩΝΙΚΟΤΗΤΑ", category: "Τεχνολογία", hint: "Υψηλής ταχύτητας σύνδεση ίντερνετ" },
-  { word: "ΚΒΑΝΤΙΚΟΣ ΥΠΟΛΟΓΙΣΤΗΣ", category: "Τεχνολογία", hint: "Υπολογιστής βασισμένος στην κβαντομηχανική" },
   { word: "ΝΑΝΟΤΕΧΝΟΛΟΓΙΑ", category: "Τεχνολογία", hint: "Τεχνολογία σε κλίμακα νανομέτρου" },
   { word: "ΒΙΟΤΕΧΝΟΛΟΓΙΑ", category: "Τεχνολογία", hint: "Εφαρμογή βιολογίας στην τεχνολογία" },
-  { word: "ΓΟΝΙΔΙΑΚΗ ΘΕΡΑΠΕΙΑ", category: "Τεχνολογία", hint: "Ιατρική τεχνική τροποποίησης γονιδίων" },
 
   { word: "ΑΥΤΟΜΑΤΙΣΜΟΣ", category: "Τεχνολογία", hint: "Αντικατάσταση εργασίας από μηχανές" },
   { word: "ΚΥΒΕΡΝΟΑΣΦΑΛΕΙΑ", category: "Τεχνολογία", hint: "Προστασία ψηφιακών συστημάτων" },
   { word: "ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ", category: "Τεχνολογία", hint: "Γραφή κώδικα για υπολογιστές" },
-  { word: "ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ", category: "Τεχνολογία", hint: "Οργανωμένη συλλογή δεδομένων" },
   { word: "ΔΙΑΚΟΜΙΣΤΗΣ", category: "Τεχνολογία", hint: "Υπολογιστής που παρέχει υπηρεσίες" },
   { word: "ΠΡΩΤΟΚΟΛΛΟ", category: "Τεχνολογία", hint: "Κανόνες επικοινωνίας δικτύου" },
-  { word: "ΣΤΑΘΜΟΣ ΒΑΣΗΣ", category: "Τεχνολογία", hint: "Κεραία κινητής τηλεφωνίας" },
-
-
-  { word: "ΔΙΑΚΟΠΤΗΣ ΔΙΚΤΥΟΥ", category: "Τεχνολογία", hint: "Switch — συνδέει συσκευές σε δίκτυο" },
-  { word: "ΤΕΙΧΟΣ ΠΡΟΣΤΑΣΙΑΣ", category: "Τεχνολογία", hint: "Firewall — προστατεύει το δίκτυο" },
 
 
 
-  { word: "ΔΥΑΔΙΚΟΣ ΚΩΔΙΚΑΣ", category: "Τεχνολογία", hint: "Μηδενικά και άσσοι — γλώσσα μηχανής" },
-  { word: "ΠΗΓΑΙΟΣ ΚΩΔΙΚΑΣ", category: "Τεχνολογία", hint: "Source code — ο κώδικας του προγράμματος" },
+
+
   { word: "ΑΠΟΣΦΑΛΜΑΤΩΣΗ", category: "Τεχνολογία", hint: "Debugging — διόρθωση σφαλμάτων" },
   { word: "ΕΠΑΝΑΛΗΨΗ", category: "Τεχνολογία", hint: "Loop — επαναλαμβανόμενη εκτέλεση κώδικα" },
   { word: "ΑΝΤΙΚΕΙΜΕΝΟΣΤΡΕΦΗΣ", category: "Τεχνολογία", hint: "Object-oriented — τρόπος προγραμματισμού" },
-  { word: "ΛΕΙΤΟΥΡΓΙΚΟ ΣΥΣΤΗΜΑ", category: "Τεχνολογία", hint: "OS — Windows, Linux, macOS" },
-  { word: "ΚΑΤΑΝΕΜΗΜΕΝΑ ΣΥΣΤΗΜΑΤΑ", category: "Τεχνολογία", hint: "Υπολογισμός σε πολλούς κόμβους" },
-  { word: "ΠΑΡΑΛΛΗΛΗ ΕΠΕΞΕΡΓΑΣΙΑ", category: "Τεχνολογία", hint: "Ταυτόχρονη εκτέλεση πολλών εργασιών" },
-  { word: "ΕΝΣΩΜΑΤΩΜΕΝΑ ΣΥΣΤΗΜΑΤΑ", category: "Τεχνολογία", hint: "Υπολογιστές σε συσκευές — π.χ. πλυντήριο" },
 
-  { word: "ΓΛΩΣΣΙΚΟ ΜΟΝΤΕΛΟ", category: "Τεχνολογία", hint: "LLM — AI που παράγει κείμενο" },
-  { word: "ΕΠΕΞΕΡΓΑΣΤΗΣ ΓΛΩΣΣΑΣ", category: "Τεχνολογία", hint: "NLP — κατανόηση φυσικής γλώσσας" },
 
-  { word: "ΜΝΗΜΗ RAM", category: "Τεχνολογία", hint: "Τυχαία πρόσβαση μνήμης υπολογιστή" },
-  { word: "ΣΚΛΗΡΟΣ ΔΙΣΚΟΣ", category: "Τεχνολογία", hint: "Μόνιμη αποθήκευση δεδομένων" },
-  { word: "ΓΡΑΦΙΚΗ ΚΑΡΤΑ", category: "Τεχνολογία", hint: "GPU — επεξεργασία εικόνας και gaming" },
-  { word: "ΔΙΚΤΥΟ 5G", category: "Τεχνολογία", hint: "Πέμπτη γενιά κινητής επικοινωνίας" },
-  { word: "ΨΗΦΙΑΚΟΣ ΜΕΤΑΣΧΗΜΑΤΙΣΜΟΣ", category: "Τεχνολογία", hint: "Αλλαγή επιχειρήσεων μέσω τεχνολογίας" },
-  { word: "ΑΥΤΟΜΑΤΑ ΟΧΗΜΑΤΑ", category: "Τεχνολογία", hint: "Αυτοκίνητα χωρίς οδηγό" },
-  { word: "ΕΞΥΠΝΗ ΠΟΛΗ", category: "Τεχνολογία", hint: "Πόλη με ψηφιακή τεχνολογία" },
-  { word: "ΨΗΦΙΑΚΟ ΝΟΜΙΣΜΑ", category: "Τεχνολογία", hint: "Κεντρική τράπεζα ψηφιακό νόμισμα" },
   { word: "ΜΕΤΑΠΡΑΓΜΑΤΙΚΟΤΗΤΑ", category: "Τεχνολογία", hint: "Metaverse — εικονικός κοινωνικός κόσμος" },
-  { word: "ΤΕΧΝΗΤΗ ΓΛΩΣΣΑ", category: "Τεχνολογία", hint: "Γλωσσικό μοντέλο ΑΙ" },
 
-  { word: "ΑΝΟΙΧΤΟΣ ΚΩΔΙΚΑΣ", category: "Τεχνολογία", hint: "Software με ελεύθερα διαθέσιμο κώδικα" },
-  { word: "ΑΓΙΛ ΜΕΘΟΔΟΛΟΓΙΑ", category: "Τεχνολογία", hint: "Ευέλικτη ανάπτυξη λογισμικού" },
   { word: "ΚΥΒΕΡΝΟΕΠΙΘΕΣΗ", category: "Τεχνολογία", hint: "Επίθεση σε ψηφιακά συστήματα" },
   { word: "ΦΙΣΙΝΓΚ", category: "Τεχνολογία", hint: "Απόπειρα απάτης μέσω ηλεκτρονικού ταχυδρομείου" },
-  { word: "ΚΛΟΥΝΤ ΚΟΜΠΙΟΥΤΙΝΓΚ", category: "Τεχνολογία", hint: "Υπολογιστικές υπηρεσίες μέσω internet" },
-  { word: "ΨΗΦΙΑΚΗ ΥΠΟΓΡΑΦΗ", category: "Τεχνολογία", hint: "Ηλεκτρονική ταυτοποίηση" },
-  { word: "ΒΑΘΙΑ ΜΑΘΗΣΗ", category: "Τεχνολογία", hint: "Deep learning — υποσύνολο ΑΙ" },
-  { word: "ΑΥΤΟΜΑΤΗ ΜΕΤΑΦΡΑΣΗ", category: "Τεχνολογία", hint: "Μηχανική μετάφραση γλωσσών" },
-  { word: "ΑΝΑΓΝΩΡΙΣΗ ΦΩΝΗΣ", category: "Τεχνολογία", hint: "Τεχνολογία κατανόησης προφορικού λόγου" },
   { word: "ΓΥΡΟΣ", category: "Φαγητά & Ποτά", hint: "Ελληνικό street food σε πίτα" },
   { word: "ΣΑΛΑΤΑ", category: "Φαγητά & Ποτά", hint: "Ωμά λαχανικά με λαδολέμονο" },
   { word: "ΚΕΦΤΕΔΕΣ", category: "Φαγητά & Ποτά", hint: "Τηγανητοί κιμαδόπιτες" },
@@ -3716,7 +3437,7 @@ const WORDS = [
   { word: "ΡΙΖΟΤΟ", category: "Φαγητά & Ποτά", hint: "Ιταλικό πιάτο με ρύζι" },
   { word: "ΠΑΕΛΙΑ", category: "Φαγητά & Ποτά", hint: "Ισπανικό πιάτο με ρύζι και θαλασσινά" },
   { word: "ΣΟΥΣΙ", category: "Φαγητά & Ποτά", hint: "Ιαπωνικό πιάτο με ρύζι και ψάρι" },
-  { word: "ΤΑCOS", category: "Φαγητά & Ποτά", hint: "Μεξικάνικο φαγητό σε αραβοσιτόπιτα" },
+  { word: "ΤΑΚΟΣ", category: "Φαγητά & Ποτά", hint: "Μεξικάνικο φαγητό σε αραβοσιτόπιτα" },
   { word: "ΚΕΡΙ", category: "Φαγητά & Ποτά", hint: "Ινδικό πικάντικο πιάτο" },
   { word: "ΧΟΥΜΟΥΣ", category: "Φαγητά & Ποτά", hint: "Μεσανατολική πάστα ρεβιθιών" },
   { word: "ΦΑΛΑΦΕΛ", category: "Φαγητά & Ποτά", hint: "Τηγανητές μπάλες ρεβιθιών" },
@@ -3725,7 +3446,6 @@ const WORDS = [
   { word: "ΜΑΦΙΝ", category: "Φαγητά & Ποτά", hint: "Μικρό αμερικάνικο κεκάκι" },
   { word: "ΤΣΑΙ", category: "Φαγητά & Ποτά", hint: "Αφέψημα από φυτά ή φύλλα" },
   { word: "ΧΑΛΒΑ", category: "Φαγητά & Ποτά", hint: "Σιμιγδαλένιο ελληνικό γλυκό" },
-  { word: "ΡΟΛΟΣ ΚΑΝΕΛΛΑΣ", category: "Φαγητά & Ποτά", hint: "Σκανδιναβικό γλύκισμα με κανέλα" },
 
   { word: "ΜΠΑΓΚΕΛ", category: "Φαγητά & Ποτά", hint: "Αμερικανικό στρογγυλό ψωμί με τρύπα" },
   { word: "ΤΑΡΤΑ", category: "Φαγητά & Ποτά", hint: "Ανοιχτή πίτα με γέμιση" },
@@ -3800,8 +3520,6 @@ const WORDS = [
   { word: "ΣΟΓΙΑ", category: "Φρούτα & Λαχανικά", hint: "Ασιατικό όσπριο — βάση tofu" },
   { word: "ΑΡΑΧΙΔΑ", category: "Φρούτα & Λαχανικά", hint: "Καρπός που ψήνεται — φυστίκι Αμερικής" },
 
-  { word: "ΔΑΜΑΣΚΗΝΟ ΞΕΡΟ", category: "Φρούτα & Λαχανικά", hint: "Αποξηραμένο δαμάσκηνο" },
-  { word: "ΒΕΡΙΚΟΚΟ ΞΕΡΟ", category: "Φρούτα & Λαχανικά", hint: "Αποξηραμένο πορτοκαλί φρούτο" },
   { word: "ΛΩΤΟΣ", category: "Φρούτα & Λαχανικά", hint: "Πορτοκαλί φρούτο του φθινοπώρου" },
   { word: "ΑΚΤΙΝΙΔΙΟ", category: "Φρούτα & Λαχανικά", hint: "Πράσινο φρούτο με χνουδωτό πράσινο δέρμα" },
   { word: "ΠΙΠΕΡΟΚΑΨΙΑ", category: "Φρούτα & Λαχανικά", hint: "Πολύ καυτερή πιπεριά" },
@@ -3810,7 +3528,6 @@ const WORDS = [
   { word: "ΠΑΣΤΙΝΑΚΙ", category: "Φρούτα & Λαχανικά", hint: "Λευκή ρίζα — γλυκόξινη γεύση" },
 
   { word: "ΒΟΛΒΟΣ", category: "Φρούτα & Λαχανικά", hint: "Υπόγεια αποθήκη θρεπτικών — κρεμμύδι" },
-  { word: "ΜΠΡΙΖΟΛΑ ΛΑΧΑΝΟΥ", category: "Φρούτα & Λαχανικά", hint: "Φέτα κουνουπίδι ψητή" },
   { word: "ΡΥΖΙ", category: "Φρούτα & Λαχανικά", hint: "Βασικό δημητριακό — Ασία" },
   { word: "ΚΕΧΡΙ", category: "Φρούτα & Λαχανικά", hint: "Αρχαίο σιτηρό — millet" },
   { word: "ΣΙΤΑΡΙ", category: "Φρούτα & Λαχανικά", hint: "Το πιο βασικό σιτηρό για ψωμί" },
@@ -3827,8 +3544,6 @@ const WORDS = [
   { word: "ΦΙΝΟΚΙΟ", category: "Φρούτα & Λαχανικά", hint: "Φρέσκο λαχανικό με γλυκάνισο — μάραθο" },
   { word: "ΑΝΤΙΒΙΑ", category: "Φρούτα & Λαχανικά", hint: "Πικρό πράσινο φυλλώδες λαχανικό" },
   { word: "ΡΑΝΤΙΤΣΙΟ", category: "Φρούτα & Λαχανικά", hint: "Κόκκινο πικρό ιταλικό λαχανικό" },
-  { word: "ΚΕΦΑΛΩΤΟ ΜΑΡΟΥΛΙ", category: "Φρούτα & Λαχανικά", hint: "Στρογγυλό μαρούλι — iceberg" },
-  { word: "ΛΑΧΑΝΑΚΙΑ ΒΡΥΞΕΛΛΩΝ", category: "Φρούτα & Λαχανικά", hint: "Μικρά λαχανάκια Βρυξελλών" },
 
   { word: "ΑΓΓΟΥΡΙ", category: "Φρούτα & Λαχανικά", hint: "Δροσερό λαχανικό — για σαλάτα" },
 
@@ -3900,8 +3615,6 @@ const WORDS = [
   { word: "ΚΑΣΤΑΝΟ", category: "Χρώματα & Σχήματα", hint: "Σκούρο καφέ χρώμα" },
   { word: "ΜΕΛΙΤΖΑΝΙ", category: "Χρώματα & Σχήματα", hint: "Σκούρο μωβ χρώμα" },
   { word: "ΠΡΑΣΙΝΟ", category: "Χρώματα & Σχήματα", hint: "Χρώμα φύσης και λαχανικών" },
-  { word: "ΑΝΟΙΧΤΟ ΜΠΛΕ", category: "Χρώματα & Σχήματα", hint: "Χρώμα του ουρανού" },
-  { word: "ΣΚΟΥΡΟ ΜΠΛΕ", category: "Χρώματα & Σχήματα", hint: "Βαθύ μπλε χρώμα" },
   { word: "ΧΑΚΙ", category: "Χρώματα & Σχήματα", hint: "Στρατιωτικό πρασινωπό χρώμα" },
   { word: "ΛΑΧΑΝΙ", category: "Χρώματα & Σχήματα", hint: "Ανοιχτό πρασινοκίτρινο" },
   { word: "ΚΟΡΑΛΛΙ", category: "Χρώματα & Σχήματα", hint: "Ζεστό κοραλένιο ροζ" },
@@ -3943,7 +3656,6 @@ const WORDS = [
   { word: "ΣΤΑΥΡΟΛΕΞΟ", category: "Χόμπι & Δραστηριότητες", hint: "Παζλ με λέξεις οριζόντια-κάθετα" },
   { word: "ΣΟΥΝΤΟΚΟΥ", category: "Χόμπι & Δραστηριότητες", hint: "Παζλ αριθμών σε πλέγμα" },
   { word: "ΡΑΔΙΟΕΡΑΣΙΤΕΧΝΙΣΜΟΣ", category: "Χόμπι & Δραστηριότητες", hint: "Χόμπι ραδιοεπικοινωνίας" },
-  { word: "ΑΣΤΡΟΝΟΜΙΚΗ ΠΑΡΑΤΗΡΗΣΗ", category: "Χόμπι & Δραστηριότητες", hint: "Κοίταγμα αστεριών" },
   { word: "ΟΡΝΙΘΟΛΟΓΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Παρατήρηση πτηνών" },
   { word: "ΦΥΤΕΜΑ", category: "Χόμπι & Δραστηριότητες", hint: "Καλλιέργεια φυτών" },
   { word: "ΚΟΜΠΟΣΤΟΠΟΙΗΣΗ", category: "Χόμπι & Δραστηριότητες", hint: "Παραγωγή λιπάσματος από υπολείμματα" },
@@ -3966,7 +3678,6 @@ const WORDS = [
   { word: "ΝΤΕΚΟΥΠΑΖ", category: "Χόμπι & Δραστηριότητες", hint: "Διακόσμηση με κολλητά χαρτιά" },
   { word: "ΣΚΡΑΠΜΠΟΥΚΙΝΓΚ", category: "Χόμπι & Δραστηριότητες", hint: "Δημιουργία άλμπουμ αναμνήσεων" },
   { word: "ΚΑΛΛΙΓΡΑΦΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Τέχνη ωραίας γραφής" },
-  { word: "ΖΩΓΡΑΦΙΚΗ ΝΕΡΟΜΠΟΓΙΕΣ", category: "Χόμπι & Δραστηριότητες", hint: "Τεχνική με υδατοδιαλυτά χρώματα" },
   { word: "ΕΛΑΙΟΓΡΑΦΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Ζωγραφική με λαδοχρώματα" },
   { word: "ΠΕΦΤΟΚΕΝΤΗΜΑΤΑ", category: "Χόμπι & Δραστηριότητες", hint: "Βελονιές σε ύφασμα" },
   { word: "ΣΑΠΟΥΝΟΠΟΙΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή σαπουνιών" },
@@ -3974,14 +3685,11 @@ const WORDS = [
   { word: "ΜΙΝΙΑΤΟΥΡΕΣ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή μικροσκοπικών αντικειμένων" },
   { word: "ΜΑΚΕΤΕΣ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή μοντέλων αεροπλάνων-πλοίων" },
   { word: "ΤΡΕΝΑΚΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή και λειτουργία τρένων" },
-  { word: "ΑΣΥΡΜΑΤΟΣ ΕΛΕΓΧΟΣ", category: "Χόμπι & Δραστηριότητες", hint: "RC cars — τηλεκατευθυνόμενα" },
   { word: "ΑΕΡΟΜΟΝΤΕΛΙΣΜΟΣ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή μοντέλων αεροσκαφών" },
-  { word: "ΓΕΩΛΟΓΙΚΗ ΣΥΛΛΟΓΗ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή πετρωμάτων και ορυκτών" },
   { word: "ΝΟΜΙΣΜΑΤΟΛΟΓΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή νομισμάτων" },
   { word: "ΦΙΛΟΤΕΛΙΣΜΟΣ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή γραμματοσήμων" },
   { word: "ΒΙΝΥΛΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή δίσκων βινυλίου" },
   { word: "ΚΟΜΙΚ", category: "Χόμπι & Δραστηριότητες", hint: "Ανάγνωση και συλλογή comics" },
-  { word: "ΤΡΑΠΕΖΙΚΑ ΠΑΙΧΝΙΔΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Board games — επιτραπέζια" },
   { word: "ΡΟΛΕΠΛΑΙΝΓΚ", category: "Χόμπι & Δραστηριότητες", hint: "RPG — role playing games" },
   { word: "ΕΙΚΑΣΤΙΚΑ", category: "Χόμπι & Δραστηριότητες", hint: "Ασχολία με όλες τις τέχνες" },
   { word: "ΑΕΡΟΝΑΥΤΙΚΗ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή ή πτήση μοντέλων αεροπλάνων" },
@@ -4002,11 +3710,7 @@ const WORDS = [
 
 
   { word: "ΒΙΒΛΙΟΦΙΛΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Πάθος για βιβλία — συλλογή" },
-  { word: "ΚΥΝΗΓΙ ΘΗΣΑΥΡΟΥ", category: "Χόμπι & Δραστηριότητες", hint: "Εντοπισμός κρυμμένων αντικειμένων" },
-  { word: "ΘΡΗΛΕΡ ΕΞΟΔΟΥ", category: "Χόμπι & Δραστηριότητες", hint: "Escape room — λύσε γρίφους" },
 
-  { word: "ΤΑΞΙΔΙΑ ΦΥΓΗΣ", category: "Χόμπι & Δραστηριότητες", hint: "Αυθόρμητα ταξίδια για εξερεύνηση" },
-  { word: "ΑΣΤΡΟΝΟΜΙΚΗ ΦΩΤΟΓΡΑΦΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Αστροφωτογραφία — αστέρια" },
   { word: "ΕΝΤΟΜΟΛΟΓΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Συλλογή και μελέτη εντόμων" },
   { word: "ΔΕΝΔΡΟΛΟΓΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Μελέτη και ταυτοποίηση δέντρων" },
   { word: "ΙΝΔΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Πολυπληθέστερη χώρα του κόσμου" },
@@ -4037,7 +3741,6 @@ const WORDS = [
   { word: "ΤΟΥΡΚΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Χώρα γέφυρα Ευρώπης-Ασίας" },
   { word: "ΙΣΡΑΗΛ", category: "Χώρες & Πρωτεύουσες", hint: "Χώρα στη Μέση Ανατολή" },
   { word: "ΑΙΘΙΟΠΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Αφρικανική χώρα γνωστή για καφέ" },
-  { word: "ΝΟΤΙΑ ΑΦΡΙΚΗ", category: "Χώρες & Πρωτεύουσες", hint: "Χώρα στο νότιο άκρο Αφρικής" },
   { word: "ΓΟΥΑΤΕΜΑΛΑ", category: "Χώρες & Πρωτεύουσες", hint: "Κεντροαμερικανική χώρα με μάγια" },
   { word: "ΑΦΓΑΝΙΣΤΑΝ", category: "Χώρες & Πρωτεύουσες", hint: "Κεντρασιατική χώρα — Καμπούλ" },
   { word: "ΙΡΑΚ", category: "Χώρες & Πρωτεύουσες", hint: "Μέση Ανατολή — Βαγδάτη" },
@@ -4064,15 +3767,508 @@ const WORDS = [
   { word: "ΜΑΛΑΟΥΙ", category: "Χώρες & Πρωτεύουσες", hint: "Νότια Αφρική — Λιλόνγκουε" },
   { word: "ΜΟΖΑΜΒΙΚΗ", category: "Χώρες & Πρωτεύουσες", hint: "Ανατολική Αφρική — Μαπούτο" },
   { word: "ΑΝΓΚΟΛΑ", category: "Χώρες & Πρωτεύουσες", hint: "Δυτική Αφρική — Λουάντα" },
+
+  // ── Ζώα (νέες) ──────────────────────────────────────────────────
+  { word: "ΜΑΝΤΡΑ", category: "Ζώα", hint: "Γιγάντια ψαροπλατού χόνδρινο ψάρι" },
+  { word: "ΧΑΜΑΙΛΕΟΝΤΗΣ", category: "Ζώα", hint: "Σαύρα που αλλάζει χρώμα" },
+  { word: "ΜΑΛΕΓΑ", category: "Ζώα", hint: "Πουλί της ακτής που βουτά για ψάρια" },
+  { word: "ΣΠΟΥΡΓΙΤΙ", category: "Ζώα", hint: "Μικρό καφετί στρουθιόμορφο πουλί" },
+  { word: "ΧΕΛΙΔΟΝΙ", category: "Ζώα", hint: "Μεταναστευτικό πουλί της άνοιξης" },
+  { word: "ΑΗΔΟΝΙ", category: "Ζώα", hint: "Πουλί γνωστό για το τραγούδι του" },
+  { word: "ΚΑΡΑΚΑΞΑ", category: "Ζώα", hint: "Μαυρόασπρο έξυπνο πουλί" },
+  { word: "ΠΕΛΑΡΓΟΣ", category: "Ζώα", hint: "Μεγάλο λευκό πουλί που φέρνει τα μωρά" },
+  { word: "ΤΣΑΛΑΠΕΤΕΙΝΟΣ", category: "Ζώα", hint: "Πολύχρωμο πουλί με λοφίο" },
+  { word: "ΚΟΤΣΥΦΟΣ", category: "Ζώα", hint: "Μαύρο πουλί με κίτρινο ράμφος" },
+  { word: "ΣΚΩΛΗΚΑΣ", category: "Ζώα", hint: "Χωρίς πόδια — ζει στο χώμα" },
+  { word: "ΒΑΤΡΑΧΟΣ", category: "Ζώα", hint: "Αμφίβιο που κοάζει" },
+  { word: "ΦΙΔΙ", category: "Ζώα", hint: "Ερπετό χωρίς πόδια" },
+  { word: "ΚΟΥΝΟΥΠΙ", category: "Ζώα", hint: "Έντομο που μας τσιμπά τα νύχτα" },
+  { word: "ΜΕΛΙΣΣΑ", category: "Ζώα", hint: "Πετούμενο έντομο που φτιάχνει μέλι" },
+  { word: "ΣΦΗΚΑ", category: "Ζώα", hint: "Κίτρινο-μαύρο κεντριστό έντομο" },
+
+  // ── Φρούτα & Λαχανικά (νέες) ────────────────────────────────────
+  
+  { word: "ΚΥΔΩΝΙ", category: "Φρούτα & Λαχανικά", hint: "Κίτρινο φρούτο για μαρμελάδα" },
+  { word: "ΡΟΔΙ", category: "Φρούτα & Λαχανικά", hint: "Κόκκινο φρούτο με σπόρους — σύμβολο γονιμότητας" },
+  { word: "ΜΟΥΡΟ", category: "Φρούτα & Λαχανικά", hint: "Μικρό μαύρο ή κόκκινο φρούτο" },
+  
+
+  // ── Φυτά & Λουλούδια (νέες) ─────────────────────────────────────
+  { word: "ΚΑΣΤΑΝΙΑ", category: "Φυτά & Λουλούδια", hint: "Δέντρο που κάνει καστανά" },
+
+  // ── Μουσικά Όργανα (νέες) ────────────────────────────────────────
+  { word: "ΣΑΡΑΓΚΙ", category: "Μουσικά Όργανα", hint: "Ινδικό τοξωτό έγχορδο" },
+
+  // ── Μουσική (νέες) ───────────────────────────────────────────────
+  { word: "ΟΒΕΡΤΟΥΡΑ", category: "Μουσική", hint: "Εισαγωγή ορχηστρικού έργου" },
+  
+  
+  { word: "ΦΛΑΜΕΝΚΟ", category: "Μουσική", hint: "Ισπανική μουσική και χορός" },
+
+  // ── Φαγητά & Ποτά (νέες) ────────────────────────────────────────
+  
+  { word: "ΧΩΡΤΟΠΙΤΑ", category: "Φαγητά & Ποτά", hint: "Πίτα με χόρτα — νηστίσιμη" },
+  
+  
+  { word: "ΨΗΤΟΧΤΑΠΟΔΙ", category: "Φαγητά & Ποτά", hint: "Χταπόδι στη σχάρα — μεζές" },
+  
+
+  // ── Αθλήματα (νέες) ─────────────────────────────────────────────
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  // ── Επαγγέλματα (νέες) ──────────────────────────────────────────
+  { word: "ΚΕΡΑΜΙΣΤΗΣ", category: "Επαγγέλματα", hint: "Φτιάχνει αντικείμενα από πηλό" },
+  { word: "ΥΦΑΝΤΗΣ", category: "Επαγγέλματα", hint: "Υφαίνει υφάσματα στον αργαλειό" },
+  { word: "ΜΑΡΜΑΡΟΓΛΥΠΤΗΣ", category: "Επαγγέλματα", hint: "Γλύπτης που εργάζεται μάρμαρο" },
+  { word: "ΧΑΡΤΟΚΟΠΤΗΣ", category: "Επαγγέλματα", hint: "Τέχνη κοπής χαρτιού" },
+  { word: "ΜΙΝΙΑΤΟΥΡΙΣΤΗΣ", category: "Επαγγέλματα", hint: "Φτιάχνει μικροσκοπικά αντικείμενα" },
+  { word: "ΚΟΣΜΗΜΑΤΟΠΟΙΟΣ", category: "Επαγγέλματα", hint: "Κατασκευάζει κοσμήματα" },
+  { word: "ΚΑΛΛΙΓΡΑΦΟΣ", category: "Επαγγέλματα", hint: "Γράφει με καλλιτεχνική γραφή" },
+  { word: "ΒΙΒΛΙΟΔΕΤΗΣ", category: "Επαγγέλματα", hint: "Δένει και αποκαθιστά βιβλία" },
+  { word: "ΣΑΠΟΥΝΟΠΟΙΟΣ", category: "Επαγγέλματα", hint: "Φτιάχνει σαπούνι χειροποίητο" },
+  { word: "ΖΑΧΑΡΟΠΛΑΣΤΗΣ", category: "Επαγγέλματα", hint: "Φτιάχνει γλυκά και τούρτες" },
+  { word: "ΓΥΑΛΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Κατασκευάζει αντικείμενα από γυαλί" },
+  { word: "ΣΙΔΗΡΟΥΡΓΟΣ", category: "Επαγγέλματα", hint: "Εργάζεται με σίδηρο — σιδεράς" },
+
+  // ── Χρώματα & Σχήματα (νέες) ────────────────────────────────────
+  
+  { word: "ΚΑΝΕΛΑ", category: "Χρώματα & Σχήματα", hint: "Καφεκόκκινο χρώμα μπαχαρικού" },
+  
+  
+  
+  { word: "ΠΕΝΤΑΓΩΝΟ", category: "Χρώματα & Σχήματα", hint: "Σχήμα με πέντε πλευρές" },
+  
+  
+
+  // ── Χώρες & Πρωτεύουσες (νέες) ──────────────────────────────────
+  
+  
+  
+
+  // ── Πόλεις του κόσμου (νέες) ────────────────────────────────────
+  
+  
+  
+  { word: "ΤΟΡΟΝΤΟ", category: "Πόλεις του κόσμου", hint: "Μεγαλύτερη πόλη Καναδά" },
+  { word: "ΣΤΟΚΧΟΛΜΗ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Σουηδίας" },
+
+  // ── Μυθολογία (νέες) ─────────────────────────────────────────────
+  
+  
+  { word: "ΑΜΑΛΘΕΙΑ", category: "Μυθολογία", hint: "Κατσίκα που θήλασε τον Δία" },
+  { word: "ΤΑΝΤΤΑΛΟΣ", category: "Μυθολογία", hint: "Καταδικάστηκε να στέκεται σε νερό — δεν φτάνει" },
+  { word: "ΙΔΑΙΟΣ", category: "Μυθολογία", hint: "Κρητικός χορευτής των Κουρητών" },
+
+  // ── Ιστορία (νέες) ───────────────────────────────────────────────
+  { word: "ΚΟΙΝΩΝΙΣΜΟΣ", category: "Ιστορία", hint: "Μαρξιστική οικονομική ιδεολογία" },
+  
+  
+  { word: "ΙΕΡΟΕΞΕΤΑΣΗ", category: "Ιστορία", hint: "Μεσαιωνικό καθολικό δικαστήριο" },
+  
+
+  // ── Επιστήμη (νέες) ──────────────────────────────────────────────
+  
+  
+
+  // ── Τεχνολογία (νέες) ────────────────────────────────────────────
+  
+  
+
+  // ── Ονόματα (νέες) ───────────────────────────────────────────────
+  { word: "ΙΗΛΙΑΣ", category: "Ονόματα", hint: "Ανδρικό βιβλικό όνομα προφήτη" },
+
+  // ── Χόμπι & Δραστηριότητες (νέες) ──────────────────────────────
+  
+  
+
+  // ── Διάσημες Προσωπικότητες (νέες) ─────────────────────────────
+  
+  
+  
+  { word: "ΙΣΟΚΡΑΤΗΣ", category: "Διάσημες Προσωπικότητες", hint: "Αθηναίος ρήτορας — ίδρυσε σχολή" },
+
+  // ── Ζώα ─────────────────────────────────────────────────────────
+  { word: "ΤΣΑΚΑΛΙ", category: "Ζώα", hint: "Μικρό αγριόσκυλο της Αφρικής" },
+  { word: "ΚΟΤΑ", category: "Ζώα", hint: "Οικιακό πτηνό που δίνει αυγά" },
+  { word: "ΓΑΛΟΠΟΥΛΑ", category: "Ζώα", hint: "Μεγάλο πτηνό — σύμβολο Θανκσγκίβινγκ" },
+  { word: "ΧΗΝΑ", category: "Ζώα", hint: "Υδρόβιο πτηνό — φωνάζει δυνατά" },
+  { word: "ΠΑΠΙΑ", category: "Ζώα", hint: "Υδρόβιο πτηνό με επίπεδο ράμφος" },
+  { word: "ΠΟΝΤΙΚΙ", category: "Ζώα", hint: "Μικρό τρωκτικό — εχθρός γάτας" },
+  { word: "ΑΡΟΥΡΑΙΟΣ", category: "Ζώα", hint: "Μεγάλο τρωκτικό — ζει σε υπονόμους" },
+  { word: "ΣΚΙΟΥΡΟΣ", category: "Ζώα", hint: "Τρωκτικό που μαζεύει βελανίδια" },
+  { word: "ΑΣΒΟΣ", category: "Ζώα", hint: "Νυκτόβιο θηλαστικό με ασπρόμαυρο κεφάλι" },
+  { word: "ΝΥΦΙΤΣΑ", category: "Ζώα", hint: "Μακρύ λεπτό σαρκοφάγο θηλαστικό" },
+  { word: "ΚΟΥΝΕΛΙ", category: "Ζώα", hint: "Μαλακό θηλαστικό με μακριά αυτιά" },
+  { word: "ΕΛΑΦΟΣ", category: "Ζώα", hint: "Θηλαστικό — το αρσενικό έχει κέρατα" },
+  { word: "ΖΑΡΚΑΔΙ", category: "Ζώα", hint: "Μικρό ελάφι των ελληνικών βουνών" },
+  { word: "ΑΓΕΛΑΔΑ", category: "Ζώα", hint: "Κτηνοτροφικό ζώο — δίνει γάλα" },
+  { word: "ΓΑΙΔΑΡΟΣ", category: "Ζώα", hint: "Υπομονετικό κτηνοτροφικό ζώο" },
+  { word: "ΑΛΟΓΟ", category: "Ζώα", hint: "Ισχυρό θηλαστικό — μεταφορά και αγώνες" },
+  { word: "ΤΖΙΤΖΙΚΑΣ", category: "Ζώα", hint: "Έντομο που τραγουδά το καλοκαίρι" },
+  { word: "ΣΑΡΑΝΤΑΠΟΔΑΡΟΥΣΑ", category: "Ζώα", hint: "Αρθρόποδο με πολλά πόδια — σκοτωτική λαβή" },
+
+  // ── Φρούτα & Λαχανικά ────────────────────────────────────────────
+  { word: "ΦΙΣΤΙΚΙ", category: "Φρούτα & Λαχανικά", hint: "Μικρός ξηρός καρπός — πράσινος" },
+  { word: "ΦΟΥΝΤΟΥΚΙ", category: "Φρούτα & Λαχανικά", hint: "Στρογγυλός ξηρός καρπός για σοκολάτα" },
+  { word: "ΚΑΡΥΔΙ", category: "Φρούτα & Λαχανικά", hint: "Ξηρός καρπός που μοιάζει με εγκέφαλο" },
+  { word: "ΑΜΥΓΔΑΛΟ", category: "Φρούτα & Λαχανικά", hint: "Ξηρός καρπός ωοειδής" },
+  { word: "ΚΟΥΚΙ", category: "Φρούτα & Λαχανικά", hint: "Μεγάλο όσπριο — άντε μαγειρέψτο" },
+  { word: "ΦΑΚΕΣ", category: "Φρούτα & Λαχανικά", hint: "Μικρά στρογγυλά όσπρια" },
+  { word: "ΜΟΣΧΟΚΑΡΥΔΟ", category: "Φρούτα & Λαχανικά", hint: "Αρωματικός σπόρος για μπεσαμέλ" },
+  { word: "ΜΑΡΑΘΟΣ", category: "Φρούτα & Λαχανικά", hint: "Αρωματικό φυτό — γνωστό ως φινόκιο" },
+  { word: "ΜΑΪΝΤΑΝΟΣ", category: "Φρούτα & Λαχανικά", hint: "Πράσινο αρωματικό βότανο για σαλάτες" },
+  { word: "ΔΥΟΣΜΟΣ", category: "Φρούτα & Λαχανικά", hint: "Αρωματικό βότανο — μέντα" },
+  { word: "ΡΙΓΑΝΗ", category: "Φρούτα & Λαχανικά", hint: "Ελληνικό αρωματικό βότανο για ψητά" },
+  { word: "ΒΑΣΙΛΙΚΟΣ", category: "Φρούτα & Λαχανικά", hint: "Πράσινο αρωματικό φυτό — βάση pesto" },
+  { word: "ΘΥΜΑΡΙ", category: "Φρούτα & Λαχανικά", hint: "Αρωματικό βότανο των βουνών" },
+  { word: "ΚΟΛΟΚΥΘΟΣΠΟΡΟ", category: "Φρούτα & Λαχανικά", hint: "Σπόρος κολοκύθας — υγιεινό σνακ" },
+  { word: "ΠΑΤΑΤΑ", category: "Φρούτα & Λαχανικά", hint: "Κόνδυλος — βάση πολλών φαγητών" },
+  { word: "ΓΛΥΚΟΠΙΠΕΡΙΑ", category: "Φρούτα & Λαχανικά", hint: "Γλυκιά κόκκινη πιπεριά" },
+
+  // ── Φυτά & Λουλούδια ─────────────────────────────────────────────
+  { word: "ΑΛΟΗ", category: "Φυτά & Λουλούδια", hint: "Παχύφυτο με θεραπευτικό τζελ" },
+  { word: "ΜΠΑΜΠΟΥ", category: "Φυτά & Λουλούδια", hint: "Τροπικό γρήγορα αυξανόμενο φυτό" },
+  { word: "ΠΑΛΜΑ", category: "Φυτά & Λουλούδια", hint: "Τροπικό δέντρο — φοίνικας" },
+  { word: "ΕΥΚΑΛΥΠΤΟΣ", category: "Φυτά & Λουλούδια", hint: "Αυστραλιανό δέντρο — τροφή κοάλα" },
+  { word: "ΜΥΡΤΙΑ", category: "Φυτά & Λουλούδια", hint: "Αειθαλής θάμνος — μυρωδάτα φύλλα" },
+  { word: "ΧΑΜΟΜΗΛΟ", category: "Φυτά & Λουλούδια", hint: "Μικρό λευκό λουλούδι για τσάι" },
+  { word: "ΚΟΡΟΜΗΛΟ", category: "Φυτά & Λουλούδια", hint: "Ελληνικό άγριο δέντρο με ξινά φρούτα" },
+  { word: "ΠΟΥΡΝΑΡΙ", category: "Φυτά & Λουλούδια", hint: "Αγκαθωτός αειθαλής θάμνος" },
+  { word: "ΑΓΡΙΟΤΡΙΑΝΤΑΦΥΛΛΟ", category: "Φυτά & Λουλούδια", hint: "Αγριολούλουδο — ροδακάνθα" },
+  { word: "ΣΑΛΒΙΑ", category: "Φυτά & Λουλούδια", hint: "Φαρμακευτικό φυτό — φασκόμηλο" },
+  { word: "ΓΑΡΙΦΑΛΟ", category: "Φυτά & Λουλούδια", hint: "Αρωματικό λουλούδι — σύμβολο Πορτογαλικής Επανάστασης" },
+  { word: "ΖΕΡΜΠΕΡΑ", category: "Φυτά & Λουλούδια", hint: "Χρωματιστό λουλούδι — αφρικανική μαργαρίτα" },
+  { word: "ΦΡΈΖΙΑ", category: "Φυτά & Λουλούδια", hint: "Αρωματικό λουλούδι — πολλά χρώματα" },
+  { word: "ΚΥΠΑΡΙΣΣΟΣ", category: "Φυτά & Λουλούδια", hint: "Ψηλό κωνικό αειθαλές δέντρο" },
+  { word: "ΚΑΛΑΜΟΣ", category: "Φυτά & Λουλούδια", hint: "Υδρόβιο φυτό — καλάμι" },
+
+  // ── Μουσικά Όργανα ───────────────────────────────────────────────
+  { word: "ΜΠΑΓΚΛΑΜΑΣ", category: "Μουσικά Όργανα", hint: "Μικρό μπουζουκόσχημο — παίζεται κρυφά φυλακή" },
+  { word: "ΤΣΑΜΠΟΥΝΑ", category: "Μουσικά Όργανα", hint: "Ελληνική νησιώτικη γκάιντα" },
+  { word: "ΛΑΓΟΥΤΟ", category: "Μουσικά Όργανα", hint: "Κρητικό έγχορδο — πολεμικό πλήκτρο" },
+  { word: "ΘΕΟΡΜΠΟ", category: "Μουσικά Όργανα", hint: "Μπαρόκ τοξωτό λαούτο με επεκτεταμένες χορδές" },
+  { word: "ΣΙΤΆΡ", category: "Μουσικά Όργανα", hint: "Ινδικό έγχορδο — Ράβι Σανκάρ" },
+  { word: "ΜΠΑΛΑΦΟΝ", category: "Μουσικά Όργανα", hint: "Δυτικοαφρικανικό ξυλόφωνο" },
+  { word: "ΚΕΜΠΕ", category: "Μουσικά Όργανα", hint: "Δυτικοαφρικανικό τύμπανο με χέρια" },
+  { word: "ΝΤΟΥΝΤΛΣΑΚ", category: "Μουσικά Όργανα", hint: "Γερμανική γκάιντα" },
+  { word: "ΜΕΓΚΑΔΟΥΛΤΣΙΜΕΡ", category: "Μουσικά Όργανα", hint: "Ορεινό αππαλατσιανό έγχορδο" },
+  { word: "ΑΝΚΛΟΥΝΓΚ", category: "Μουσικά Όργανα", hint: "Ινδονησιακό κρουστό από μπαμπού" },
+  { word: "ΚΙΤΑΡΡΟΝ", category: "Μουσικά Όργανα", hint: "Μεγάλο μπαρόκ λαούτο — μπάσο" },
+  { word: "ΦΛΟΓΕΡΑ", category: "Μουσικά Όργανα", hint: "Ελληνική ποιμενική φλογέρα" },
+  { word: "ΑΣΚΑΥΛΟΣ", category: "Μουσικά Όργανα", hint: "Αρχαίο διπλό πνευστό — ελληνικός αυλός" },
+  { word: "ΚΟΡΝΕΤΟ", category: "Μουσικά Όργανα", hint: "Χάλκινο πνευστό — μικρότερη τρομπέτα" },
+  { word: "ΒΙΟΛΟΝΤΣΕΛΟ", category: "Μουσικά Όργανα", hint: "Μεγάλο τοξωτό έγχορδο — παίζεται καθιστά" },
+  { word: "ΕΚΟΤΣΕ", category: "Μουσικά Όργανα", hint: "Κρουστό ξύλο — τικ-τακ ρυθμός" },
+
+  // ── Μουσική ──────────────────────────────────────────────────────
+  { word: "ΜΙΝΙΜΑΛΙΣΜΟΣ", category: "Μουσική", hint: "Μουσικό κίνημα με επανάληψη — Φίλιπ Γκλας" },
+  { word: "ΝΤΟΝΤΕΚΑΦΩΝΙΑ", category: "Μουσική", hint: "Δωδεκάτονη σύνθεση — Σένμπεργκ" },
+  { word: "ΑΛΕΑΤΟΡΙΚΗ", category: "Μουσική", hint: "Τυχαία μουσική — Τζον Κέιτζ" },
+  { word: "ΜΠΑΡΟΚ", category: "Μουσική", hint: "Μουσική εποχή 1600-1750 — Μπαχ Βιβάλντι" },
+  { word: "ΡΟΜΑΝΤΙΣΜΟΣ", category: "Μουσική", hint: "Μουσική εποχή 19ου αιώνα — Σοπέν Σούμαν" },
+  { word: "ΙΜΠΡΕΣΙΟΝΙΣΜΟΣ", category: "Μουσική", hint: "Γαλλική μουσική — Ντεμπυσί" },
+  { word: "ΣΕΡΙΑΛΙΣΜΟΣ", category: "Μουσική", hint: "Σύνθεση με ακολουθίες νοτών" },
+  { word: "ΜΟΤΕΤΟ", category: "Μουσική", hint: "Πολυφωνικό φωνητικό κομμάτι — Μεσαίωνας" },
+  { word: "ΚΑΝΤΑΔΑ", category: "Μουσική", hint: "Φωνητική σύνθεση με συνοδεία — Μπαχ" },
+  { word: "ΚΑΠΡΙΤΣΙΟ", category: "Μουσική", hint: "Ελεύθερη βιρτουόζα σύνθεση" },
+  { word: "ΕΤΥΔ", category: "Μουσική", hint: "Μελέτη για εξάσκηση τεχνικής" },
+  { word: "ΝΟΚΤΟΥΡΝΟ", category: "Μουσική", hint: "Νυκτερινό μελωδικό κομμάτι — Σοπέν" },
+  { word: "ΡΑΨΩΔΙΑ", category: "Μουσική", hint: "Επικό μουσικό έργο — ελεύθερη μορφή" },
+  { word: "ΝΤΙΒΕΡΤΙΜΕΝΤΟ", category: "Μουσική", hint: "Ελαφρύ ορχηστρικό έργο — Μότσαρτ" },
+  { word: "ΣΕΚΣΤΕΤΟ", category: "Μουσική", hint: "Σύνολο έξι μουσικών ή φωνών" },
+  { word: "ΚΟΥΑΡΤΕΤΟ", category: "Μουσική", hint: "Σύνολο τεσσάρων μουσικών ή φωνών" },
+  { word: "ΚΟΥΙΝΤΕΤΟ", category: "Μουσική", hint: "Σύνολο πέντε μουσικών ή φωνών" },
+
+  // ── Φαγητά & Ποτά ────────────────────────────────────────────────
+  { word: "ΣΑΓΑΝΑΚΙ", category: "Φαγητά & Ποτά", hint: "Τηγανητό τυρί — ελληνικός μεζές" },
+  { word: "ΝΤΟΛΜΑΔΕΣ", category: "Φαγητά & Ποτά", hint: "Αμπελόφυλλα γεμιστά με ρύζι" },
+  { word: "ΜΠΡΙΑΜ", category: "Φαγητά & Ποτά", hint: "Ψητά λαχανικά φούρνου — ελληνικό" },
+  { word: "ΣΟΥΠΑ", category: "Φαγητά & Ποτά", hint: "Υγρό ζεστό φαγητό — πρώτο πιάτο" },
+  { word: "ΨΑΡΟΣΟΥΠΑ", category: "Φαγητά & Ποτά", hint: "Σούπα με ψάρι — κακαβιά" },
+  { word: "ΑΥΓΟΛΕΜΟΝΟ", category: "Φαγητά & Ποτά", hint: "Ελληνική σούπα με αυγό και λεμόνι" },
+  { word: "ΤΡΑΧΑΝΑΣ", category: "Φαγητά & Ποτά", hint: "Χειμωνιάτικη ελληνική σούπα — ξινή" },
+  { word: "ΛΟΚΟΥΜ", category: "Φαγητά & Ποτά", hint: "Τουρκικό γλυκό ζελέ με άχνη" },
+  { word: "ΡΑΒΑΝΙ", category: "Φαγητά & Ποτά", hint: "Σιροπιαστό κέικ σιμιγδαλιού" },
+  { word: "ΚΑΤAΙΦΙ", category: "Φαγητά & Ποτά", hint: "Τριμμένο φύλλο με ξηρούς καρπούς και σιρόπι" },
+  { word: "ΡΕΒΑΝΙ", category: "Φαγητά & Ποτά", hint: "Ελληνικό σιροπιαστό κέικ σιμιγδαλιού" },
+  { word: "ΤΣΟΥΡΕΚΙ", category: "Φαγητά & Ποτά", hint: "Πασχαλινό ελληνικό αρωματικό ψωμί" },
+  { word: "ΛΑΓΑΝΑ", category: "Φαγητά & Ποτά", hint: "Επίπεδο ψωμί Καθαράς Δευτέρας" },
+  { word: "ΠΛΙΓΟΥΡΙ", category: "Φαγητά & Ποτά", hint: "Πλυμένο σιτάρι — υγιεινή εναλλακτική ρυζιού" },
+  { word: "ΧΥΛΟΠΙΤΕΣ", category: "Φαγητά & Ποτά", hint: "Χειροποίητα τετράγωνα ζυμαρικά" },
+  { word: "ΧΤΕΝΙΑ", category: "Φαγητά & Ποτά", hint: "Θαλασσινά χτένια — ψητά ή στον ατμό" },
+  { word: "ΜΥΔΙΑ", category: "Φαγητά & Ποτά", hint: "Θαλασσινά μύδια — μαγειρεμένα με κρασί" },
+  { word: "ΣΤΡΕΙΔΙΑ", category: "Φαγητά & Ποτά", hint: "Θαλασσινά με κέλυφος — ωμά με λεμόνι" },
+  { word: "ΚΟΛΟΚΥΘΟΚΕΦΤΕΔΕΣ", category: "Φαγητά & Ποτά", hint: "Τηγανητοί κεφτέδες κολοκύθας" },
+
+  // ── Αθλήματα ─────────────────────────────────────────────────────
+  { word: "ΝΤΟΥΑΤΛΟΝ", category: "Αθλήματα", hint: "Τρέξιμο και ποδηλασία" },
+  { word: "ΑΟΥΤΡΙΓΚΕΡ", category: "Αθλήματα", hint: "Χαβανέζικο κανό με σταθεροποιητή" },
+  { word: "ΣΚΟΙΝΑΚΙ", category: "Αθλήματα", hint: "Αερόβιο με σχοινάκι" },
+  { word: "ΚΕΡΑΥΝΟΒΟΛΙΑ", category: "Αθλήματα", hint: "Κυνήγι εντόμων ή βατράχων με ηλεκτρολαβή" },
+  { word: "ΣΚΟΥΟΣ", category: "Αθλήματα", hint: "Αντισφαίριση σε κλειστό γήπεδο" },
+  { word: "ΜΠΑΝΤΜΙΝΤΟΝ", category: "Αθλήματα", hint: "Αθλητισμός με ρακέτα και φτερένιο βλήμα" },
+  { word: "ΠΕΤΟΣΦΑΙΡΑ", category: "Αθλήματα", hint: "Βόλεϊ παραλίας — άμμος και ήλιος" },
+  { word: "ΠΑΓΚΡΑΤΙΟ", category: "Αθλήματα", hint: "Αρχαιοελληνικό — συνδυασμός πυγμαχίας και πάλης" },
+  { word: "ΚΥΝΗΓΙ", category: "Αθλήματα", hint: "Κυνηγετική δραστηριότητα — κυνηγός" },
+  { word: "ΨΑΡΕΜΑ", category: "Αθλήματα", hint: "Αλιεία ως αθλητισμός ή χόμπι" },
+
+  // ── Ελληνικά Νησιά ───────────────────────────────────────────────
+  { word: "ΠΟΛΥΑΙΓΟΣ", category: "Ελληνικά Νησιά", hint: "Ακατοίκητο νησί Κυκλάδων — αγριοκάτσικα" },
+  { word: "ΨΑΡΑ", category: "Ελληνικά Νησιά", hint: "Ηρωικό νησί βορείου Αιγαίου" },
+  { word: "ΤΕΛΕΝΔΟΣ", category: "Ελληνικά Νησιά", hint: "Μικρό νησί μπροστά στην Κάλυμνο" },
+  { word: "ΑΡΚΟΙ", category: "Ελληνικά Νησιά", hint: "Μικροσκοπικό νησάκι Δωδεκανήσου" },
+  { word: "ΛΕΙΨΟΙ", category: "Ελληνικά Νησιά", hint: "Ήσυχο νησί βόρεια της Πάτμου" },
+  { word: "ΚΑΣΟΣ", category: "Ελληνικά Νησιά", hint: "Νησί Δωδεκανήσου — θρυλικός στόλος" },
+  { word: "ΚΕΡΟΣ", category: "Ελληνικά Νησιά", hint: "Αρχαιολογικό νησί Κυκλάδων" },
+  { word: "ΓΙΟΥΡΑ", category: "Ελληνικά Νησιά", hint: "Βόρειες Σποράδες — άγρια κατσίκια" },
+  { word: "ΑΛΟΝΝΗΣΟΣ", category: "Ελληνικά Νησιά", hint: "Σποράδες — θαλάσσιο πάρκο Μεσογείου" },
+
+  // ── Ελληνικές Πόλεις ─────────────────────────────────────────────
+  { word: "ΜΕΣΟΛΟΓΓΙ", category: "Ελληνικές Πόλεις", hint: "Πόλη ηρωικής εξόδου — λιμνοθάλασσα" },
+  { word: "ΜΥΣΤΡΑΣ", category: "Ελληνικές Πόλεις", hint: "Βυζαντινή πόλη Λακωνίας — αρχαιολογικός χώρος" },
+  { word: "ΜΟΛΑΟΙ", category: "Ελληνικές Πόλεις", hint: "Πόλη Λακωνίας" },
+  { word: "ΚΑΛΑΒΡΥΤΑ", category: "Ελληνικές Πόλεις", hint: "Αχαΐα — ολοκαύτωμα και οδοντωτός" },
+  { word: "ΑΚΡΑΤΑ", category: "Ελληνικές Πόλεις", hint: "Παραθαλάσσια Αχαΐα — κρύα πηγή" },
+  { word: "ΞΥΛΟΚΑΣΤΡΟ", category: "Ελληνικές Πόλεις", hint: "Κορινθία — παραλιακή πόλη" },
+  { word: "ΚΙΑΤΟ", category: "Ελληνικές Πόλεις", hint: "Πόλη Κορινθίας κοντά σε σταφίδες" },
+  { word: "ΖΕΥΓΟΛΑΤΙΟ", category: "Ελληνικές Πόλεις", hint: "Περιοχή Κορινθίας" },
+  { word: "ΛΗΔΑ", category: "Ελληνικές Πόλεις", hint: "Μικρή κοινότητα" },
+  { word: "ΓΑΣΤΟΥΝΗ", category: "Ελληνικές Πόλεις", hint: "Πόλη Ηλείας" },
+  { word: "ΛΕΧΑΙΝΑ", category: "Ελληνικές Πόλεις", hint: "Πόλη Ηλείας — κοντά στην παραλία" },
+  { word: "ΚΥΛΛΗΝΗ", category: "Ελληνικές Πόλεις", hint: "Λιμάνι Ηλείας — φεριμπότ Κεφαλονιά" },
+  { word: "ΦΑΡΣΑΛΑ", category: "Ελληνικές Πόλεις", hint: "Θεσσαλική πόλη — ιστορική μάχη" },
+  { word: "ΤΥΡΝΑΒΟΣ", category: "Ελληνικές Πόλεις", hint: "Θεσσαλική πόλη — φαλλικό καρναβάλι" },
+  { word: "ΕΛΑΣΣΟΝΑ", category: "Ελληνικές Πόλεις", hint: "Θεσσαλική πόλη κοντά στον Όλυμπο" },
+
+  // ── Επαγγέλματα ──────────────────────────────────────────────────
+  { word: "ΓΡΑΦΙΣΤΑΣ", category: "Επαγγέλματα", hint: "Σχεδιάζει οπτική επικοινωνία" },
+  { word: "ΕΙΚΟΝΟΓΡΑΦΟΣ", category: "Επαγγέλματα", hint: "Δημιουργεί εικόνες για βιβλία ή διαφήμιση" },
+  { word: "ΑΡΧΑΙΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Σκάβει και μελετά αρχαιότητες" },
+  { word: "ΑΙΤΙΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Γιατρός που ερευνά αιτίες ασθενειών" },
+  { word: "ΚΛΙΜΑΤΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Επιστήμονας κλίματος" },
+  { word: "ΥΔΡΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Μελετά νερό — ποτάμια λίμνες" },
+  { word: "ΣΕΙΣΜΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Μελετά σεισμούς" },
+  { word: "ΒΟΤΑΝΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Επιστήμονας φυτών" },
+  { word: "ΖΩΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Επιστήμονας ζώων" },
+  { word: "ΕΝΤΟΜΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Μελετά έντομα" },
+  { word: "ΩΚΕΑΝΟΓΡΑΦΟΣ", category: "Επαγγέλματα", hint: "Μελετά ωκεανούς" },
+  { word: "ΓΛΩΣΣΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Μελετά γλώσσα και γλωσσικά φαινόμενα" },
+  { word: "ΨΥΧΑΝΑΛΥΤΗΣ", category: "Επαγγέλματα", hint: "Εφαρμόζει ψυχανάλυση — Φρόιντ" },
+  { word: "ΝΕΥΡΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Γιατρός νευρολογικών παθήσεων" },
+  { word: "ΠΝΕΥΜΟΝΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Γιατρός αναπνευστικού" },
+  { word: "ΚΑΡΔΙΟΛΟΓΟΣ", category: "Επαγγέλματα", hint: "Γιατρός καρδιάς" },
+  { word: "ΧΑΡΤΟΓΡΑΦΟΣ", category: "Επαγγέλματα", hint: "Φτιάχνει χάρτες" },
+
+  // ── Επιστήμη ─────────────────────────────────────────────────────
+  { word: "ΣΕΙΣΜΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη σεισμών και σεισμικών κυμάτων" },
+  { word: "ΚΛΙΜΑΤΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη κλιματικών συστημάτων" },
+  { word: "ΩΚΕΑΝΟΓΡΑΦΙΑ", category: "Επιστήμη", hint: "Μελέτη ωκεανών και θαλάσσιων φαινομένων" },
+  { word: "ΓΛΩΣΣΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Επιστήμη της γλώσσας" },
+  { word: "ΨΥΧΑΝΑΛΥΣΗ", category: "Επιστήμη", hint: "Θεωρία ασυνείδητου — Φρόιντ" },
+  { word: "ΝΕΥΡΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Επιστήμη νευρικού συστήματος" },
+  { word: "ΑΝΟΣΟΛΟΓΙΑ", category: "Επιστήμη", hint: "Μελέτη ανοσοποιητικού" },
+  { word: "ΜΙΚΡΟΣΚΟΠΙΑ", category: "Επιστήμη", hint: "Χρήση μικροσκοπίου για παρατήρηση" },
+  { word: "ΒΙΟΗΘΙΚΗ", category: "Επιστήμη", hint: "Ηθικά ζητήματα στη βιοϊατρική" },
+  { word: "ΚΥΜΑΤΟΜΗΧΑΝΙΚΗ", category: "Επιστήμη", hint: "Μελέτη κυματικών φαινομένων" },
+  { word: "ΗΛΕΚΤΡΟΜΑΓΝΗΤΙΣΜΟΣ", category: "Επιστήμη", hint: "Ενιαία θεωρία ηλεκτρισμού-μαγνητισμού" },
+  { word: "ΘΕΡΜΟΚΡΑΣΙΑ", category: "Επιστήμη", hint: "Μέτρο θερμικής κατάστασης — Κέλβιν" },
+  { word: "ΠΥΚΝΟΤΗΤΑ", category: "Επιστήμη", hint: "Μάζα ανά μονάδα όγκου" },
+  { word: "ΑΔΡΑΝΕΙΑ", category: "Επιστήμη", hint: "Τάση σώματος να διατηρεί κίνηση — Νεύτων" },
+  { word: "ΤΡΙΒΗ", category: "Επιστήμη", hint: "Δύναμη αντίστασης κίνησης μεταξύ επιφανειών" },
+  { word: "ΕΛΑΣΤΙΚΟΤΗΤΑ", category: "Επιστήμη", hint: "Ικανότητα υλικού να επιστρέφει σε αρχική μορφή" },
+  { word: "ΤΗΞΗ", category: "Επιστήμη", hint: "Μετάβαση από στερεό σε υγρό" },
+  { word: "ΕΞΑΤΜΙΣΗ", category: "Επιστήμη", hint: "Μετάβαση από υγρό σε αέριο" },
+  { word: "ΟΣΜΩΣΗ", category: "Επιστήμη", hint: "Διέλευση νερού διαμέσου ημιπερατής μεμβράνης" },
+
+  // ── Τεχνολογία ───────────────────────────────────────────────────
+  { word: "ΜΠΛΟΚΤΣΕΪΝ", category: "Τεχνολογία", hint: "Κατανεμημένο αλυσιδωτό αρχείο συναλλαγών" },
+  { word: "ΜΕΤΑΠΑΓΚΟΣΜΙΟ", category: "Τεχνολογία", hint: "Ψηφιακός κόσμος τρισδιάστατης εμβύθισης" },
+
+  // ── Χρώματα & Σχήματα ────────────────────────────────────────────
+  { word: "ΣΑΜΑΝΙΚΟ", category: "Χρώματα & Σχήματα", hint: "Απαλό πορτοκαλί-ροζ χρώμα" },
+  { word: "ΚΑΡΔΑΜΟ", category: "Χρώματα & Σχήματα", hint: "Ανοιχτό κίτρινο-πράσινο χρώμα" },
+  { word: "ΚΕΧΡΙΜΠΑΡΙ", category: "Χρώματα & Σχήματα", hint: "Χρώμα ρετσίνας — κίτρινο-πορτοκαλί" },
+  { word: "ΣΙΕΛ", category: "Χρώματα & Σχήματα", hint: "Ανοιχτό γαλάζιο — ουρανί" },
+  { word: "ΚΑΦΕΚΟΚΚΙΝΟ", category: "Χρώματα & Σχήματα", hint: "Σκούρο κοκκινο-καφέ — τούβλο" },
+  { word: "ΜΕΝΤΑ", category: "Χρώματα & Σχήματα", hint: "Παστέλ πράσινο — δροσερό" },
+  { word: "ΜΠΟΡΝΤΩ", category: "Χρώματα & Σχήματα", hint: "Σκούρο κόκκινο — χρώμα κρασιού Μπορντό" },
+  { word: "ΕΛΛΕΙΨΟΕΙΔΕΣ", category: "Χρώματα & Σχήματα", hint: "Τρισδιάστατη έλλειψη" },
+  { word: "ΠΑΡΑΒΟΛΗ", category: "Χρώματα & Σχήματα", hint: "Καμπύλη συμμετρική — τομή κώνου" },
+  { word: "ΥΠΕΡΒΟΛΗ", category: "Χρώματα & Σχήματα", hint: "Δύο καμπύλες — τομή κώνου" },
+  { word: "ΦΡΑΚΤΑΛ", category: "Χρώματα & Σχήματα", hint: "Αυτοόμοιο γεωμετρικό μοτίβο" },
+  { word: "ΣΤΡΙΜΜΑ", category: "Χρώματα & Σχήματα", hint: "Επίπεδο Μέμπιους — μια μόνο όψη" },
+
+  // ── Μυθολογία ────────────────────────────────────────────────────
+  { word: "ΑΜΦΙΤΡΙΤΗ", category: "Μυθολογία", hint: "Βασίλισσα της θάλασσας — σύζυγος Ποσειδώνα" },
+  { word: "ΓΛΑΥΚΟΣ", category: "Μυθολογία", hint: "Θαλάσσιο δαιμόνιο με δώρο προφητείας" },
+  { word: "ΠΡΩΤΕΑΣ", category: "Μυθολογία", hint: "Θαλάσσιος θεός που αλλάζει μορφή" },
+  { word: "ΤΗΘΥΣ", category: "Μυθολογία", hint: "Τιτανίδα — μητέρα ποταμών και νηρηίδων" },
+  { word: "ΘΕΜΙΣ", category: "Μυθολογία", hint: "Θεά δικαιοσύνης και τάξης" },
+  { word: "ΜΝΗΜΟΣΥΝΗ", category: "Μυθολογία", hint: "Θεά μνήμης — μητέρα Μουσών" },
+  { word: "ΜΟΥΣΕΣ", category: "Μυθολογία", hint: "Εννέα θεές τέχνης και επιστήμης" },
+  { word: "ΧΑΡΙΤΕΣ", category: "Μυθολογία", hint: "Τρεις θεές χάρης — Αγλαΐα Θάλεια Ευφροσύνη" },
+  { word: "ΕΡΙΝΝΥΕΣ", category: "Μυθολογία", hint: "Θεές εκδίκησης — Αλληκτώ Μέγαιρα Τισιφόνη" },
+  { word: "ΜΟΙΡΕΣ", category: "Μυθολογία", hint: "Κλωθώ Λάχεσης Άτροπος — νήμα ζωής" },
+  { word: "ΕΛΠΙΣ", category: "Μυθολογία", hint: "Θεά ελπίδας — έμεινε στο κουτί Πανδώρας" },
+  { word: "ΝΙΚΗ", category: "Μυθολογία", hint: "Θεά νίκης — φτερωτή" },
+  { word: "ΩΡΑ", category: "Μυθολογία", hint: "Θεές εποχών και τάξης" },
+  { word: "ΕΚΑΤΗ", category: "Μυθολογία", hint: "Θεά μαγείας και σταυροδρομιών" },
+  { word: "ΠΕΙΘΩ", category: "Μυθολογία", hint: "Θεά πειθούς — Αφροδίτη συντροφιά" },
+  { word: "ΕΡΩΤΕΣ", category: "Μυθολογία", hint: "Πολλαπλοί Έρωτες — υπηρέτες Αφροδίτης" },
+  { word: "ΑΝΤΕΡΟΣ", category: "Μυθολογία", hint: "Θεός ανταπόδοσης έρωτα — αδελφός Έρωτα" },
+  { word: "ΠΡΙΑΠΟΣ", category: "Μυθολογία", hint: "Θεός γονιμότητας κήπων" },
+
+  // ── Ιστορία ──────────────────────────────────────────────────────
+  { word: "ΦΩΤΙΣΜΟΣ", category: "Ιστορία", hint: "Ευρωπαϊκό κίνημα λογικής — 18ος αιώνας" },
+
+  // ── Διάσημες Προσωπικότητες ──────────────────────────────────────
+  { word: "ΑΒΙΚΕΝΝΑΣ", category: "Διάσημες Προσωπικότητες", hint: "Μεσαιωνικός Πέρσης φιλόσοφος-γιατρός" },
+  { word: "ΑΛΧΑΖΕΝ", category: "Διάσημες Προσωπικότητες", hint: "Άραβας επιστήμονας — πατέρας οπτικής" },
+  { word: "ΚΕΠΛΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Γερμανός αστρονόμος — νόμοι πλανητών" },
+  { word: "ΚΟΠΕΡΝΙΚΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Πολωνός — ήλιος κέντρο ηλιακού" },
+  { word: "ΒΕΣΑΛΙΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Πατέρας σύγχρονης ανατομίας — Βέλγος" },
+  { word: "ΠΑΣΤΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Γάλλος — παστερίωση και εμβόλια" },
+  { word: "ΛΙΣΤΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός — αντισηψία στη χειρουργική" },
+  { word: "ΦΛΕΜΙΝΓΚ", category: "Διάσημες Προσωπικότητες", hint: "Ανακάλυψε την πενικιλίνη 1928" },
+  { word: "ΣΑΛΚ", category: "Διάσημες Προσωπικότητες", hint: "Ανακάλυψε εμβόλιο πολιομυελίτιδας" },
+  { word: "ΧΟΚΙΝΓΚ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός φυσικός — θεωρία μελανών οπών" },
+  { word: "ΤΟΥΡΙΝΓΚ", category: "Διάσημες Προσωπικότητες", hint: "Πατέρας υπολογιστών — Turing test" },
+  { word: "ΦΑΡΑΝΤΕΪ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός — ηλεκτρομαγνητική επαγωγή" },
+  { word: "ΜΑΞΓΟΥΕΛ", category: "Διάσημες Προσωπικότητες", hint: "Σκώτος — θεωρία ηλεκτρομαγνητισμού" },
+  { word: "ΧΑΙΖΕΝΜΠΕΡΓΚ", category: "Διάσημες Προσωπικότητες", hint: "Γερμανός — αρχή αβεβαιότητας" },
+  { word: "ΣΡΕΝΤΙΝΓΚΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Αυστριακός — κυματοσυνάρτηση και γάτα" },
+  { word: "ΝΤΙΡΑΚ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός — εξίσωση αντιύλης" },
+  { word: "ΦΕΪΝΜΑΝ", category: "Διάσημες Προσωπικότητες", hint: "Αμερικανός — διαγράμματα κβαντικής" },
+  { word: "ΚΙΟΥΡΙ", category: "Διάσημες Προσωπικότητες", hint: "Πολωνή — δύο βραβεία Νόμπελ ραδιενέργεια" },
+
+  // ── Χώρες & Πρωτεύουσες ─────────────────────────────────────────
+  { word: "ΑΡΜΕΝΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Καυκάσια χώρα — Ερεβάν" },
+  { word: "ΑΖΕΡΜΠΑΪΤΖΑΝ", category: "Χώρες & Πρωτεύουσες", hint: "Καυκάσια χώρα — Μπακού" },
+  { word: "ΓΕΩΡΓΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Καυκάσια χώρα — Τιφλίδα" },
+  { word: "ΚΑΖΑΚΣΤΑΝ", category: "Χώρες & Πρωτεύουσες", hint: "Μεγαλύτερη χώρα Κεντρικής Ασίας — Αστάνα" },
+  { word: "ΟΥΖΜΠΕΚΙΣΤΑΝ", category: "Χώρες & Πρωτεύουσες", hint: "Κεντρική Ασία — Τασκένδη" },
+  { word: "ΜΑΛΑΙΣΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "ΝΑ Ασία — Κουάλα Λουμπούρ" },
+  { word: "ΙΝΔΟΝΗΣΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Μεγαλύτερη αρχιπελαγος χώρα — Τζακάρτα" },
+  { word: "ΦΙΛΙΠΠΙΝΕΣ", category: "Χώρες & Πρωτεύουσες", hint: "Αρχιπέλαγος ΝΑ Ασίας — Μανίλα" },
+  { word: "ΒΙΕΤΝΑΜ", category: "Χώρες & Πρωτεύουσες", hint: "ΝΑ Ασία — Ανόι" },
+  { word: "ΤΑΪΛΑΝΔΗ", category: "Χώρες & Πρωτεύουσες", hint: "Χώρα χαμόγελου — Μπανγκόκ" },
+  { word: "ΜΙΑΝΜΑΡ", category: "Χώρες & Πρωτεύουσες", hint: "ΝΑ Ασία — Νεϊπιντό" },
+  { word: "ΣΡΙΛΑΝΚΑ", category: "Χώρες & Πρωτεύουσες", hint: "Νησί κάτω Ινδίας — Κολόμπο" },
+  { word: "ΜΠΑΓΚΛΑΝΤΕΣ", category: "Χώρες & Πρωτεύουσες", hint: "Νότια Ασία — Ντάκα" },
+  { word: "ΝΕΠΑΛ", category: "Χώρες & Πρωτεύουσες", hint: "Χώρα Ιμαλαΐων — Κατμαντού" },
+  { word: "ΓΚΑΝΑ", category: "Χώρες & Πρωτεύουσες", hint: "Δυτική Αφρική — Άκρα" },
+  { word: "ΝΙΓΗΡΙΑ", category: "Χώρες & Πρωτεύουσες", hint: "Πολυπληθέστερη αφρικανική χώρα — Αμπούτζα" },
+  { word: "ΣΕΝΕΓΑΛΗ", category: "Χώρες & Πρωτεύουσες", hint: "Δυτική Αφρική — Ντακάρ" },
+  { word: "ΚΑΜΕΡΟΥΝ", category: "Χώρες & Πρωτεύουσες", hint: "Κεντρική Αφρική — Γιαουντέ" },
+
+  // ── Πόλεις του κόσμου ────────────────────────────────────────────
+  { word: "ΑΒΑΝΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Κούβας — παλιά αυτοκίνητα" },
+  { word: "ΣΙΓΚΑΠΟΥΡΗ", category: "Πόλεις του κόσμου", hint: "Πόλη-κράτος ΝΑ Ασίας" },
+  { word: "ΤΖΑΚΑΡΤΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ινδονησίας" },
+  { word: "ΦΙΛΙΠΠΟΥΠΟΛΗ", category: "Πόλεις του κόσμου", hint: "Δεύτερη πόλη Βουλγαρίας — Πλόβντιβ" },
+  { word: "ΣΑΛΟΝΙΚΑ", category: "Πόλεις του κόσμου", hint: "Ελληνική πόλη γνωστή ως Θεσσαλονίκη" },
+  { word: "ΝΤΑΚΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Μπαγκλαντές" },
+  { word: "ΛΑΧΩΡΗ", category: "Πόλεις του κόσμου", hint: "Πολιτιστική πόλη Πακιστάν" },
+  { word: "ΤΕΧΕΡΑΝΗ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ιράν" },
+  { word: "ΒΑΓΔΑΤΗ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Ιράκ — Χιλιάδες και Μια Νύχτες" },
+  { word: "ΡΙΑΝΤ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Σαουδικής Αραβίας" },
+
+  // ── Οχήματα ──────────────────────────────────────────────────────
+  { word: "ΚΙΛΙΣΤΡΟ", category: "Οχήματα", hint: "Παλιό αγροτικό μεταφορικό με σκαπτικά" },
+  { word: "ΕΛΚΥΣΤΗΡΑΣ", category: "Οχήματα", hint: "Αγροτικό όχημα — τρακτέρ" },
+  { word: "ΘΕΡΙΖΟΑΛΩΝΙΣΤΙΚΗ", category: "Οχήματα", hint: "Μεγάλη γεωργική μηχανή συγκομιδής" },
+  { word: "ΟΔΟΣΤΡΩΤΗΡΑΣ", category: "Οχήματα", hint: "Βαρύ όχημα για ισοπέδωση δρόμων" },
+  { word: "ΜΟΝΟΡΑΙΛ", category: "Οχήματα", hint: "Τρένο σε μία μόνο ράγα" },
+  { word: "ΜΕΤΡΟ", category: "Οχήματα", hint: "Υπόγειος συρμός αστικής συγκοινωνίας" },
+  { word: "ΥΔΡΟΦΟΙΛ", category: "Οχήματα", hint: "Πλοίο που ανυψώνεται με φτερύγια" },
+  { word: "ΑΕΡΟΣΤΡΩΜΝΗ", category: "Οχήματα", hint: "Χόβερκραφτ — κινείται σε μαξιλάρι αέρα" },
+  { word: "ΥΠΕΡΟΧΗΜΑΤΟ", category: "Οχήματα", hint: "Αυτοκίνητο πολυτελείας υψηλής επίδοσης" },
+  { word: "ΦΟΡΤΗΓΑΚΙ", category: "Οχήματα", hint: "Μικρό φορτηγό — ντελιβεράδες" },
+  { word: "ΤΡΟΧΟΣΠΙΤΟ", category: "Οχήματα", hint: "Caravan — σπίτι πάνω σε ρόδες" },
+  { word: "ΚΑΡΑΒΙ", category: "Οχήματα", hint: "Μεγάλο πλοίο ανοιχτής θάλασσας" },
+  { word: "ΒΑΠΟΡΙ", category: "Οχήματα", hint: "Ατμοκίνητο πλοίο — παλιό" },
+  { word: "ΓΟΛΕΤΑ", category: "Οχήματα", hint: "Ιστιοφόρο με δύο ή περισσότερα κατάρτια" },
+  { word: "ΜΠΡΙΚΙ", category: "Οχήματα", hint: "Παλιό ιστιοφόρο με τετράγωνα πανιά" },
+
+  // ── Μέρη του Σώματος ─────────────────────────────────────────────
+  { word: "ΚΛΑΒΙΚΟΥΛΑ", category: "Μέρη του Σώματος", hint: "Κλείδα — οστό ώμου" },
+  { word: "ΣΤΕΡΝΑ", category: "Μέρη του Σώματος", hint: "Στέρνο — κεντρικό οστό θώρακα" },
+  { word: "ΩΛΕΚΡΑΝΟ", category: "Μέρη του Σώματος", hint: "Αγκώνας — οστέινη προεξοχή" },
+  { word: "ΓΛΩΣΣΑ", category: "Μέρη του Σώματος", hint: "Μυς στο στόμα — γεύση και ομιλία" },
+  { word: "ΣΙΕΛΟΓΟΝΟΣ", category: "Μέρη του Σώματος", hint: "Αδένας παραγωγής σάλιου" },
+  { word: "ΧΟΛΗ", category: "Μέρη του Σώματος", hint: "Πέτρες χολής — χοληδόχος κύστη" },
+  { word: "ΑΠΕΝΔΙΚΙΤΙΔΑ", category: "Μέρη του Σώματος", hint: "Φλεγμονή σκωλικοειδούς" },
+  { word: "ΣΠΛΗΝΑΣ", category: "Μέρη του Σώματος", hint: "Ανοσολογικό όργανο — αριστερά" },
+  { word: "ΦΡΕΝΙΤΙΔΑ", category: "Μέρη του Σώματος", hint: "Διάφραγμα — διαχωρίζει θώρακα κοιλιά" },
+  { word: "ΚΟΧΛΙΑΣ", category: "Μέρη του Σώματος", hint: "Σπειροειδές τμήμα εσωτερικού ωτός" },
+  { word: "ΑΜΦΙΒΛΗΣΤΡΟΕΙΔΗΣ", category: "Μέρη του Σώματος", hint: "Φωτοευαίσθητο τμήμα βυθού ματιού" },
+  { word: "ΚΕΡΑΤΟΕΙΔΗΣ", category: "Μέρη του Σώματος", hint: "Διαφανής μεμβράνη μπροστά στο μάτι" },
+
+  // ── Χόμπι & Δραστηριότητες ──────────────────────────────────────
+  { word: "ΤΟΞΟΤΕΧΝΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Άθλημα ή χόμπι με τόξο και βέλη" },
+  { word: "ΣΠΗΛΑΙΟΛΟΓΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Εξερεύνηση σπηλαίων" },
+  { word: "ΓΕΩΚΡΥΨΙΑ", category: "Χόμπι & Δραστηριότητες", hint: "Geocaching — εύρεση κρυμμένων κουτιών με GPS" },
+  { word: "ΑΚΤΙΒΙΣΜΟΣ", category: "Χόμπι & Δραστηριότητες", hint: "Εθελοντική κοινωνική δράση" },
+  { word: "ΜΟΝΤΕΛΟΠΟΙΗΣΗ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή μοντέλων αεροπλάνων πλοίων" },
+  { word: "ΡΑΨΙΜΟ", category: "Χόμπι & Δραστηριότητες", hint: "Κατασκευή ρούχων με ραπτομηχανή" },
+  { word: "ΒΕΛΟΝΑΚΙ", category: "Χόμπι & Δραστηριότητες", hint: "Πλέξιμο με μονή βελόνα — κροσέ" },
+
+  // ── Ονόματα ──────────────────────────────────────────────────────
+  { word: "ΤΡΙΑΝΤΑΦΥΛΛΙΑ", category: "Ονόματα", hint: "Γυναικείο ελληνικό όνομα" },
+  { word: "ΧΡΥΣΑΝΘΗ", category: "Ονόματα", hint: "Γυναικείο ελληνικό όνομα — λουλούδι" },
+  { word: "ΘΕΟΔΟΣΙΟΣ", category: "Ονόματα", hint: "Ανδρικό βυζαντινό όνομα" },
+  { word: "ΜΑΝΩΛΗΣ", category: "Ονόματα", hint: "Ανδρικό κρητικό όνομα — Εμμανουήλ" },
+  { word: "ΝΙΚΟΣΤΡΑΤΟΣ", category: "Ονόματα", hint: "Ανδρικό αρχαιοελληνικό όνομα" },
+  { word: "ΦΙΛΑΡΕΤΗ", category: "Ονόματα", hint: "Γυναικείο ελληνικό χριστιανικό όνομα" },
+  { word: "ΣΤΑΜΑΤΙΑ", category: "Ονόματα", hint: "Γυναικείο ελληνικό λαϊκό όνομα" },
+  { word: "ΠΟΛΥΜΝΙΑ", category: "Ονόματα", hint: "Γυναικείο ελληνικό όνομα — Μούσα ύμνων" },
+  { word: "ΑΛΚΙΒΙΑΔΗΣ", category: "Ονόματα", hint: "Ανδρικό αρχαιοελληνικό όνομα — αθηναίος στρατηγός" },
+  { word: "ΑΡΙΣΤΟΚΛΗΣ", category: "Ονόματα", hint: "Ανδρικό αρχαιοελληνικό — πραγματικό όνομα Πλάτωνα" },
+  { word: "ΛΑΜΠΡΙΝΗ", category: "Ονόματα", hint: "Γυναικείο ελληνικό όνομα — Λαμπρή Ανάσταση" },
+  { word: "ΑΝΑΡΓΥΡΟΣ", category: "Ονόματα", hint: "Ανδρικό ελληνικό χριστιανικό όνομα" },
+
+  // ── Ταινίες & Σειρές ─────────────────────────────────────────────
+  { word: "ΙΝΤΙΟΤ", category: "Ταινίες & Σειρές", hint: "Κλασικό ρωσικό μυθιστόρημα Ντοστογιέφσκι" },
+  { word: "ΣΑΙΔΦΕΛΝΤ", category: "Ταινίες & Σειρές", hint: "Αμερικανική κωμωδία — show about nothing" },
+  { word: "ΦΙΛΕΝΙΤΕΣ", category: "Ταινίες & Σειρές", hint: "Αμερικανική σειρά φίλων στη Νέα Υόρκη" },
+  { word: "ΛΟΣΤ", category: "Ταινίες & Σειρές", hint: "Επιζώντες σε νησί — μυστηριώδης" },
+  { word: "ΕΠΑΡΧΙΑ", category: "Ταινίες & Σειρές", hint: "Ελληνική κωμική σειρά εποχής" },
+  { word: "ΔΑΙΜΟΝΕΣ", category: "Ταινίες & Σειρές", hint: "Σειρά εποχής — Ρώσοι αξιωματούχοι" },
+
+  // ── Αντικείμενα Σπιτιού ──────────────────────────────────────────
+  { word: "ΕΞΑΕΡΙΣΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Συσκευή αποβολής αέρα-οσμών" },
+  { word: "ΑΦΥΓΡΑΝΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Μειώνει υγρασία στον αέρα" },
+  { word: "ΦΟΥΡΝΑΚΙ", category: "Αντικείμενα Σπιτιού", hint: "Μικρό ηλεκτρικό φουρνάκι επιτραπέζιο" },
+  { word: "ΒΡΑΣΤΗΡΑΣ", category: "Αντικείμενα Σπιτιού", hint: "Ηλεκτρική συσκευή βρασμού νερού" },
+  { word: "ΑΕΡΟΧΥΤΡΑ", category: "Αντικείμενα Σπιτιού", hint: "Air fryer — τηγάνισμα χωρίς λάδι" },
+  { word: "ΑΠΟΧΥΜΩΤΗΣ", category: "Αντικείμενα Σπιτιού", hint: "Εξάγει χυμό από φρούτα" },
+  { word: "ΣΟΥΡΩΧΤΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Σήτα για στράγγισμα ζυμαρικών" },
+  { word: "ΑΝΤΙΚΟΥΝΟΥΠΙΚΟ", category: "Αντικείμενα Σπιτιού", hint: "Συσκευή ή σπρέι κατά κουνουπιών" },
+  { word: "ΚΟΛΩΝΙΑ", category: "Αντικείμενα Σπιτιού", hint: "Αρωματικό σπρέι σώματος" },
+  { word: "ΜΠΡΕΛΟΚ", category: "Αντικείμενα Σπιτιού", hint: "Κρεμαστό διακοσμητικό κλειδιών" },
+
 ];
+
 
 const BODY_PARTS = ['h-head','h-body','h-larm','h-rarm','h-lleg','h-rleg'];
-const KEYBOARD_ROWS = [
-  ['Ε','Ρ','Τ','Υ','Θ','Ι','Ο','Π'],
-  ['Α','Σ','Δ','Φ','Γ','Η','Ξ','Κ','Λ'],
-  ['Ζ','Χ','Ψ','Ω','Β','Ν','Μ']
-];
-
 let word, guessed, wrong, gameOver;
 let usedWords = new Set();
 let newGameTimeouts = [];
@@ -4096,19 +4292,46 @@ function announce(msg, skipTTS = false) {
   }, 150);
 }
 
+// ── Τύπος Πληκτρολογίου ────────────────────────────────────────────────────
+let kbType = localStorage.getItem('hangman_kbtype') || 'buttons';
+
+function selectKbType(val) {
+  soundTick();
+  kbType = val;
+  localStorage.setItem('hangman_kbtype', val);
+  document.querySelectorAll('[data-kbtype]').forEach(btn => {
+    const isActive = btn.dataset.kbtype === val;
+    btn.setAttribute('aria-checked', String(isActive));
+    const stateEl = btn.querySelector('.toggle-state-label');
+    if (stateEl) stateEl.textContent = isActive ? 'Ενεργό' : 'Ανενεργό';
+  });
+  applyKbType();
+}
+
+function applyKbType() {
+  const kb   = document.getElementById('keyboard');
+  const wrap = document.getElementById('touch-input-wrap');
+  if (!kb || !wrap) return;
+  if (kbType === 'touch') {
+    kb.style.display = 'none';
+    wrap.classList.add('visible');
+  } else {
+    kb.style.display = '';
+    wrap.classList.remove('visible');
+  }
+}
+
 function buildKeyboard() {
-  KEYBOARD_ROWS.forEach((row, i) => {
-    const rowEl = document.getElementById(`row${i+1}`);
-    rowEl.innerHTML = '';
-    row.forEach(letter => {
-      const btn = document.createElement('button');
-      btn.className = 'key-btn';
-      btn.id = `key-${letter}`;
-      btn.textContent = letter;
-      btn.setAttribute('aria-label', letter);
-      btn.onclick = () => guess(letter);
-      rowEl.appendChild(btn);
-    });
+  const kb = document.getElementById('keyboard');
+  kb.innerHTML = '';
+  'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'.split('').forEach(letter => {
+    const btn = document.createElement('button');
+    btn.className = 'key-btn';
+    btn.id = 'key-' + letter;
+    btn.textContent = letter;
+    btn.setAttribute('aria-label', letter);
+    btn.onclick = () => guess(letter);
+    kb.appendChild(btn);
   });
 }
 
@@ -4155,8 +4378,8 @@ function renderHangman() {
 function guess(letter) {
   if (gameOver) return;
   if (guessed.has(letter)) { announce(letter + ", απενεργοποιημένο"); return; }
-  const btn = document.getElementById(`key-${letter}`);
-  if (btn.getAttribute('aria-disabled') === 'true') return;
+  const btn = document.getElementById('key-' + letter);
+  if (!btn || btn.getAttribute('aria-disabled') === 'true') return;
 
   // Bounce animation στο κουμπί
   btn.classList.remove('bounce');
@@ -4199,7 +4422,10 @@ function guess(letter) {
       document.getElementById('category-label').setAttribute('aria-hidden', 'true');
       document.getElementById('category-label').setAttribute('tabindex', '-1');
       disableAll();
-      setTimeout(() => btn.setAttribute('aria-label', `${letter}, σωστό`), 500);
+      setTimeout(() => {
+        btn.setAttribute('aria-label', `${letter}, σωστό`);
+
+      }, 500);
     } else {
       const positions = [];
       for (let i = 0; i < word.length; i++) {
@@ -4217,7 +4443,10 @@ function guess(letter) {
         : `${letter} σωστό.`;
       announce(msg);
       // Ενημερώνουμε το aria-label αφού ολοκληρωθεί η ανακοίνωση
-      setTimeout(() => btn.setAttribute('aria-label', `${letter}, σωστό`), 500);
+      setTimeout(() => {
+        btn.setAttribute('aria-label', `${letter}, σωστό`);
+
+      }, 500);
     }
   } else {
     wrong++;
@@ -4256,23 +4485,24 @@ function guess(letter) {
       word.split('').forEach(ch => { if(ch !== ' ') guessed.add(ch); });
       renderWord();
       disableAll();
-      setTimeout(() => btn.setAttribute('aria-label', `${letter}, λάθος`), 500);
+      setTimeout(() => {
+        btn.setAttribute('aria-label', `${letter}, λάθος`);
+      }, 500);
     } else {
       const remaining = maxWrong - wrong;
       const quipWrong = quipsEnabled ? ' ' + randomQuip('wrong') : '';
       announce(`Το ${letter} δεν υπάρχει. ${remainingToPhrase(remaining)}. ${quipWrong}`.trim() + '.');
-      setTimeout(() => btn.setAttribute('aria-label', `${letter}, λάθος`), 500);
+      setTimeout(() => {
+        btn.setAttribute('aria-label', `${letter}, λάθος`);
+      }, 500);
     }
   }
 }
 
 function disableAll() {
   setTimeout(() => {
-    // Απόκρυψη πληκτρολογίου — inert αποκλείει πλήρως από αναγνώστες οθόνης
     const kb = document.getElementById('keyboard');
-    kb.hidden = true;
-    kb.setAttribute('aria-hidden', 'true');
-    kb.setAttribute('inert', '');
+    if (kb) { kb.hidden = true; kb.setAttribute('aria-hidden', 'true'); kb.setAttribute('inert', ''); }
     // Απόκρυψη λέξης από αναγνώστη οθόνης στο τέλος
     const srWord = document.getElementById('sr-word-display');
     srWord.textContent = '';
@@ -4281,6 +4511,9 @@ function disableAll() {
     document.getElementById('btn-new').hidden = false;
     document.getElementById('btn-home').hidden = false;
     document.getElementById('btn-close-game').hidden = false;
+
+
+    // Απόκρυψη touch input
     const _tw = document.getElementById('touch-input-wrap');
     const _ti = document.getElementById('touch-letter-input');
     if (_tw) { _tw.setAttribute('aria-hidden', 'true'); _tw.setAttribute('inert', ''); }
@@ -4317,15 +4550,12 @@ function newGame() {
   document.getElementById('btn-new').hidden = true;
   document.getElementById('btn-home').hidden = true;
   document.getElementById('btn-close-game').hidden = true;
-  // Εμφάνιση πληκτρολογίου
   const kb = document.getElementById('keyboard');
-  kb.hidden = false;
-  kb.removeAttribute('aria-hidden');
-  kb.removeAttribute('inert');
-  const _tw2 = document.getElementById('touch-input-wrap');
-  const _ti2 = document.getElementById('touch-letter-input');
-  if (_tw2) { _tw2.removeAttribute('aria-hidden'); _tw2.removeAttribute('inert'); }
-  if (_ti2) { _ti2.disabled = false; _ti2.value = ''; }
+  if (kb) { kb.hidden = false; kb.removeAttribute('aria-hidden'); kb.removeAttribute('inert'); }
+  const _tw = document.getElementById('touch-input-wrap');
+  const _ti = document.getElementById('touch-letter-input');
+  if (_tw) { _tw.removeAttribute('aria-hidden'); _tw.removeAttribute('inert'); }
+  if (_ti) { _ti.disabled = false; _ti.value = ''; }
 
   document.getElementById('wrong-count').textContent = '0';
   document.getElementById('max-wrong-display').textContent = maxWrong;
@@ -4348,9 +4578,8 @@ function newGame() {
   document.getElementById('status-live').textContent = '';
   document.getElementById('status-live').className = '';
 
-  document.querySelectorAll('.key-btn').forEach(btn => {
+  document.querySelectorAll('#keyboard .key-btn').forEach(btn => {
     btn.removeAttribute('aria-disabled');
-    btn.removeAttribute('aria-hidden');
     btn.className = 'key-btn';
     btn.setAttribute('aria-label', btn.textContent);
   });
@@ -4462,7 +4691,6 @@ function buildCategorySelect() {
   const closeBtn = document.createElement('button');
   closeBtn.className = 'menu-close-btn';
   closeBtn.textContent = '✕ Κλείσιμο μενού';
-  closeBtn.setAttribute('onclick', 'closeCategoryMenu()');
   closeBtn.addEventListener('click', closeCategoryMenu);
   box.appendChild(closeBtn);
 
@@ -4627,7 +4855,6 @@ function selectFont(val) {
   if (val === 'xlarge') document.documentElement.classList.add('font-xlarge');
   localStorage.setItem('hangman_font', val);
   const fonts = ['normal', 'large', 'xlarge'];
-  const labels = { normal: 'Κανονικό μέγεθος γραμματοσειράς', large: 'Μεγάλη γραμματοσειρά', xlarge: 'Πολύ μεγάλη γραμματοσειρά' };
   fonts.forEach(f => {
     const active = f === val;
     const state = active ? 'Ενεργή' : 'Ανενεργή';
@@ -4748,88 +4975,9 @@ function getFilteredWords() {
   return pool;
 }
 
-// ── Τύπος Πληκτρολογίου ─────────────────────────────────────────────────
-let kbType = 'buttons'; // 'buttons' | 'touch'
 
-function selectKbType(val) {
-  soundTick();
-  kbType = val;
-  localStorage.setItem('hangman_kbtype', val);
-  // Δυναμικός συγχρονισμός — βρίσκει όλα τα toggles με data-kbtype
-  document.querySelectorAll('[data-kbtype]').forEach(btn => {
-    const isActive = btn.dataset.kbtype === val;
-    btn.setAttribute('aria-checked', String(isActive));
-    const stateEl = btn.querySelector('.toggle-state-label');
-    if (stateEl) stateEl.textContent = isActive ? 'Ενεργό' : 'Ανενεργό';
-  });
-  applyKbType();
-}
 
-function loadKbType() {
-  kbType = localStorage.getItem('hangman_kbtype') || 'buttons';
-  selectKbType(kbType);
-}
 
-function applyKbType() {
-  const kb   = document.getElementById('keyboard');
-  const wrap = document.getElementById('touch-input-wrap');
-  if (!kb || !wrap) return;
-
-  if (kbType === 'touch') {
-    kb.style.display   = 'none';
-    wrap.classList.add('visible');
-
-  } else {
-    kb.style.display = '';
-    wrap.classList.remove('visible');
-  }
-}
-
-// Αυτόματη υποβολή αφής — μόλις εντοπιστεί ελληνικό γράμμα
-document.addEventListener('DOMContentLoaded', () => {
-  const inp = document.getElementById('touch-letter-input');
-  if (!inp) return;
-
-  const LABEL_CLOSED = 'Πάτησε εδώ για να ανοίξει το πληκτρολόγιο. Συντομεύσεις πληκτρολογίου: Enter, επανάληψη τελευταίου μηνύματος.';
-  const LABEL_OPEN   = '';
-
-  // Αρχικό label (κλειστό πληκτρολόγιο)
-  inp.setAttribute('aria-label', LABEL_CLOSED);
-
-  // Όταν ανοίξει το πληκτρολόγιο (focus)
-  inp.addEventListener('focus', () => {
-    inp.setAttribute('aria-label', LABEL_OPEN);
-  });
-
-  // Όταν κλείσει το πληκτρολόγιο (blur)
-  inp.addEventListener('blur', () => {
-    inp.setAttribute('aria-label', LABEL_CLOSED);
-  });
-
-  inp.addEventListener('input', () => {
-    const GREEK   = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ';
-    const raw     = inp.value;
-    inp.value = '';
-
-    // Αριθμός
-    if (/[0-9]/.test(raw)) {
-      announce('Το αριθμητικό πληκτρολόγιο είναι απενεργοποιημένο.');
-      return;
-    }
-
-    // Λατινικοί χαρακτήρες (αγγλική γλώσσα πληκτρολογίου)
-    if (/[a-zA-Z]/.test(raw)) {
-      announce('Άλλαξε την γλώσσα πληκτρολογίου σε: Ελληνικά.');
-      return;
-    }
-
-    // Ελληνικό γράμμα
-    const filtered = raw.toUpperCase().replace(/[^ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ]/g, '');
-    if (filtered.length > 0) {
-      guess(filtered[0]);
-    }
-  });
-});
 
 // ── Custom Picker Menus (αντί για <select>) ──────────────────────────────
 function togglePickerMenu(id) {
@@ -4941,16 +5089,6 @@ function closeCategoryMenu() {
   if (btn)  setTimeout(() => btn.focus(), 50);
 }
 
-function closeStartOptions() {
-  soundShort();
-  const menu = document.getElementById('start-options-menu');
-  const btn  = document.getElementById('start-options-btn');
-  if (menu) menu.hidden = true;
-  if (btn)  { btn.setAttribute('aria-expanded', 'false'); document.getElementById('options-btn-arrow').textContent = '▼'; }
-  updateOptionsBtnText();
-  if (btn)  setTimeout(() => btn.focus(), 50);
-}
-
 function closeSettingsMenu() {
   soundShort();
   const menu = document.getElementById('settings-menu');
@@ -4959,6 +5097,32 @@ function closeSettingsMenu() {
   if (btn)  { btn.setAttribute('aria-expanded', 'false'); setTimeout(() => btn.focus(), 50); }
 }
 
+
+// ── Touch input listener ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const inp = document.getElementById('touch-letter-input');
+  if (!inp) return;
+
+  const LABEL_CLOSED = 'Πάτησε εδώ για να ανοίξει το πληκτρολόγιο. Συντομεύσεις πληκτρολογίου: Enter, επανάληψη τελευταίου μηνύματος.';
+
+  inp.addEventListener('focus', () => inp.setAttribute('aria-label', ''));
+  inp.addEventListener('blur',  () => inp.setAttribute('aria-label', LABEL_CLOSED));
+
+  inp.addEventListener('input', () => {
+    const raw = inp.value;
+    inp.value = '';
+    if (/[0-9]/.test(raw)) {
+      announce('Το αριθμητικό πληκτρολόγιο είναι απενεργοποιημένο.');
+      return;
+    }
+    if (/[a-zA-Z]/.test(raw)) {
+      announce('Άλλαξε την γλώσσα πληκτρολογίου σε: Ελληνικά.');
+      return;
+    }
+    const filtered = raw.toUpperCase().replace(/[^ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ]/g, '');
+    if (filtered.length > 0) guess(filtered[0]);
+  });
+});
 
 buildKeyboard();
 window.addEventListener('load', () => {
@@ -4971,7 +5135,7 @@ window.addEventListener('load', () => {
   loadPosInfo();
   loadQuips();
   loadPickerSelections();
-  loadKbType();
+  selectKbType(kbType); // αρχικοποίηση τύπου πληκτρολογίου
   updateOptionsBtnText();
   document.getElementById('start-screen').hidden = false;
   setTimeout(() => document.getElementById('start-subtitle').focus(), 500);
