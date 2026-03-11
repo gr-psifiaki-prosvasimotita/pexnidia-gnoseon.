@@ -1,0 +1,20 @@
+{
+  "name": "Παιχνίδια γνώσεων",
+  "short_name": "Παιχνίδια γνώσεων",
+  "description": "Παιχνίδια γνώσεων",
+  "start_url": "https://gr-psifiaki-prosvasimotita.github.io/pexnidia-gnoseon./",
+  "display": "standalone",
+  "background_color": "#0d0d1a",
+  "theme_color": "#d4bcff",
+  "orientation": "portrait-primary",
+  "lang": "el",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "education"]
+}

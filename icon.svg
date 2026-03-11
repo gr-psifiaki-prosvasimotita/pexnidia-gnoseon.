@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1c1c35"/>
+      <stop offset="100%" style="stop-color:#0d0d1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4bcff"/>
+      <stop offset="60%" style="stop-color:#ff8aaa"/>
+      <stop offset="100%" style="stop-color:#ffb347"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Φόντο με στρογγυλεμένες γωνίες -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#bg)"/>
+
+  <!-- Λεπτό border -->
+  <rect width="512" height="512" rx="96" ry="96" fill="none" stroke="url(#accent)" stroke-width="8" opacity="0.4"/>
+
+  <!-- Κεντρικό εικονίδιο: Κεφάλι/Εγκέφαλος με ερωτηματικό = γνώση -->
+
+  <!-- Ανθρώπινη σιλουέτα κεφαλιού -->
+  <ellipse cx="256" cy="200" rx="90" ry="95" fill="none" stroke="url(#accent)" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- Λαιμός -->
+  <line x1="226" y1="290" x2="226" y2="315" stroke="url(#accent)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="286" y1="290" x2="286" y2="315" stroke="url(#accent)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="215" y1="315" x2="297" y2="315" stroke="url(#accent)" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- Λεπτομέρειες εγκεφάλου μέσα στο κεφάλι (συμβολικές γραμμές) -->
+  <path d="M 210 175 Q 240 155 270 175 Q 290 190 270 210 Q 250 220 240 205" fill="none" stroke="#d4bcff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 230 215 Q 256 230 285 210" fill="none" stroke="#ff8aaa" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Ερωτηματικό — κεντρικό σύμβολο γνώσης -->
+  <text x="256" y="248" font-family="Arial, sans-serif" font-size="90" font-weight="900"
+    text-anchor="middle" fill="url(#accent)" filter="url(#glow)" opacity="0.95">?</text>
+
+  <!-- Αστεράκια γνώσης γύρω -->
+  <circle cx="148" cy="148" r="8" fill="#d4bcff" opacity="0.7"/>
+  <circle cx="364" cy="148" r="6" fill="#ff8aaa" opacity="0.6"/>
+  <circle cx="130" cy="260" r="5" fill="#ffb347" opacity="0.5"/>
+  <circle cx="382" cy="250" r="7" fill="#d4bcff" opacity="0.6"/>
+  <circle cx="170" cy="340" r="5" fill="#ff8aaa" opacity="0.5"/>
+  <circle cx="340" cy="345" r="6" fill="#d4bcff" opacity="0.55"/>
+
+  <!-- Κείμενο στο κάτω μέρος -->
+  <text x="256" y="420" font-family="Arial Black, sans-serif" font-size="38" font-weight="900"
+    text-anchor="middle" fill="url(#accent)" letter-spacing="2">ΓΝΩΣΕΙΣ</text>
+
+  <!-- Διακοσμητική γραμμή κάτω από τον τίτλο -->
+  <line x1="140" y1="435" x2="372" y2="435" stroke="url(#accent)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+</svg>
