@@ -8336,9 +8336,17 @@ document.addEventListener('DOMContentLoaded', () => {
 let pwaInstallPrompt = null;
 
 // Αποθηκεύουμε το beforeinstallprompt event για χρήση αργότερα
+// Αν ξαναπυροδοτηθεί (π.χ. μετά απεγκατάσταση), επαναφέρουμε το κουμπί
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   pwaInstallPrompt = e;
+  // Επαναφορά κουμπιού αν ήταν κρυφό (π.χ. μετά απεγκατάσταση)
+  localStorage.removeItem('pwa_install_btn_hidden');
+  const btn = document.getElementById('btn-install-shortcut');
+  if (btn) {
+    btn.hidden = false;
+    btn.removeAttribute('aria-hidden');
+  }
 });
 
 // Αν εγκατασταθεί, καθαρίζουμε το prompt
@@ -8354,6 +8362,15 @@ window.addEventListener('appinstalled', () => {
   }
 });
 
+function hideInstallBtn() {
+  const btn = document.getElementById('btn-install-shortcut');
+  if (btn) {
+    btn.hidden = true;
+    btn.setAttribute('aria-hidden', 'true');
+  }
+  localStorage.setItem('pwa_install_btn_hidden', '1');
+}
+
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
@@ -8363,13 +8380,15 @@ function handleInstallShortcut() {
   if (pwaInstallPrompt) {
     // Android / Windows Chrome / Edge — άμεση εγκατάσταση
     pwaInstallPrompt.prompt();
-    pwaInstallPrompt.userChoice.then(result => {
-      if (result.outcome === 'accepted') {
-        pwaInstallPrompt = null;
-      }
+    pwaInstallPrompt.userChoice.then(() => {
+      // Κρύβουμε το κουμπί ανεξάρτητα αν αποδέχτηκε ή απέρριψε
+      pwaInstallPrompt = null;
+      hideInstallBtn();
     });
   } else {
-    // iOS Safari και άλλες πλατφόρμες — εμφάνιση χειροκίνητων οδηγιών
+    // iOS/Mac και άλλες πλατφόρμες — εμφάνιση χειροκίνητων οδηγιών
+    // Κρύβουμε το κουμπί μόλις ανοίξει το modal
+    hideInstallBtn();
     openInstallModal();
   }
 }
@@ -8409,9 +8428,9 @@ function closeInstallModal() {
   overlay.hidden = true;
   overlay.setAttribute('aria-hidden', 'true');
   soundTick && soundTick();
-  // Επιστροφή εστίασης στο κουμπί
-  const btn = document.getElementById('btn-install-shortcut');
-  if (btn) btn.focus();
+  // Εστίαση πίσω στο subtitle αφού το κουμπί είναι πλέον κρυφό
+  const sub = document.getElementById('start-subtitle');
+  if (sub) sub.focus();
 }
 
 // Κλείσιμο με Escape
@@ -8453,6 +8472,11 @@ window.addEventListener('load', () => {
   loadQuips();
   loadPickerSelections(); // ορίζει selectedGame, buildCategorySelect, updateStartScreenForGame
   selectKbType(kbType, true);
+  // Απόκρυψη κουμπιού αν ο χρήστης έχει ήδη πατήσει εγκατάσταση στο παρελθόν
+  if (localStorage.getItem('pwa_install_btn_hidden') === '1') {
+    const btn = document.getElementById('btn-install-shortcut');
+    if (btn) { btn.hidden = true; btn.setAttribute('aria-hidden', 'true'); }
+  }
   document.getElementById('start-screen').hidden = false;
   document.title = 'Παιχνίδια γνώσεων';
   setTimeout(() => document.getElementById('start-subtitle').focus(), 500);
