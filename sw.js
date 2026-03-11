@@ -1,11 +1,13 @@
 // ── Service Worker — Παιχνίδια γνώσεων ──────────────────────────
-const CACHE_NAME = 'pexnidia-gnoseon-v1';
-const START_URL  = '/pexnidia-gnoseon./index.html';
+const CACHE_NAME = 'pexnidia-gnoseon-v2';
+const START_URL  = './index.html';
 
 // Αρχεία που αποθηκεύονται στη cache κατά την εγκατάσταση
 const PRECACHE_URLS = [
   START_URL,
-  '/pexnidia-gnoseon./',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 // Εγκατάσταση: προ-αποθήκευση των βασικών αρχείων
@@ -55,7 +57,7 @@ self.addEventListener('fetch', (event) => {
       .catch(() => {
         // Αν δεν υπάρχει δίκτυο, επιστρέφουμε από cache
         return caches.match(event.request).then((cached) => {
-          return cached || caches.match(START_URL + 'index.html');
+          return cached || caches.match(START_URL);
         });
       })
   );
