@@ -1286,14 +1286,6 @@
 // ── PWA Install ─────────────────────────────────────────────────
 let pwaInstallPrompt = null;
 
-// Εγγραφή Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .catch(() => { /* Αθόρυβη αποτυχία σε τοπικό περιβάλλον */ });
-  });
-}
-
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   pwaInstallPrompt = e;
