@@ -1,11 +1,11 @@
 // ── Service Worker — Παιχνίδια γνώσεων ──────────────────────────
 const CACHE_NAME = 'pexnidia-gnoseon-v1';
-const START_URL  = '/pexnidia-gnoseon./';
+const START_URL  = '/pexnidia-gnoseon./index.html';
 
 // Αρχεία που αποθηκεύονται στη cache κατά την εγκατάσταση
 const PRECACHE_URLS = [
   START_URL,
-  START_URL + 'index.html',
+  '/pexnidia-gnoseon./',
 ];
 
 // Εγκατάσταση: προ-αποθήκευση των βασικών αρχείων

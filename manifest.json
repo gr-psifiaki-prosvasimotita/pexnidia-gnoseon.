@@ -2,7 +2,8 @@
   "name": "Παιχνίδια γνώσεων",
   "short_name": "Παιχνίδια γνώσεων",
   "description": "Παιχνίδια γνώσεων - Κρεμάλα και Σωστό ή Λάθος",
-  "start_url": "/pexnidia-gnoseon./",
+  "start_url": "/pexnidia-gnoseon./index.html",
+  "scope": "/pexnidia-gnoseon./",
   "display": "standalone",
   "background_color": "#0d0d1a",
   "theme_color": "#d4bcff",
@@ -12,13 +13,25 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
