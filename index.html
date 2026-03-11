@@ -1024,13 +1024,22 @@
     <span>ΠΡΟΣΘΗΚΗ ΣΥΝΤΟΜΕΥΣΗΣ</span>
   </button>
 
-  <!-- Modal οδηγιών εγκατάστασης — εμφανίζεται μόνο σε iOS -->
+  <!-- Modal οδηγιών εγκατάστασης — εμφανίζεται όταν δεν υποστηρίζεται άμεση εγκατάσταση -->
   <div id="install-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="install-modal-title" hidden
     onclick="if(event.target===this)closeInstallModal()">
     <div id="install-modal">
       <h2 id="install-modal-title">📲 Προσθήκη Συντόμευσης</h2>
 
-      <div class="install-platform">
+      <div class="install-platform" id="install-platform-android">
+        <div class="install-platform-title"><span aria-hidden="true">🤖</span> Android (Chrome)</div>
+        <ol>
+          <li>Πάτησε το μενού <strong>⋮</strong> (τρεις τελείες) πάνω δεξιά</li>
+          <li>Επίλεξε <strong>«Προσθήκη στην αρχική οθόνη»</strong></li>
+          <li>Πάτησε <strong>«Προσθήκη»</strong> για επιβεβαίωση</li>
+        </ol>
+      </div>
+
+      <div class="install-platform" id="install-platform-ios">
         <div class="install-platform-title"><span aria-hidden="true">🍎</span> iOS (Safari)</div>
         <ol>
           <li>Άνοιξε το παιχνίδι στο <strong>Safari</strong></li>
@@ -8368,16 +8377,29 @@ function handleInstallShortcut() {
 function openInstallModal() {
   const overlay = document.getElementById('install-modal-overlay');
   if (!overlay) return;
+
+  // Εμφάνιση μόνο των σχετικών οδηγιών ανάλογα με πλατφόρμα
+  const isIos = isIOS();
+  const androidSection = document.getElementById('install-platform-android');
+  const iosSection     = document.getElementById('install-platform-ios');
+  if (androidSection) androidSection.style.display = isIos ? 'none' : '';
+  if (iosSection)     iosSection.style.display     = isIos ? '' : 'none';
+
   overlay.hidden = false;
   overlay.removeAttribute('aria-hidden');
+
   // Εστίαση στον τίτλο για αναγνώστες οθόνης
   setTimeout(() => {
     const title = document.getElementById('install-modal-title');
     if (title) { title.setAttribute('tabindex', '-1'); title.focus(); }
   }, 100);
+
   // Ανακοίνωση για TTS
   if (typeof speak === 'function') {
-    setTimeout(() => speak('Οδηγίες εγκατάστασης για iOS Safari. Ακολουθήστε τα παρακάτω βήματα.'), 300);
+    const msg = isIos
+      ? 'Οδηγίες εγκατάστασης για iOS Safari. Ακολουθήστε τα παρακάτω βήματα.'
+      : 'Οδηγίες εγκατάστασης για Android Chrome. Ακολουθήστε τα παρακάτω βήματα.';
+    setTimeout(() => speak(msg), 300);
   }
 }
 
