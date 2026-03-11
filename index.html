@@ -1024,21 +1024,11 @@
     <span>ΠΡΟΣΘΗΚΗ ΣΥΝΤΟΜΕΥΣΗΣ</span>
   </button>
 
-  <!-- Modal οδηγιών εγκατάστασης -->
+  <!-- Modal οδηγιών εγκατάστασης — εμφανίζεται μόνο σε iOS -->
   <div id="install-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="install-modal-title" hidden
     onclick="if(event.target===this)closeInstallModal()">
     <div id="install-modal">
       <h2 id="install-modal-title">📲 Προσθήκη Συντόμευσης</h2>
-
-      <div class="install-platform">
-        <div class="install-platform-title"><span aria-hidden="true">🤖</span> Android (Chrome)</div>
-        <ol>
-          <li>Άνοιξε το παιχνίδι στο <strong>Chrome</strong></li>
-          <li>Πάτησε το μενού <strong>⋮</strong> (τρεις τελείες) πάνω δεξιά</li>
-          <li>Επίλεξε <strong>«Προσθήκη στην αρχική οθόνη»</strong></li>
-          <li>Πάτησε <strong>«Προσθήκη»</strong> για επιβεβαίωση</li>
-        </ol>
-      </div>
 
       <div class="install-platform">
         <div class="install-platform-title"><span aria-hidden="true">🍎</span> iOS (Safari)</div>
@@ -1047,16 +1037,6 @@
           <li>Πάτησε το κουμπί <strong>Κοινής χρήσης</strong> <span aria-hidden="true">⬆️</span> κάτω στη γραμμή εργαλείων</li>
           <li>Κύλησε κάτω και επίλεξε <strong>«Προσθήκη στην αρχική οθόνη»</strong></li>
           <li>Πάτησε <strong>«Προσθήκη»</strong> πάνω δεξιά</li>
-        </ol>
-      </div>
-
-      <div class="install-platform">
-        <div class="install-platform-title"><span aria-hidden="true">💻</span> Windows (Chrome / Edge)</div>
-        <ol>
-          <li>Άνοιξε το παιχνίδι στο <strong>Chrome</strong> ή <strong>Edge</strong></li>
-          <li>Στη γραμμή διεύθυνσης θα εμφανιστεί εικονίδιο εγκατάστασης <span aria-hidden="true">⊕</span></li>
-          <li>Πάτησέ το και επίλεξε <strong>«Εγκατάσταση»</strong></li>
-          <li>Εναλλακτικά: μενού <strong>⋮</strong> → <strong>«Αποθήκευση και κοινή χρήση»</strong> → <strong>«Εγκατάσταση ως εφαρμογή»</strong></li>
         </ol>
       </div>
 
@@ -8365,10 +8345,14 @@ window.addEventListener('appinstalled', () => {
   }
 });
 
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+
 function handleInstallShortcut() {
   soundTick && soundTick();
   if (pwaInstallPrompt) {
-    // Ο browser υποστηρίζει άμεση εγκατάσταση
+    // Android / Windows Chrome / Edge — άμεση εγκατάσταση
     pwaInstallPrompt.prompt();
     pwaInstallPrompt.userChoice.then(result => {
       if (result.outcome === 'accepted') {
@@ -8376,7 +8360,7 @@ function handleInstallShortcut() {
       }
     });
   } else {
-    // Εμφάνιση χειροκίνητων οδηγιών
+    // iOS Safari και άλλες πλατφόρμες — εμφάνιση χειροκίνητων οδηγιών
     openInstallModal();
   }
 }
@@ -8393,7 +8377,7 @@ function openInstallModal() {
   }, 100);
   // Ανακοίνωση για TTS
   if (typeof speak === 'function') {
-    setTimeout(() => speak('Οδηγίες εγκατάστασης παιχνιδιού. Επιλέξτε την πλατφόρμα σας για να δείτε τα βήματα.'), 300);
+    setTimeout(() => speak('Οδηγίες εγκατάστασης για iOS Safari. Ακολουθήστε τα παρακάτω βήματα.'), 300);
   }
 }
 
