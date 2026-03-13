@@ -182,8 +182,21 @@
     transition: opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .hangman-part.visible { opacity: 1; }
-  .hangman-part.head  { stroke: var(--accent2); stroke-width: 3.5; filter: drop-shadow(0 0 6px rgba(255,112,150,0.5)); }
-  .hangman-part.body  { stroke: var(--accent2); filter: drop-shadow(0 0 4px rgba(255,112,150,0.4)); }
+  .hangman-part.head {
+    stroke: url(#hg-body-grad);
+    stroke-width: 3.5;
+    filter: url(#hg-glow) drop-shadow(0 0 8px rgba(255,112,150,0.6));
+  }
+  .hangman-part.body {
+    stroke: url(#hg-body-grad);
+    stroke-width: 4;
+    filter: url(#hg-glow) drop-shadow(0 0 6px rgba(255,112,150,0.5));
+  }
+  .hangman-part.limb {
+    stroke: url(#hg-body-grad);
+    stroke-width: 3.5;
+    filter: drop-shadow(0 0 4px rgba(255,138,170,0.4));
+  }
 
   /* ── Μήνυμα αποτελέσματος ───────────────────────────────────── */
   .announce-box {
@@ -780,6 +793,10 @@
   .cat-checkbox-row:hover label { color: var(--accent); }
 
   /* ── Κουμπί Έναρξης ──────────────────────────────────────────── */
+  @keyframes btnStartPulse {
+    0%, 100% { box-shadow: 0 6px 32px rgba(196,168,255,0.4), 0 2px 8px rgba(0,0,0,0.4); }
+    50%       { box-shadow: 0 8px 48px rgba(196,168,255,0.7), 0 0 24px rgba(255,138,170,0.35), 0 2px 8px rgba(0,0,0,0.4); }
+  }
   .btn-start {
     background: var(--gradient);
     color: #ffffff;
@@ -798,6 +815,7 @@
     box-shadow: 0 6px 32px rgba(196,168,255,0.4), 0 2px 8px rgba(0,0,0,0.4);
     position: relative;
     overflow: hidden;
+    animation: btnStartPulse 2.5s ease-in-out infinite;
   }
   .btn-start::after {
     content: '' / '';
@@ -980,26 +998,139 @@
   .install-modal-close:hover { opacity: 0.9; transform: translateY(-1px); }
   .install-modal-close:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
 
-  @media (min-width: 768px) {
-    .btn-install { width: min(480px, 90vw); }
+  /* ── Logo αρχικής οθόνης ─────────────────────────────────────── */
+  .start-logo {
+    font-size: clamp(3rem, 10vw, 4.5rem);
+    margin-top: 1.5rem;
+    margin-bottom: 0.2rem;
+    filter: drop-shadow(0 0 24px rgba(196,168,255,0.5));
+    animation: logoFloat 3.5s ease-in-out infinite;
+    speak: none;
+  }
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
   }
 
-  /* Κοινό μενού γενικών ρυθμίσεων — εκτός screens, εμφανίζεται κεντραρισμένο */
-  #start-settings-menu:not([hidden]) {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  /* ── Κουμπί Κλεισίματος αρχικής οθόνης ───────────────────────── */
+  .btn-close-start {
+    background: none;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1.8rem;
+    cursor: pointer;
     width: min(420px, 95vw);
+    margin-top: 0.75rem;
+    text-align: center;
+    transition: color var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .btn-close-start:hover { color: var(--text); border-color: var(--muted); background: var(--surface); }
+  .btn-close-start:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  @media (min-width: 768px) { .btn-close-start { width: min(480px, 90vw); } }
+
+  /* ── Announce box win/lose states ────────────────────────────── */
+  .announce-box.state-win {
+    border-left-color: var(--green);
+    background: linear-gradient(135deg, rgba(111,255,192,0.08), var(--surface));
+    color: var(--green);
+  }
+  .announce-box.state-lose {
+    border-left-color: var(--accent2);
+    background: linear-gradient(135deg, rgba(255,138,170,0.08), var(--surface));
+    color: var(--accent2);
+  }
+
+  /* ── Κουμπιά Σωστό/Λάθος ─────────────────────────────────────── */
+  #sl-btn-true {
+    background: linear-gradient(145deg, rgba(111,255,192,0.12), rgba(45,214,138,0.08)) !important;
+    border-color: var(--green) !important;
+    color: var(--green) !important;
+    font-size: 1.15rem !important;
+    transition: background 0.18s, transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s !important;
+  }
+  #sl-btn-true:hover:not(:disabled) {
+    background: linear-gradient(145deg, rgba(111,255,192,0.22), rgba(45,214,138,0.15)) !important;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px rgba(111,255,192,0.3) !important;
+  }
+  #sl-btn-false {
+    background: linear-gradient(145deg, rgba(255,138,170,0.12), rgba(255,80,120,0.08)) !important;
+    border-color: var(--accent2) !important;
+    color: var(--accent2) !important;
+    font-size: 1.15rem !important;
+    transition: background 0.18s, transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s !important;
+  }
+  #sl-btn-false:hover:not(:disabled) {
+    background: linear-gradient(145deg, rgba(255,138,170,0.22), rgba(255,80,120,0.15)) !important;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px rgba(255,138,170,0.3) !important;
+  }
+  #sl-btn-true:disabled, #sl-btn-false:disabled { opacity: 0.4; transform: none !important; }
+  #sl-btn-true:focus-visible, #sl-btn-false:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* ── Κουτί ερώτησης Σωστό/Λάθος ──────────────────────────────── */
+  @keyframes questionShimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  #sl-question-box {
+    border-color: var(--accent) !important;
+    border-width: 2px !important;
+    background: linear-gradient(145deg, var(--surface2), var(--surface)) !important;
+    box-shadow: var(--shadow), 0 0 30px rgba(196,168,255,0.06) !important;
+    font-size: clamp(1rem, 3.5vw, 1.25rem) !important;
+    transition: box-shadow 0.3s !important;
+  }
+  #sl-question-box.shimmer {
+    background: linear-gradient(
+      105deg,
+      var(--surface2) 0%,
+      var(--surface2) 30%,
+      rgba(212,188,255,0.18) 50%,
+      var(--surface2) 70%,
+      var(--surface2) 100%
+    ) !important;
+    background-size: 200% auto !important;
+    animation: questionShimmer 0.7s ease-in-out !important;
+    box-shadow: var(--shadow), 0 0 40px rgba(196,168,255,0.18) !important;
+  }
+
+  /* ── sl-result-visual animation ──────────────────────────────── */
+  @keyframes resultPop {
+    0%   { transform: scale(0.95); opacity: 0; }
+    60%  { transform: scale(1.03); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  #sl-result-visual:not(:empty) { animation: resultPop 0.3s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+  /* ── Κουμπιά τέλους παιχνιδιού — καλύτερο spacing ────────────── */
+  #btn-new, #btn-home, #btn-close-game,
+  #sl-btn-new, #sl-btn-home, #sl-btn-close {
+    margin-top: 0.6rem !important;
+  }
+
+
+  #start-settings-menu[hidden],
+  #game-settings-menu[hidden],
+  #sl-settings-menu[hidden] { display: none !important; }
+
+  #start-settings-menu:not([hidden]),
+  #game-settings-menu:not([hidden]),
+  #sl-settings-menu:not([hidden]) {
+    display: block;
+    width: 100%;
     max-height: 80vh;
     overflow-y: auto;
-    z-index: 1000;
     background: var(--surface);
     border: 1.5px solid var(--accent);
     border-radius: 18px;
     padding: 1.1rem 1.3rem;
     box-shadow: var(--shadow), 0 0 40px rgba(196,168,255,0.15);
+    margin-top: 0.4rem;
   }
 
 
@@ -1012,8 +1143,9 @@
 <!-- ── Αρχική Οθόνη ─────────────────────────────────────────── -->
 <div id="start-screen" role="region" aria-label="Αρχική οθόνη παιχνιδιών γνώσεων">
 
+  <div class="start-logo" aria-hidden="true">🧠</div>
   <p class="screen-title" aria-hidden="true">Παιχνίδια γνώσεων</p>
-  <p class="subtitle" id="start-subtitle" tabindex="-1">Καλωσόρισες στα παιχνίδια γνώσεων</p>
+  <p class="subtitle" id="start-subtitle" tabindex="-1" aria-live="assertive" aria-atomic="true">Καλωσόρισες στα παιχνίδια γνώσεων</p>
 
 
   <!-- Κουμπί Προσθήκης Συντόμευσης -->
@@ -1163,7 +1295,7 @@
   </div>
 
   <!-- Γενικές ρυθμίσεις -->
-  <div class="start-section">
+  <div class="start-section" id="start-settings-section">
     <button type="button" class="start-select settings-trigger-btn" id="start-settings-btn"
       aria-expanded="false"
       aria-controls="start-settings-menu"
@@ -1174,15 +1306,155 @@
       <span aria-hidden="true" id="start-settings-btn-text">⚙️ Γενικές ρυθμίσεις</span>
       <span id="start-settings-btn-arrow" class="settings-trigger-arrow" aria-hidden="true">▼</span>
     </button>
+    <!-- Μενού γενικών ρυθμίσεων — αμέσως μετά το κουμπί για σωστή DOM-order σε NVDA/TalkBack -->
+    <div id="start-settings-menu" role="group" aria-label="Γενικές ρυθμίσεις" hidden aria-hidden="true">
+    <button type="button" class="toggle-row" id="ss-sound-toggle"
+        data-sync="sound"
+      role="switch"
+      aria-checked="true"
+      aria-label="Ήχοι"
+      onclick="toggleSound()">
+      <span class="toggle-label" aria-hidden="true">🔊 Ήχοι</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-sound-state" aria-hidden="true">Ενεργοί</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-speech-toggle"
+        data-sync="speech"
+      role="switch"
+      aria-checked="false"
+      aria-label="Φωνητική καθοδήγηση"
+      onclick="toggleSpeech()">
+      <span class="toggle-label" aria-hidden="true">🗣️ Φωνητική καθοδήγηση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-speech-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-hint-toggle"
+        data-sync="hint"
+      role="switch"
+      aria-checked="false"
+      aria-label="Υποδείξεις λέξεων"
+      onclick="toggleHint()">
+      <span class="toggle-label" aria-hidden="true">💡 Υποδείξεις λέξεων</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-hint-state" aria-hidden="true">Ανενεργές</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-posinfo-toggle"
+        data-sync="posinfo"
+      role="switch" aria-checked="true"
+      aria-label="Περιγραφή θέσεις σωστών γραμμάτων και κενών"
+      onclick="togglePosInfo()">
+      <span class="toggle-label" aria-hidden="true">📍 Περιγραφή θέσεις σωστών γραμμάτων και κενών</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-posinfo-state" aria-hidden="true">Ενεργή</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-quips-toggle"
+        data-sync="quips"
+      role="switch" aria-checked="false"
+      aria-label="Ατάκες παιχνιδιού"
+      onclick="toggleQuips()">
+      <span class="toggle-label" aria-hidden="true">💬 Ατάκες παιχνιδιού</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-quips-state" aria-hidden="true">Ανενεργές</span>
+    </button>
+
+    <div id="ss-section-kbtype" role="group" aria-labelledby="ss-kbtype-title">
+    <div class="settings-title" id="ss-kbtype-title" style="margin-top:0.5rem;">Τύπος πληκτρολογίου</div>
+
+    <button type="button" class="toggle-row" id="ss-kbtype-buttons-toggle"
+      role="switch" aria-checked="true"
+      data-kbtype="buttons"
+      aria-label="Πληκτρολόγιο με κουμπιά"
+      onclick="selectKbType('buttons')">
+      <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με κουμπιά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-kbtype-buttons-state" aria-hidden="true">Ενεργό</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-kbtype-touch-toggle"
+      role="switch" aria-checked="false"
+      data-kbtype="touch"
+      aria-label="Πληκτρολόγιο αφής"
+      onclick="selectKbType('touch')">
+      <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο αφής</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-kbtype-touch-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    </div>
+
+    <div role="group" aria-labelledby="ss-theme-title">
+    <div class="settings-title" id="ss-theme-title" style="margin-top:0.5rem;">Επιλογές εμφάνισης παιχνιδιού</div>
+
+    <button type="button" class="toggle-row" id="ss-theme-default-toggle"
+      role="switch" aria-checked="true"
+      aria-label="Προεπιλεγμένη εμφάνιση"
+      onclick="selectTheme('default')">
+      <span class="toggle-label" aria-hidden="true">🎨 Προεπιλεγμένη εμφάνιση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-theme-default-state" aria-hidden="true">Ενεργή</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-theme-dark-toggle"
+      role="switch" aria-checked="false"
+      aria-label="Μαύρο φόντο με λευκά γράμματα"
+      onclick="selectTheme('dark')">
+      <span class="toggle-label" aria-hidden="true">🌑 Μαύρο φόντο με λευκά γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-theme-dark-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-theme-light-toggle"
+      role="switch" aria-checked="false"
+      aria-label="Λευκό φόντο με μαύρα γράμματα"
+      onclick="selectTheme('light')">
+      <span class="toggle-label" aria-hidden="true">☀️ Λευκό φόντο με μαύρα γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-theme-light-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    </div>
+
+    <div role="group" aria-labelledby="ss-font-title">
+    <div class="settings-title" id="ss-font-title" style="margin-top:0.5rem;">Μέγεθος γραμματοσειράς</div>
+
+    <button type="button" class="toggle-row" id="ss-font-normal-toggle"
+      role="switch" aria-checked="true"
+      aria-label="Κανονικό μέγεθος γραμματοσειράς"
+      onclick="selectFont('normal')">
+      <span class="toggle-label" aria-hidden="true">🅰️ Κανονικό μέγεθος γραμματοσειράς</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-font-normal-state" aria-hidden="true">Ενεργή</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-font-large-toggle"
+      role="switch" aria-checked="false"
+      aria-label="Μεγάλη γραμματοσειρά"
+      onclick="selectFont('large')">
+      <span class="toggle-label" aria-hidden="true">🔠 Μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-font-large-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+
+    <button type="button" class="toggle-row" id="ss-font-xlarge-toggle"
+      role="switch" aria-checked="false"
+      aria-label="Πολύ μεγάλη γραμματοσειρά"
+      onclick="selectFont('xlarge')">
+      <span class="toggle-label" aria-hidden="true">🔡 Πολύ μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="ss-font-xlarge-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    </div>
+    </div>
   </div>
 
   <!-- Κουμπί Έναρξης -->
   <button type="button" class="btn-start" aria-label="Έναρξη παιχνιδιού" onclick="startGame()">
-    🎮 Έναρξη παιχνιδιού
+    <span aria-hidden="true">▶</span> Έναρξη παιχνιδιού
   </button>
 
-  <button type="button" class="btn-new" aria-label="Κλείσιμο"
-    style="background:var(--surface);color:var(--muted);border:2px solid var(--border);"
+  <button type="button" class="btn-close-start" aria-label="Κλείσιμο"
     onclick="closeWithQuip()">✕ Κλείσιμο</button>
 
 </div>
@@ -1196,7 +1468,7 @@
 <div class="start-section" id="shared-settings-container">
   <button type="button" class="start-select settings-trigger-btn" id="game-shared-settings-btn"
     aria-expanded="false"
-    aria-controls="start-settings-menu"
+    aria-controls="game-settings-menu"
     aria-label="Γενικές ρυθμίσεις"
     tabindex="0"
     onclick="toggleSharedSettingsMenu()"
@@ -1204,6 +1476,83 @@
     <span aria-hidden="true" id="game-shared-settings-btn-text">⚙️ Γενικές ρυθμίσεις</span>
     <span id="game-shared-settings-btn-arrow" class="settings-trigger-arrow" aria-hidden="true">▼</span>
   </button>
+  <div id="game-settings-menu" role="group" aria-label="Γενικές ρυθμίσεις" hidden aria-hidden="true">
+    <button type="button" class="toggle-row" id="gm-sound-toggle" data-sync="sound" role="switch" aria-checked="true" aria-label="Ήχοι" onclick="toggleSound()">
+      <span class="toggle-label" aria-hidden="true">🔊 Ήχοι</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-sound-state" aria-hidden="true">Ενεργοί</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-speech-toggle" data-sync="speech" role="switch" aria-checked="false" aria-label="Φωνητική καθοδήγηση" onclick="toggleSpeech()">
+      <span class="toggle-label" aria-hidden="true">🗣️ Φωνητική καθοδήγηση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-speech-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-hint-toggle" data-sync="hint" role="switch" aria-checked="false" aria-label="Υποδείξεις λέξεων" onclick="toggleHint()">
+      <span class="toggle-label" aria-hidden="true">💡 Υποδείξεις λέξεων</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-hint-state" aria-hidden="true">Ανενεργές</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-posinfo-toggle" data-sync="posinfo" role="switch" aria-checked="true" aria-label="Περιγραφή θέσεις σωστών γραμμάτων και κενών" onclick="togglePosInfo()">
+      <span class="toggle-label" aria-hidden="true">📍 Περιγραφή θέσεις σωστών γραμμάτων και κενών</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-posinfo-state" aria-hidden="true">Ενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-quips-toggle" data-sync="quips" role="switch" aria-checked="false" aria-label="Ατάκες παιχνιδιού" onclick="toggleQuips()">
+      <span class="toggle-label" aria-hidden="true">💬 Ατάκες παιχνιδιού</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-quips-state" aria-hidden="true">Ανενεργές</span>
+    </button>
+    <div role="group" aria-labelledby="gm-kbtype-title">
+    <div class="settings-title" id="gm-kbtype-title" style="margin-top:0.5rem;">Τύπος πληκτρολογίου</div>
+    <button type="button" class="toggle-row" id="gm-kbtype-buttons-toggle" data-sync="kbtype-buttons" role="switch" aria-checked="true" data-kbtype="buttons" aria-label="Πληκτρολόγιο με κουμπιά" onclick="selectKbType('buttons')">
+      <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με κουμπιά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-kbtype-buttons-state" aria-hidden="true">Ενεργό</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-kbtype-touch-toggle" data-sync="kbtype-touch" role="switch" aria-checked="false" data-kbtype="touch" aria-label="Πληκτρολόγιο αφής" onclick="selectKbType('touch')">
+      <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο αφής</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-kbtype-touch-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    </div>
+    <div role="group" aria-labelledby="gm-theme-title">
+    <div class="settings-title" id="gm-theme-title" style="margin-top:0.5rem;">Επιλογές εμφάνισης παιχνιδιού</div>
+    <button type="button" class="toggle-row" id="gm-theme-default-toggle" data-sync="theme-default" role="switch" aria-checked="true" aria-label="Προεπιλεγμένη εμφάνιση" onclick="selectTheme('default')">
+      <span class="toggle-label" aria-hidden="true">🎨 Προεπιλεγμένη εμφάνιση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-theme-default-state" aria-hidden="true">Ενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-theme-dark-toggle" data-sync="theme-dark" role="switch" aria-checked="false" aria-label="Μαύρο φόντο με λευκά γράμματα" onclick="selectTheme('dark')">
+      <span class="toggle-label" aria-hidden="true">🌑 Μαύρο φόντο με λευκά γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-theme-dark-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-theme-light-toggle" data-sync="theme-light" role="switch" aria-checked="false" aria-label="Λευκό φόντο με μαύρα γράμματα" onclick="selectTheme('light')">
+      <span class="toggle-label" aria-hidden="true">☀️ Λευκό φόντο με μαύρα γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-theme-light-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    </div>
+    <div role="group" aria-labelledby="gm-font-title">
+    <div class="settings-title" id="gm-font-title" style="margin-top:0.5rem;">Μέγεθος γραμματοσειράς</div>
+    <button type="button" class="toggle-row" id="gm-font-normal-toggle" data-sync="font-normal" role="switch" aria-checked="true" aria-label="Κανονικό μέγεθος γραμματοσειράς" onclick="selectFont('normal')">
+      <span class="toggle-label" aria-hidden="true">🅰️ Κανονικό μέγεθος γραμματοσειράς</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-font-normal-state" aria-hidden="true">Ενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-font-large-toggle" data-sync="font-large" role="switch" aria-checked="false" aria-label="Μεγάλη γραμματοσειρά" onclick="selectFont('large')">
+      <span class="toggle-label" aria-hidden="true">🔠 Μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-font-large-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="gm-font-xlarge-toggle" data-sync="font-xlarge" role="switch" aria-checked="false" aria-label="Πολύ μεγάλη γραμματοσειρά" onclick="selectFont('xlarge')">
+      <span class="toggle-label" aria-hidden="true">🔡 Πολύ μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="gm-font-xlarge-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    </div>
+    <button type="button" class="menu-close-btn" aria-label="Κλείσιμο μενού γενικών ρυθμίσεων" onclick="closeSharedSettingsMenu()">✕ Κλείσιμο μενού</button>
+  </div>
 </div>
 
 <!-- Live region ΜΟΝΟ για αναγνώστες οθόνης – αόρατο, δεν επηρεάζει εστίαση -->
@@ -1219,16 +1568,30 @@
 <!-- Σχήμα κρεμάλας — το div είναι καθαρά οπτικό, inert για TalkBack -->
 <div class="hangman-wrap no-talkback-scan" role="presentation" id="hangman-img" aria-hidden="true" inert>
   <svg class="hangman-svg" viewBox="0 0 200 180" aria-hidden="true" focusable="false" role="presentation" tabindex="-1">
-    <line x1="20" y1="170" x2="180" y2="170" class="hangman-part visible" style="stroke:var(--muted)" role="presentation" aria-hidden="true"/>
-    <line x1="60" y1="170" x2="60" y2="10"  class="hangman-part visible" style="stroke:var(--muted)" role="presentation" aria-hidden="true"/>
-    <line x1="60" y1="10"  x2="130" y2="10" class="hangman-part visible" style="stroke:var(--muted)" role="presentation" aria-hidden="true"/>
-    <line x1="130" y1="10" x2="130" y2="35" class="hangman-part visible" style="stroke:var(--muted)" role="presentation" aria-hidden="true"/>
+    <defs>
+      <linearGradient id="hg-scaffold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#a0a0c8"/>
+        <stop offset="100%" stop-color="#3e3e6a"/>
+      </linearGradient>
+      <linearGradient id="hg-body-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff8aaa"/>
+        <stop offset="100%" stop-color="#ffb347"/>
+      </linearGradient>
+      <filter id="hg-glow">
+        <feGaussianBlur stdDeviation="2" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <line x1="20" y1="170" x2="180" y2="170" class="hangman-part visible" style="stroke:url(#hg-scaffold)" role="presentation" aria-hidden="true"/>
+    <line x1="60" y1="170" x2="60" y2="10"  class="hangman-part visible" style="stroke:url(#hg-scaffold)" role="presentation" aria-hidden="true"/>
+    <line x1="60" y1="10"  x2="130" y2="10" class="hangman-part visible" style="stroke:url(#hg-scaffold)" role="presentation" aria-hidden="true"/>
+    <line x1="130" y1="10" x2="130" y2="35" class="hangman-part visible" style="stroke:url(#hg-scaffold)" role="presentation" aria-hidden="true"/>
     <circle id="h-head" cx="130" cy="50" r="15" class="hangman-part head" role="presentation" aria-hidden="true"/>
     <line   id="h-body" x1="130" y1="65" x2="130" y2="110" class="hangman-part body" role="presentation" aria-hidden="true"/>
-    <line   id="h-larm" x1="130" y1="75" x2="105" y2="97"  class="hangman-part" role="presentation" aria-hidden="true"/>
-    <line   id="h-rarm" x1="130" y1="75" x2="155" y2="97"  class="hangman-part" role="presentation" aria-hidden="true"/>
-    <line   id="h-lleg" x1="130" y1="110" x2="105" y2="140" class="hangman-part" role="presentation" aria-hidden="true"/>
-    <line   id="h-rleg" x1="130" y1="110" x2="155" y2="140" class="hangman-part" role="presentation" aria-hidden="true"/>
+    <line   id="h-larm" x1="130" y1="75" x2="105" y2="97"  class="hangman-part limb" role="presentation" aria-hidden="true"/>
+    <line   id="h-rarm" x1="130" y1="75" x2="155" y2="97"  class="hangman-part limb" role="presentation" aria-hidden="true"/>
+    <line   id="h-lleg" x1="130" y1="110" x2="105" y2="140" class="hangman-part limb" role="presentation" aria-hidden="true"/>
+    <line   id="h-rleg" x1="130" y1="110" x2="155" y2="140" class="hangman-part limb" role="presentation" aria-hidden="true"/>
   </svg>
 </div>
 <!-- Προσβάσιμη περιγραφή κρεμάλας — μόνο για αναγνώστες οθόνης -->
@@ -1304,7 +1667,7 @@
 <div class="start-section" id="sl-shared-settings-container">
   <button type="button" class="start-select settings-trigger-btn" id="sl-shared-settings-btn"
     aria-expanded="false"
-    aria-controls="start-settings-menu"
+    aria-controls="sl-settings-menu"
     aria-label="Γενικές ρυθμίσεις"
     tabindex="0"
     onclick="toggleSharedSettingsMenu()"
@@ -1312,6 +1675,55 @@
     <span aria-hidden="true" id="sl-shared-settings-btn-text">⚙️ Γενικές ρυθμίσεις</span>
     <span id="sl-shared-settings-btn-arrow" class="settings-trigger-arrow" aria-hidden="true">▼</span>
   </button>
+  <div id="sl-settings-menu" role="group" aria-label="Γενικές ρυθμίσεις" hidden aria-hidden="true">
+    <button type="button" class="toggle-row" id="sl-sound-toggle" data-sync="sound" role="switch" aria-checked="true" aria-label="Ήχοι" onclick="toggleSound()">
+      <span class="toggle-label" aria-hidden="true">🔊 Ήχοι</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-sound-state" aria-hidden="true">Ενεργοί</span>
+    </button>
+    <button type="button" class="toggle-row" id="sl-speech-toggle" data-sync="speech" role="switch" aria-checked="false" aria-label="Φωνητική καθοδήγηση" onclick="toggleSpeech()">
+      <span class="toggle-label" aria-hidden="true">🗣️ Φωνητική καθοδήγηση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-speech-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    <div role="group" aria-labelledby="sl-theme-title">
+    <div class="settings-title" id="sl-theme-title" style="margin-top:0.5rem;">Επιλογές εμφάνισης παιχνιδιού</div>
+    <button type="button" class="toggle-row" id="sl-theme-default-toggle" data-sync="theme-default" role="switch" aria-checked="true" aria-label="Προεπιλεγμένη εμφάνιση" onclick="selectTheme('default')">
+      <span class="toggle-label" aria-hidden="true">🎨 Προεπιλεγμένη εμφάνιση</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-theme-default-state" aria-hidden="true">Ενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="sl-theme-dark-toggle" data-sync="theme-dark" role="switch" aria-checked="false" aria-label="Μαύρο φόντο με λευκά γράμματα" onclick="selectTheme('dark')">
+      <span class="toggle-label" aria-hidden="true">🌑 Μαύρο φόντο με λευκά γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-theme-dark-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    <button type="button" class="toggle-row" id="sl-theme-light-toggle" data-sync="theme-light" role="switch" aria-checked="false" aria-label="Λευκό φόντο με μαύρα γράμματα" onclick="selectTheme('light')">
+      <span class="toggle-label" aria-hidden="true">☀️ Λευκό φόντο με μαύρα γράμματα</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-theme-light-state" aria-hidden="true">Ανενεργό</span>
+    </button>
+    </div>
+    <div role="group" aria-labelledby="sl-font-title">
+    <div class="settings-title" id="sl-font-title" style="margin-top:0.5rem;">Μέγεθος γραμματοσειράς</div>
+    <button type="button" class="toggle-row" id="sl-font-normal-toggle" data-sync="font-normal" role="switch" aria-checked="true" aria-label="Κανονικό μέγεθος γραμματοσειράς" onclick="selectFont('normal')">
+      <span class="toggle-label" aria-hidden="true">🅰️ Κανονικό μέγεθος γραμματοσειράς</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-font-normal-state" aria-hidden="true">Ενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="sl-font-large-toggle" data-sync="font-large" role="switch" aria-checked="false" aria-label="Μεγάλη γραμματοσειρά" onclick="selectFont('large')">
+      <span class="toggle-label" aria-hidden="true">🔠 Μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-font-large-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    <button type="button" class="toggle-row" id="sl-font-xlarge-toggle" data-sync="font-xlarge" role="switch" aria-checked="false" aria-label="Πολύ μεγάλη γραμματοσειρά" onclick="selectFont('xlarge')">
+      <span class="toggle-label" aria-hidden="true">🔡 Πολύ μεγάλη γραμματοσειρά</span>
+      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
+      <span class="toggle-state-label" id="sl-font-xlarge-state" aria-hidden="true">Ανενεργή</span>
+    </button>
+    </div>
+    <button type="button" class="menu-close-btn" aria-label="Κλείσιμο μενού γενικών ρυθμίσεων" onclick="closeSharedSettingsMenu()">✕ Κλείσιμο μενού</button>
+  </div>
 </div>
 
 <!-- Live region για αναγνώστες οθόνης -->
@@ -1339,7 +1751,7 @@
 </div>
 
 <!-- Ορατό κουτί αποτελέσματος -->
-<div id="sl-result-visual" class="announce-box" aria-hidden="true" style="min-height:2.5rem;"></div>
+<div id="sl-result-visual" class="announce-box" aria-hidden="true"></div>
 
 <!-- Κουμπιά απάντησης -->
 <div id="sl-answer-btns" role="group" aria-label="Απάντηση"
@@ -1389,15 +1801,22 @@
 let audioCtx = null;
 let soundEnabled = true;
 
-// ── Ανίχνευση TalkBack (Android touch) ──────────────────────────────────────
-// Το TalkBack τρέχει αποκλειστικά σε Android — ανιχνεύουμε Android + touch.
-// Το NVDA/JAWS τρέχουν σε Windows desktop, χωρίς touch interface.
-// Το VoiceOver iOS ανιχνεύεται επίσης ως touch αλλά διαφορετικό OS.
+// ── Ανίχνευση Assistive Navigation (TalkBack / VoiceOver / πληκτρολόγιο) ──────
+// Δεν υπάρχει web API για άμεση ανίχνευση TalkBack/VoiceOver.
+// Ανιχνεύουμε αν ο χρήστης πλοηγείται με Tab ή βελάκια — αν ναι,
+// θεωρείται χρήστης βοηθητικής τεχνολογίας και ενεργοποιούνται οι εστιάσεις.
+// Οι απλοί χρήστες αφής/ποντικιού δεν επηρεάζονται.
+let _assistiveNav = false;
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab' || e.key === 'ArrowRight' || e.key === 'ArrowLeft' ||
+      e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    _assistiveNav = true;
+  }
+}, { once: false, capture: true });
+
 function isTalkBack() {
-  const ua = navigator.userAgent || '';
-  const isAndroid = /Android/i.test(ua);
-  const isTouch   = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
-  return isAndroid && isTouch;
+  return _assistiveNav;
 }
 
 function getCtx() {
@@ -1580,12 +1999,27 @@ function soundShort() {
 }
 
 // ── Ρυθμίσεις ──────────────────────────────────────────────────
+// Βρίσκει το μενού ρυθμίσεων της ενεργής οθόνης
+function _getActiveSettingsMenu() {
+  const screenMenuMap = {
+    'start-screen':        'start-settings-menu',
+    'game-screen':         'game-settings-menu',
+    'sosto-lathos-screen': 'sl-settings-menu',
+  };
+  for (const [screenId, menuId] of Object.entries(screenMenuMap)) {
+    const screen = document.getElementById(screenId);
+    if (screen && !screen.hidden) return document.getElementById(menuId);
+  }
+  return document.getElementById('start-settings-menu');
+}
+
 function toggleSharedSettingsMenu() {
   soundShort();
-  const menu = document.getElementById('start-settings-menu');
+  const menu = _getActiveSettingsMenu();
+  if (!menu) return;
   const isOpen = !menu.hidden;
 
-  // Κλείσιμο άλλων ανοιχτών μενού
+  // Κλείσιμο άλλων ανοιχτών μενού (μόνο στην αρχική οθόνη)
   ['difficulty', 'maxwrong'].forEach(pid => {
     const m = document.getElementById(pid + '-menu');
     const b = document.getElementById(pid + '-btn');
@@ -1603,24 +2037,40 @@ function toggleSharedSettingsMenu() {
 
   menu.hidden = isOpen;
   menu.setAttribute('aria-hidden', String(isOpen));
-  document.querySelectorAll('.settings-trigger-btn').forEach(b => {
-    b.setAttribute('aria-expanded', String(!isOpen));
-  });
+
+  // Βάζουμε aria-expanded ΜΟΝΟ στο κουμπί που ελέγχει αυτό το μενού
+  const triggerBtn = menu.previousElementSibling;
+  if (triggerBtn && triggerBtn.classList.contains('settings-trigger-btn')) {
+    triggerBtn.setAttribute('aria-expanded', String(!isOpen));
+  }
+  // Κλείνουμε τα βέλη ΟΛΩΝ των κουμπιών όταν κλείνει, ανοίγουμε μόνο του τοπικού
   document.querySelectorAll('.settings-trigger-arrow').forEach(el => {
-    el.textContent = isOpen ? '▼' : '▲';
+    el.textContent = '▼';
   });
   if (!isOpen) {
+    const localArrow = menu.previousElementSibling
+      ? menu.previousElementSibling.querySelector('.settings-trigger-arrow')
+      : null;
+    if (localArrow) localArrow.textContent = '▲';
     updateStartScreenForGame(selectedGame || 'kremala');
-    const firstItem = document.getElementById('ss-sound-toggle');
+    const firstItem = menu.querySelector('[role="switch"]');
     if (firstItem) firstItem.focus();
+  } else {
+    // Κλείσιμο: aria-expanded false σε όλα
+    document.querySelectorAll('.settings-trigger-btn').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+    });
   }
   updateSettingsBtnText();
 }
 
 function closeSharedSettingsMenu() {
   soundShort();
-  const menu = document.getElementById('start-settings-menu');
-  if (menu) { menu.hidden = true; menu.setAttribute('aria-hidden', 'true'); }
+  // Κλείνουμε όλα τα μενού ρυθμίσεων (για ασφάλεια)
+  ['start-settings-menu', 'game-settings-menu', 'sl-settings-menu'].forEach(id => {
+    const m = document.getElementById(id);
+    if (m) { m.hidden = true; m.setAttribute('aria-hidden', 'true'); }
+  });
   document.querySelectorAll('.settings-trigger-btn').forEach(b => {
     b.setAttribute('aria-expanded', 'false');
   });
@@ -1649,11 +2099,12 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const toClose = [
-      { menuId: 'settings-menu',       btnId: 'settings-btn',      arrowId: null },
       { menuId: 'difficulty-menu',     btnId: 'difficulty-btn',     arrowId: 'difficulty-btn-arrow' },
       { menuId: 'maxwrong-menu',       btnId: 'maxwrong-btn',       arrowId: 'maxwrong-btn-arrow' },
       { menuId: 'category-checkboxes', btnId: 'category-btn',       arrowId: 'category-btn-arrow' },
       { menuId: 'start-settings-menu', btnId: 'start-settings-btn', arrowId: null },
+      { menuId: 'game-settings-menu',  btnId: 'game-shared-settings-btn', arrowId: null },
+      { menuId: 'sl-settings-menu',    btnId: 'sl-shared-settings-btn',   arrowId: null },
     ];
     toClose.forEach(({ menuId, btnId, arrowId }) => {
       const menu = document.getElementById(menuId);
@@ -2224,7 +2675,7 @@ const WORDS = [
   { word: "ΜΠΛΕΝΤΕΡ", category: "Αντικείμενα Σπιτιού", hint: "Αναμιγνύει υλικά" },
   { word: "ΚΑΦΕΤΙΕΡΑ", category: "Αντικείμενα Σπιτιού", hint: "Φτιάχνει καφέ" },
   { word: "ΚΟΥΡΤΙΝΑ", category: "Αντικείμενα Σπιτιού", hint: "Καλύπτει το παράθυρο" },
-  { word: "ΣΤΡΩΜΑ", category: "Αντικείμενα Σπιτιού", hint: "Παχύ αφρώδες υπόστρωμα κρεβατιού" },
+  { word: "ΣΤΡΩΜΑ", category: "Αντικείμενα Σπιτιού", hint: "Παχύ μαλακό υπόθεμα κρεβατιού" },
   { word: "ΜΑΞΙΛΑΡΙ", category: "Αντικείμενα Σπιτιού", hint: "Ακουμπάμε το κεφάλι" },
   { word: "ΚΑΝΑΤΑ", category: "Αντικείμενα Σπιτιού", hint: "Δοχείο για νερό ή χυμό" },
   { word: "ΤΗΛΕΟΡΑΣΗ", category: "Αντικείμενα Σπιτιού", hint: "Βλέπουμε ειδήσεις και ταινίες" },
@@ -3434,7 +3885,7 @@ const WORDS = [
   { word: "ΣΑΝΤΙΑΓΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Χιλής" },
   { word: "ΚΑΡΑΚΑΣ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Βενεζουέλας" },
   { word: "ΜΠΟΓΚΟΤΑ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Κολομβίας" },
-  { word: "ΜΕΞΙΚΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα Μεξικού" },
+  { word: "ΜΕΞΙΚΟ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα αυτής της χώρας είναι η Πόλη" },
   { word: "ΕΔΜΟΝΤΟΝ", category: "Πόλεις του κόσμου", hint: "Πρωτεύουσα επαρχίας Αλμπέρτα Καναδά" },
   { word: "ΣΙΚΑΓΟ", category: "Πόλεις του κόσμου", hint: "Πόλη του ανέμου" },
   { word: "ΜΙΑΜΙ", category: "Πόλεις του κόσμου", hint: "Παραθαλάσσια πόλη Φλόριδας" },
@@ -3585,7 +4036,7 @@ const WORDS = [
 
   { word: "ΜΠΑΓΚΕΛ", category: "Φαγητά & Ποτά", hint: "Αμερικανικό στρογγυλό ψωμί με τρύπα" },
   { word: "ΤΑΡΤΑ", category: "Φαγητά & Ποτά", hint: "Ανοιχτή πίτα με γέμιση" },
-  { word: "ΕΚΛΕΡ", category: "Φαγητά & Ποτά", hint: "Γαλλικό επίμηκες εκλεράκι με κρέμα" },
+  { word: "ΕΚΛΕΡ", category: "Φαγητά & Ποτά", hint: "Γαλλικό επίμηκες γλυκό με κρέμα" },
   { word: "ΜΑΚΑΡΟΝ", category: "Φαγητά & Ποτά", hint: "Γαλλικό μπισκοτάκι σε χρώματα" },
   { word: "ΓΚΟΦΡΕΤΑ", category: "Φαγητά & Ποτά", hint: "Τριγωνική σοκολατένια λιχουδιά" },
   { word: "ΝΟΥΓΚΑ", category: "Φαγητά & Ποτά", hint: "Γλυκό με ξηρούς καρπούς και μέλι" },
@@ -3775,11 +4226,11 @@ const WORDS = [
   { word: "ΡΟΖ", category: "Χρώματα & Σχήματα", hint: "Απαλό ερυθρό χρώμα" },
 
   { word: "ΒΕΡΑΜΑΝ", category: "Χρώματα & Σχήματα", hint: "Πράσινο-κίτρινο χρώμα" },
-  { word: "ΜΟΛΥΒΙ", category: "Χρώματα & Σχήματα", hint: "Γκρι-μαύρο χρώμα μολυβιού" },
+  { word: "ΜΟΛΥΒΙ", category: "Χρώματα & Σχήματα", hint: "Γκρι-μαύρο χρώμα γραφίτη" },
   { word: "ΙΒΟΥΑΡ", category: "Χρώματα & Σχήματα", hint: "Κρεμ-λευκό χρώμα ελεφαντόδοντου" },
-  { word: "ΡΟΥΜΠΙΝΙ", category: "Χρώματα & Σχήματα", hint: "Βαθύ κόκκινο — χρώμα ρουμπινιού" },
+  { word: "ΡΟΥΜΠΙΝΙ", category: "Χρώματα & Σχήματα", hint: "Βαθύ κόκκινο — χρώμα πολύτιμης πέτρας" },
   { word: "ΣΜΑΡΑΓΔΙ", category: "Χρώματα & Σχήματα", hint: "Σκούρο πράσινο — χρώμα σμαράγδου" },
-  { word: "ΖΑΦΕΙΡΙ", category: "Χρώματα & Σχήματα", hint: "Βαθύ μπλε — χρώμα ζαφειριού" },
+  { word: "ΖΑΦΕΙΡΙ", category: "Χρώματα & Σχήματα", hint: "Βαθύ μπλε — χρώμα πολύτιμης πέτρας" },
   { word: "ΑΜΕΘΥΣΤΟΣ", category: "Χρώματα & Σχήματα", hint: "Μωβ-μπλε — χρώμα αμέθυστου" },
   { word: "ΧΡΥΣΟΠΡΑΣΟ", category: "Χρώματα & Σχήματα", hint: "Κιτρινοπράσινο πολύτιμο χρώμα" },
   { word: "ΡΟΔΟΧΡΟΥΝ", category: "Χρώματα & Σχήματα", hint: "Τριανταφυλλένιο χρώμα" },
@@ -4281,7 +4732,7 @@ const WORDS = [
   { word: "ΚΕΠΛΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Γερμανός αστρονόμος — νόμοι πλανητών" },
   { word: "ΚΟΠΕΡΝΙΚΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Πολωνός — ήλιος κέντρο ηλιακού" },
   { word: "ΒΕΣΑΛΙΟΣ", category: "Διάσημες Προσωπικότητες", hint: "Πατέρας σύγχρονης ανατομίας — Βέλγος" },
-  { word: "ΠΑΣΤΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Γάλλος — παστερίωση και εμβόλια" },
+  { word: "ΠΑΣΤΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Γάλλος επιστήμονας — ανακάλυψε ότι τα μικρόβια προκαλούν ασθένειες" },
   { word: "ΛΙΣΤΕΡ", category: "Διάσημες Προσωπικότητες", hint: "Βρετανός — αντισηψία στη χειρουργική" },
   { word: "ΦΛΕΜΙΝΓΚ", category: "Διάσημες Προσωπικότητες", hint: "Ανακάλυψε την πενικιλίνη 1928" },
   { word: "ΣΑΛΚ", category: "Διάσημες Προσωπικότητες", hint: "Ανακάλυψε εμβόλιο πολιομυελίτιδας" },
@@ -4350,7 +4801,7 @@ const WORDS = [
   { word: "ΩΛΕΚΡΑΝΟ", category: "Μέρη του Σώματος", hint: "Αγκώνας — οστέινη προεξοχή" },
   { word: "ΓΛΩΣΣΑ", category: "Μέρη του Σώματος", hint: "Μυς στο στόμα — γεύση και ομιλία" },
   { word: "ΣΙΕΛΟΓΟΝΟΣ", category: "Μέρη του Σώματος", hint: "Αδένας παραγωγής σάλιου" },
-  { word: "ΧΟΛΗ", category: "Μέρη του Σώματος", hint: "Πέτρες χολής — χοληδόχος κύστη" },
+  { word: "ΧΟΛΗ", category: "Μέρη του Σώματος", hint: "Υγρό που παράγει το συκώτι για πέψη" },
   { word: "ΑΠΕΝΔΙΚΙΤΙΔΑ", category: "Μέρη του Σώματος", hint: "Φλεγμονή σκωλικοειδούς" },
   { word: "ΣΠΛΗΝΑΣ", category: "Μέρη του Σώματος", hint: "Ανοσολογικό όργανο — αριστερά" },
   { word: "ΦΡΕΝΙΤΙΔΑ", category: "Μέρη του Σώματος", hint: "Διάφραγμα — διαχωρίζει θώρακα κοιλιά" },
@@ -5004,7 +5455,7 @@ const QUESTIONS = [
   { question: "Τα Παράλυμπικά Αθλήματα διεξάγονται μετά τους Ολυμπιακούς.", answer: true, category: "Αθλητισμός", explanation: "Σωστό. Τα Παραολυμπιακά Παιχνίδια διεξάγονται στην ίδια πόλη, αμέσως μετά τους Ολυμπιακούς Αγώνες." },
   { question: "Η Νέα Ζηλανδία έχει εθνική ομάδα ράγκμπι που λέγεται All Blacks.", answer: true, category: "Αθλητισμός", explanation: "Σωστό. Οι All Blacks της Νέας Ζηλανδίας θεωρούνται από τις καλύτερες εθνικές ομάδες ράγκμπι στον κόσμο." },
   { question: "Ο Κέβιν Ντουράντ παίζει μπέιζμπολ.", answer: false, category: "Αθλητισμός", explanation: "Λάθος. Ο Κέβιν Ντουράντ είναι επαγγελματίας παίκτης μπάσκετ στο ΝΒΑ." },
-  { question: "Το σερφ έγινε Ολυμπιακό άθλημα στο Τόκιο 2020.", answer: true, category: "Αθλητισμός", explanation: "Σωστό. Το σερφ έκανε το Ολυμπιακό του ντεμπούτο στους Αγώνες του Τόκιο το 2021." },
+  { question: "Το σερφ έγινε Ολυμπιακό άθλημα στο Τόκιο 2020.", answer: true, category: "Αθλητισμός", explanation: "Σωστό. Το σερφ έκανε το Ολυμπιακό του ντεμπούτο στους Αγώνες του Τόκιο 2020 (που διεξήχθησαν το 2021)." },
   { question: "Το Κατάρ φιλοξένησε το Παγκόσμιο Κύπελλο 2022.", answer: true, category: "Γεωγραφία", explanation: "Σωστό. Το Κατάρ ήταν η πρώτη αραβική χώρα που φιλοξένησε το Παγκόσμιο Κύπελλο Ποδοσφαίρου." },
   { question: "Η Ουζμπεκιστάν βρίσκεται στη Νοτιοανατολική Ασία.", answer: false, category: "Γεωγραφία", explanation: "Λάθος. Η Ουζμπεκιστάν βρίσκεται στην Κεντρική Ασία." },
   { question: "Η Γροιλανδία ανήκει διοικητικά στη Δανία.", answer: true, category: "Γεωγραφία", explanation: "Σωστό. Η Γροιλανδία είναι αυτόνομο έδαφος του Βασιλείου της Δανίας." },
@@ -6772,7 +7223,7 @@ const QUESTIONS = [
   { question: "Η γοσπελ μουσική συνδέεται με Αφροαμερικανικές εκκλησίες.", answer: true, category: "Μουσική", explanation: "Σωστό. Η gospel αναπτύχθηκε στις Αφροαμερικανικές προτεσταντικές εκκλησίες τον 19ο-20ο αι. — συνδυάζει θρησκευτικά λόγια με ρυθμικά στοιχεία." },
   { question: "Ο Έλβις Πρίσλεϊ γεννήθηκε στη Νέα Υόρκη.", answer: false, category: "Μουσική", explanation: "Λάθος. Ο Έλβις Πρίσλεϊ (1935-1977) γεννήθηκε στο Τιούπελο της Μισισίπι." },
   { question: "Η τζαζ ανήκει στα παραδοσιακά ευρωπαϊκά μουσικά είδη.", answer: false, category: "Μουσική", explanation: "Λάθος. Η τζαζ αναπτύχθηκε στη Νέα Ορλεάνη (ΗΠΑ) στα τέλη 19ου-αρχές 20ου αιώνα από Αφροαμερικανούς μουσικούς." },
-  { question: "Ο Φρέντι Μέρκιουρι ήταν ο τραγουδιστής των Queen.", answer: true, category: "Μουσική", explanation: "Σωστό. Ο Φρέντι Μέρκιουρι (1946-1991) ήταν ο χαρισματικός τραγουδιστής των Queen — μία από τις μεγαλύτερες φωνές στην ιστορία της ροκ." },
+
   { question: "Το μπαγλαμά είναι Ελληνικό λαϊκό όργανο.", answer: true, category: "Μουσική", explanation: "Σωστό. Ο μπαγλαμάς είναι μικρό νυκτό έγχορδο, παραλλαγή του μπαγλαμά — στενά συνδεδεμένο με τον ελληνικό ρεμπέτικο." },
   { question: "Ο Ντέιβιντ Γκίλμορ είναι μέλος των Deep Purple.", answer: false, category: "Μουσική", explanation: "Λάθος. Ο Ντέιβιντ Γκίλμουρ (γεν. 1946) είναι κιθαρίστας των Pink Floyd — όχι των Deep Purple." },
   { question: "Η ορχήστρα χρησιμοποιεί διεύθυνση από μαέστρο.", answer: true, category: "Μουσική", explanation: "Σωστό. Ο μαέστρος (conductor) διευθύνει την ορχήστρα με χειρονομίες/μπαγκέτα, συντονίζοντας ρυθμό, δυναμική και ερμηνεία." },
@@ -6955,7 +7406,7 @@ let newGameTimeouts = [];
 
 let lastAnnouncement = '';
 
-function announce(msg, ttsDelay = 500, liveDelay = 500) {
+function announce(msg, ttsDelay = 500, liveDelay = 500, state = '') {
   const trimmed = msg.trim();
   lastAnnouncement = trimmed;
   const sr = document.getElementById('announce');
@@ -6963,8 +7414,9 @@ function announce(msg, ttsDelay = 500, liveDelay = 500) {
   // Σβήνουμε πρώτα το περιεχόμενο
   sr.textContent = '';
   visual.textContent = '';
+  visual.className = 'announce-box';
+  if (state) visual.classList.add('state-' + state);
   // TTS — ξεχωριστή καθυστέρηση
-  // Αποθηκεύουμε IDs ώστε να μπορούν να ακυρωθούν από τη guess() αν ο παίκτης πατήσει γράμμα
   newGameTimeouts.push(setTimeout(() => speak(trimmed), ttsDelay));
   // Live region — ξεχωριστή καθυστέρηση
   newGameTimeouts.push(setTimeout(() => {
@@ -7059,11 +7511,12 @@ function renderHangman() {
 
 function guess(letter, fromTouch = false) {
   // Καθυστερήσεις πληκτρολογίου αφής
-  const TOUCH_GUESS_TTS_DELAY  = 100; // ms — TTS για γράμματα από αφή
-  const TOUCH_GUESS_LIVE_DELAY = 100; // ms — live region για γράμματα από αφή
-  // Καθυστερήσεις φυσικού πληκτρολογίου
-  const HW_GUESS_TTS_DELAY     = 100; // ms — TTS για γράμματα από φυσικό πληκτρολόγιο
-  const HW_GUESS_LIVE_DELAY    = 100; // ms — live region για γράμματα από φυσικό πληκτρολόγιο
+  const TOUCH_GUESS_TTS_DELAY  = 150; // ms — TTS για γράμματα από αφή
+  const TOUCH_GUESS_LIVE_DELAY = 150; // ms — live region για γράμματα από αφή
+  // Καθυστερήσεις φυσικού πληκτρολογίου — μεγαλύτερες ώστε το TalkBack
+  // να τελειώσει με το κουμπί πριν ακούσει το live region
+  const HW_GUESS_TTS_DELAY     = 150; // ms — TTS για γράμματα από φυσικό πληκτρολόγιο
+  const HW_GUESS_LIVE_DELAY    = 150; // ms — live region για γράμματα από φυσικό πληκτρολόγιο
   const tts  = fromTouch ? TOUCH_GUESS_TTS_DELAY  : HW_GUESS_TTS_DELAY;
   const live = fromTouch ? TOUCH_GUESS_LIVE_DELAY : HW_GUESS_LIVE_DELAY;
   if (gameOver) return;
@@ -7083,14 +7536,11 @@ function guess(letter, fromTouch = false) {
 
   guessed.add(letter);
 
-  // Για TalkBack: μεταφορά focus στο live region ώστε να μη διαβαστεί το κουμπί
-  // Εξαίρεση: αν τελειώνει το παιχνίδι, το disableAll αναλαμβάνει το focus
-  const allFoundCheck  = word.split('').every(ch => ch === ' ' || guessed.has(ch));
-  const wrongCheck     = !word.includes(letter) && (wrong + 1) >= maxWrong;
-  const gameEndingNow  = allFoundCheck || wrongCheck;
-  if (!fromTouch && isTalkBack() && !gameEndingNow) {
-    const ann = document.getElementById('announce');
-    if (ann) ann.focus();
+  // Native disabled αμέσως — σταματά τον screen reader όπως τα κουμπιά σωστό/λάθος.
+  // Αφαιρείται σύντομα ώστε το κουμπί να παραμένει focusable (το aria-disabled το κρατά απενεργοποιημένο).
+  if (btn) {
+    btn.disabled = true;
+    setTimeout(() => { if (btn) btn.disabled = false; }, 250);
   }
 
   // Αποκάλυψη κατηγορίας μετά την πρώτη κίνηση
@@ -7103,9 +7553,8 @@ function guess(letter, fromTouch = false) {
   if (word.includes(letter)) {
     soundCorrect();
     btn.classList.add('correct');
-    setTimeout(() => btn.setAttribute('aria-disabled', 'true'), 600);
-    // Ενημερώνουμε το aria-label ΜΕΤΑ την ανακοίνωση
-    // ώστε κατά το κλικ ο αναγνώστης να ακούει μόνο το live region
+    btn.setAttribute('aria-disabled', 'true');
+    // Άμεσο aria-disabled — ο screen reader αγνοεί το label και εστιάζει στο live region
     renderWord();
 
     const allFound = word.split('').every(ch => ch === ' ' || guessed.has(ch));
@@ -7117,12 +7566,13 @@ function guess(letter, fromTouch = false) {
       s.textContent = '🎉 Νίκη! Βρήκες τη λέξη!';
       s.className = 'win';
       const quipWin = quipsEnabled ? ' ' + randomQuip('win') : '';
-      announce(`Νίκη! Η λέξη ήταν ${word}. Μπράβο! ${quipWin}`.trim() + '.', 500, 500);
+      const winMsg = `Νίκη! Η λέξη ήταν ${word}. Μπράβο! ${quipWin}`.trim() + '.';
 
       document.getElementById('category-label').setAttribute('aria-hidden', 'true');
       document.getElementById('category-label').setAttribute('tabindex', '-1');
       disableAll();
-      btn.setAttribute('aria-label', `${letter}, σωστό`);
+      setTimeout(() => btn.setAttribute('aria-label', `${letter}, σωστό`), 250);
+      setTimeout(() => announce(winMsg, 300, 300, 'win'), 0);
     } else {
       const positions = [];
       for (let i = 0; i < word.length; i++) {
@@ -7139,13 +7589,13 @@ function guess(letter, fromTouch = false) {
         ? `${letter} ${posText}. ${wordState}.`
         : `${letter} σωστό.`;
       announce(msg, tts, live);
-      btn.setAttribute('aria-label', `${letter}, σωστό`);
+      setTimeout(() => btn.setAttribute('aria-label', `${letter}, σωστό`), 250);
     }
   } else {
     wrong++;
     soundWrong();
     btn.classList.add('wrong');
-    setTimeout(() => btn.setAttribute('aria-disabled', 'true'), 600);
+    btn.setAttribute('aria-disabled', 'true');
     document.getElementById('wrong-count').textContent = wrong;
 
     // Shake κρεμάλα
@@ -7171,62 +7621,46 @@ function guess(letter, fromTouch = false) {
       s.textContent = `💀 Ηττήθηκες! Η λέξη ήταν: ${word}`;
       s.className = 'lose';
       const quipLose = quipsEnabled ? ' ' + randomQuip('lose') : '';
-      announce(`Ηττήθηκες! Η σωστή λέξη ήταν ${word}. ${quipLose}`.trim() + '.', 500, 500);
+      const loseMsg = `Ηττήθηκες! Η σωστή λέξη ήταν ${word}. ${quipLose}`.trim() + '.';
 
       document.getElementById('category-label').setAttribute('aria-hidden', 'true');
       document.getElementById('category-label').setAttribute('tabindex', '-1');
       word.split('').forEach(ch => { if(ch !== ' ') guessed.add(ch); });
       renderWord();
-      disableAll();
-      btn.setAttribute('aria-label', `${letter}, λάθος`);
+      setTimeout(() => disableAll(), 150);
+      setTimeout(() => btn.setAttribute('aria-label', `${letter}, λάθος`), 250);
+      setTimeout(() => announce(loseMsg, 300, 300, 'lose'), 0);
     } else {
       const remaining = maxWrong - wrong;
       const quipWrong = quipsEnabled ? ' ' + randomQuip('wrong') : '';
       announce(`Το ${letter} δεν υπάρχει. ${remainingToPhrase(remaining)}. ${quipWrong}`.trim() + '.', tts, live);
-      btn.setAttribute('aria-label', `${letter}, λάθος`);
+      setTimeout(() => btn.setAttribute('aria-label', `${letter}, λάθος`), 250);
     }
   }
 }
 
 function disableAll() {
-  // Κλείσιμο μενού ρυθμίσεων αν είναι ανοιχτό κατά τη λήξη παιχνιδιού
-  const gMenu = document.getElementById('settings-menu');
-  const gBtn  = document.getElementById('settings-btn');
-  if (gMenu && !gMenu.hidden) {
-    gMenu.hidden = true;
-    gMenu.setAttribute('aria-hidden', 'true');
-    if (gBtn) gBtn.setAttribute('aria-expanded', 'false');
-    updateSettingsBtnText();
-  }
-  setTimeout(() => {
-    const kb = document.getElementById('keyboard');
-    if (kb) { kb.hidden = true; kb.setAttribute('aria-hidden', 'true'); kb.setAttribute('inert', ''); }
-    // Απόκρυψη λέξης από αναγνώστη οθόνης στο τέλος
-    const srWord = document.getElementById('sr-word-display');
-    srWord.textContent = '';
-    srWord.setAttribute('aria-hidden', 'true');
-    // Εμφάνιση κουμπιών τέλους παιχνιδιού
-    const btnNew = document.getElementById('btn-new');
-    const btnHome = document.getElementById('btn-home');
-    const btnClose = document.getElementById('btn-close-game');
-    btnNew.hidden = false;   btnNew.removeAttribute('aria-hidden');  btnNew.removeAttribute('tabindex');
-    btnHome.hidden = false;  btnHome.removeAttribute('aria-hidden');   btnHome.removeAttribute('tabindex');
-    btnClose.hidden = false; btnClose.removeAttribute('aria-hidden'); btnClose.removeAttribute('tabindex');
+  // Κλείσιμο όλων των ανοιχτών μενού ρυθμίσεων κατά τη λήξη παιχνιδιού
+  collapseAllMenus();
+  const kb = document.getElementById('keyboard');
+  if (kb) { kb.hidden = true; kb.setAttribute('aria-hidden', 'true'); kb.setAttribute('inert', ''); }
+  // Απόκρυψη λέξης από αναγνώστη οθόνης στο τέλος
+  const srWord = document.getElementById('sr-word-display');
+  srWord.textContent = '';
+  srWord.setAttribute('aria-hidden', 'true');
+  // Εμφάνιση κουμπιών τέλους παιχνιδιού
+  const btnNew = document.getElementById('btn-new');
+  const btnHome = document.getElementById('btn-home');
+  const btnClose = document.getElementById('btn-close-game');
+  btnNew.hidden = false;   btnNew.removeAttribute('aria-hidden');  btnNew.removeAttribute('tabindex');
+  btnHome.hidden = false;  btnHome.removeAttribute('aria-hidden');   btnHome.removeAttribute('tabindex');
+  btnClose.hidden = false; btnClose.removeAttribute('aria-hidden'); btnClose.removeAttribute('tabindex');
 
-
-    // Απόκρυψη touch input
-    const _tw = document.getElementById('touch-input-wrap');
-    const _ti = document.getElementById('touch-letter-input');
-    if (_tw) { _tw.setAttribute('aria-hidden', 'true'); _tw.setAttribute('inert', ''); _tw.classList.remove('visible'); }
-    if (_ti) { _ti.disabled = true; }
-
-    // Εστίαση στο live region για TalkBack στο τέλος παιχνιδιού
-    setTimeout(() => {
-      const ann = document.getElementById('announce');
-      if (ann && isTalkBack()) ann.focus();
-    }, 500);
-
-  }, 500);
+  // Απόκρυψη touch input
+  const _tw = document.getElementById('touch-input-wrap');
+  const _ti = document.getElementById('touch-letter-input');
+  if (_tw) { _tw.setAttribute('aria-hidden', 'true'); _tw.setAttribute('inert', ''); _tw.classList.remove('visible'); }
+  if (_ti) { _ti.disabled = true; }
 }
 
 function updateCategoryLabel(category, wordLen, hint) {
@@ -7305,17 +7739,11 @@ function newGame() {
   const hintMsg = hintEnabled ? `. Υπόδειξη: ${entry.hint}.` : '';
   const quipStart = quipsEnabled ? ' ' + randomQuip('start') : '';
   const fullMsg = `Νέο παιχνίδι! Κατηγορία: ${entry.category}. Η λέξη έχει ${numToGreek(len)} γράμματα.${hintMsg}${quipStart}`;
-  // TTS: ttsDelay=500ms, live region: liveDelay=500ms (ρυθμίζονται μέσω announce)
-  announce(fullMsg, 500, 500);
-
-  // Εστίαση στο live region αν ξεκινά νέο παιχνίδι εντός οθόνης παιχνιδιού
-  const ss = document.getElementById('start-screen');
-  if (ss && ss.hidden) {
-    setTimeout(() => {
-      const ann = document.getElementById('announce');
-      if (ann && isTalkBack()) ann.focus();
-    }, 500);
-  }
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      announce(fullMsg, 300, 300);
+    });
+  });
 
 }
 
@@ -7602,7 +8030,6 @@ function updateSettingsBtnText() {
 }
 
 function toggleStartSettingsMenu() { toggleSharedSettingsMenu(); }
-function closeStartSettingsMenu() { closeSharedSettingsMenu(); }
 
 function applyTheme(val) {
   document.documentElement.classList.remove('theme-dark', 'theme-light');
@@ -7619,10 +8046,12 @@ function selectTheme(val, silent = false) {
     const active = t === val;
     const activeText = t === 'default' ? 'Ενεργή' : 'Ενεργό';
     const inactiveText = t === 'default' ? 'Ανενεργή' : 'Ανενεργό';
-    const btn   = document.getElementById('ss-theme-' + t + '-toggle');
-    const state = document.getElementById('ss-theme-' + t + '-state');
-    if (btn)   btn.setAttribute('aria-checked', String(active));
-    if (state) state.textContent = active ? activeText : inactiveText;
+    document.querySelectorAll('[data-sync="theme-' + t + '"], #ss-theme-' + t + '-toggle').forEach(btn => {
+      btn.setAttribute('aria-checked', String(active));
+      const stateId = btn.id.replace('-toggle', '-state');
+      const stateEl = document.getElementById(stateId);
+      if (stateEl) stateEl.textContent = active ? activeText : inactiveText;
+    });
   });
 }
 
@@ -7641,10 +8070,12 @@ function selectFont(val, silent = false) {
   fonts.forEach(f => {
     const active = f === val;
     const state = active ? 'Ενεργή' : 'Ανενεργή';
-    const btn   = document.getElementById('ss-font-' + f + '-toggle');
-    const sState = document.getElementById('ss-font-' + f + '-state');
-    if (btn)    btn.setAttribute('aria-checked', String(active));
-    if (sState) sState.textContent = state;
+    document.querySelectorAll('[data-sync="font-' + f + '"], #ss-font-' + f + '-toggle').forEach(btn => {
+      btn.setAttribute('aria-checked', String(active));
+      const stateId = btn.id.replace('-toggle', '-state');
+      const stateEl = document.getElementById(stateId);
+      if (stateEl) stateEl.textContent = state;
+    });
   });
 }
 
@@ -7675,14 +8106,23 @@ function collapseAllMenus() {
     catBtn.setAttribute('aria-expanded', 'false');
     updateCategoryBtnText();
   }
-  // Σύμπτυξη μενού ρυθμίσεων αρχικής οθόνης
-  const ssMenu = document.getElementById('start-settings-menu');
-  const ssBtn  = document.getElementById('start-settings-btn');
-  if (ssMenu && !ssMenu.hidden) {
-    ssMenu.hidden = true;
-    ssMenu.setAttribute('aria-hidden', 'true');
-    if (ssBtn) ssBtn.setAttribute('aria-expanded', 'false');
-  }
+  // Σύμπτυξη όλων των μενού γενικών ρυθμίσεων (αρχική + παιχνίδια)
+  [
+    { menuId: 'start-settings-menu', btnId: 'start-settings-btn' },
+    { menuId: 'game-settings-menu',  btnId: 'game-shared-settings-btn' },
+    { menuId: 'sl-settings-menu',    btnId: 'sl-shared-settings-btn' },
+  ].forEach(({ menuId, btnId }) => {
+    const m = document.getElementById(menuId);
+    const b = document.getElementById(btnId);
+    if (m && !m.hidden) {
+      m.hidden = true;
+      m.setAttribute('aria-hidden', 'true');
+      if (b) { b.setAttribute('aria-expanded', 'false'); }
+    }
+  });
+  document.querySelectorAll('.settings-trigger-arrow').forEach(el => {
+    el.textContent = '▼';
+  });
 }
 
 function startGame() {
@@ -7713,10 +8153,6 @@ function startGame() {
     sl.removeAttribute('aria-hidden');
     document.title = 'Σωστό ή λάθος';
     slNewGame();
-    setTimeout(() => {
-      const ann = document.getElementById('sl-announce');
-      if (ann && isTalkBack()) ann.focus();
-    }, 500);
   } else {
     // Ενημερώνουμε info-bar max
     document.getElementById('wrong-count').textContent = '0';
@@ -7726,12 +8162,6 @@ function startGame() {
     gs.hidden = false;
     gs.removeAttribute('aria-hidden');
     document.title = 'Κρεμάλα';
-
-    // Εστίαση στο live region στα 400ms
-    setTimeout(() => {
-      const ann = document.getElementById('announce');
-      if (ann && isTalkBack()) ann.focus();
-    }, 500);
     newGame();
   }
 }
@@ -7747,15 +8177,7 @@ function closeWithQuip() {
 
 function goHome() {
   soundShort();
-  // Κλείσιμο μενού ρυθμίσεων Κρεμάλας αν είναι ανοιχτό
-  const gMenu = document.getElementById('settings-menu');
-  const gBtn  = document.getElementById('settings-btn');
-  if (gMenu && !gMenu.hidden) {
-    gMenu.hidden = true;
-    gMenu.setAttribute('aria-hidden', 'true');
-    if (gBtn) gBtn.setAttribute('aria-expanded', 'false');
-    updateSettingsBtnText();
-  }
+  collapseAllMenus();
   // Κρύψε οθόνες παιχνιδιών
   const gs = document.getElementById('game-screen');
   gs.hidden = true;
@@ -7769,7 +8191,16 @@ function goHome() {
   ss.hidden = false;
   ss.removeAttribute('aria-hidden');
   document.title = 'Παιχνίδια γνώσεων';
-  setTimeout(() => document.getElementById('start-subtitle').focus(), 500);
+  // Πυροδότηση aria-live subtitle αφού φορτώσει η οθόνη
+  const sub = document.getElementById('start-subtitle');
+  if (sub) {
+    sub.textContent = '';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTimeout(() => { sub.textContent = 'Καλωσόρισες στα παιχνίδια γνώσεων'; }, 300);
+      });
+    });
+  }
 }
 
 
@@ -7823,13 +8254,13 @@ function slDrawFromDeck(pool, n) {
   return result;
 }
 
-function slAnnounce(msg) {
+function slAnnounce(msg, liveDelay = 300, ttsDelay = 300) {
   const live = document.getElementById('sl-announce');
   if (!live) return;
   live.textContent = '';
-  setTimeout(() => { live.textContent = msg; }, 50);
+  setTimeout(() => { live.textContent = msg; }, liveDelay);
   stopSpeech();
-  setTimeout(() => speak(msg), 100);
+  setTimeout(() => speak(msg), ttsDelay);
 }
 
 function slNewGame() {
@@ -7866,7 +8297,12 @@ function slNewGame() {
 
   document.getElementById('sl-result-visual').textContent = '';
 
-  slShowQuestion();
+  // Καθυστέρηση ώστε το TalkBack να εγγραφεί στο live region πριν το πρώτο μήνυμα
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      setTimeout(() => slShowQuestion(), 500);
+    });
+  });
 }
 
 function slShowQuestion() {
@@ -7883,18 +8319,24 @@ function slShowQuestion() {
   // Κατηγορία
   document.getElementById('sl-category-label').textContent = q.category;
 
-  // Ερώτηση — οπτικά
-  document.getElementById('sl-question-box').textContent = q.question;
+  // Ερώτηση — οπτικά με shimmer animation
+  const qBox = document.getElementById('sl-question-box');
+  qBox.textContent = q.question;
+  qBox.classList.remove('shimmer');
+  void qBox.offsetWidth; // reflow για επανεκκίνηση animation
+  qBox.classList.add('shimmer');
+  qBox.addEventListener('animationend', () => qBox.classList.remove('shimmer'), { once: true });
 
   // Καθαρισμός αποτελέσματος
-  document.getElementById('sl-result-visual').textContent = '';
-  document.getElementById('sl-result-visual').style.borderColor = '';
-  document.getElementById('sl-result-visual').style.background = '';
+  const resultEl = document.getElementById('sl-result-visual');
+  resultEl.textContent = '';
+  resultEl.className = 'announce-box';
 
   // Ανακοίνωση + TalkBack focus με το ίδιο pattern της Κρεμάλας:
   // γράφουμε πρώτα στο element, μετά focus ώστε το TalkBack να το διαβάσει
   const announceMsg = numToGreekOrdinal(slCurrentIndex + 1) + ' ερώτηση. Κατηγορία: ' + q.category + '. ' + q.question;
-  slAnnounce(announceMsg);
+  const isFirst = slCurrentIndex === 0; // πρώτη ερώτηση
+  slAnnounce(announceMsg, isFirst ? 300 : 150, isFirst ? 300 : 150);
 
   // Κρύψε κουμπιά τέλους/λάθους
   ['sl-btn-new','sl-btn-home','sl-btn-close'].forEach(id => {
@@ -7905,20 +8347,6 @@ function slShowQuestion() {
   // Επανεμφάνιση κουμπιών απάντησης
   document.getElementById('sl-btn-true').disabled = false;
   document.getElementById('sl-btn-false').disabled = false;
-
-  const talkback = isTalkBack();
-  if (talkback) {
-    const ann = document.getElementById('sl-announce');
-    if (ann) {
-      ann.textContent = '';
-      setTimeout(() => {
-        ann.textContent = announceMsg;
-        ann.focus();
-      }, 500);
-    }
-  }
-  stopSpeech();
-  setTimeout(() => speak(announceMsg), 100);
 }
 
 function slAnswer(userAnswer) {
@@ -7938,22 +8366,13 @@ function slAnswer(userAnswer) {
     soundCorrect && soundCorrect();
     slScoreCorrect++;
     document.getElementById('sl-score-correct').textContent = slScoreCorrect;
+    // Σύντομο οπτικό feedback για σωστή απάντηση
+    const resultBox = document.getElementById('sl-result-visual');
+    resultBox.textContent = '✅ Σωστά!';
+    resultBox.className = 'announce-box state-win';
     if (slCurrentIndex < slQuestions.length) {
-      const talkback = isTalkBack();
-      const ann = document.getElementById('sl-announce');
-      if (talkback && ann) {
-        ann.textContent = '';
-        setTimeout(() => {
-          ann.textContent = 'Σωστά!';
-          ann.focus();
-        }, 500);
-        stopSpeech();
-        setTimeout(() => speak('Σωστά!'), 100);
-        setTimeout(() => slShowQuestion(), 900);
-      } else {
-        slAnnounce('Σωστά!');
-        setTimeout(() => slShowQuestion(), 400);
-      }
+      slAnnounce('Σωστά!', 150, 150);
+      setTimeout(() => slShowQuestion(), 1200);
     } else {
       setTimeout(() => slEndGame(), 400);
     }
@@ -7974,11 +8393,10 @@ function slAnswer(userAnswer) {
 
     // Εμφάνιση σωστής απάντησης
     const correctText = q.answer ? 'Σωστό ✅' : 'Λάθος ❌';
-    const resultBox = document.getElementById('sl-result-visual');
     const explanation = q.explanation || ('Λάθος απάντηση. Η σωστή απάντηση είναι: ' + correctText);
+    const resultBox = document.getElementById('sl-result-visual');
     resultBox.textContent = explanation;
-    resultBox.style.borderColor = '#f87171';
-    resultBox.style.background = 'rgba(248,113,113,0.08)';
+    resultBox.className = 'announce-box state-lose';
 
     // Μήνυμα εξήγησης + ρεκόρ αν σπάστηκε
     let announceMsg = explanation;
@@ -7988,27 +8406,13 @@ function slAnswer(userAnswer) {
       announceMsg += ' Νέο ρεκόρ: ' + slScoreCorrect + ' σωστές απαντήσεις!';
     }
 
-    slAnnounce(announceMsg);
-
     // Εμφάνιση τριών κουμπιών
     ['sl-btn-new','sl-btn-home','sl-btn-close'].forEach(id => {
       const el = document.getElementById(id);
       if (el) { el.hidden = false; el.removeAttribute('aria-hidden'); }
     });
 
-    const talkback = isTalkBack();
-    const ann = document.getElementById('sl-announce');
-    if (talkback && ann) {
-      ann.textContent = '';
-      setTimeout(() => {
-        ann.textContent = announceMsg;
-        ann.focus();
-      }, 500);
-      stopSpeech();
-      setTimeout(() => speak(announceMsg), 100);
-    } else {
-      slAnnounce(announceMsg);
-    }
+    slAnnounce(announceMsg, 300, 300);
   }
 }
 
@@ -8063,28 +8467,15 @@ function slEndGame() {
     msg += ' Προσωπικό ρεκόρ: ' + currentRecord + ' σωστές απαντήσεις.';
   }
 
-  document.getElementById('sl-result-visual').textContent = msg;
-  document.getElementById('sl-result-visual').style.borderColor = newRecord ? 'var(--accent)' : '';
-  document.getElementById('sl-result-visual').style.background = newRecord ? 'rgba(196,168,255,0.08)' : '';
+  const resultEl = document.getElementById('sl-result-visual');
+  resultEl.textContent = msg;
+  resultEl.className = 'announce-box' + (newRecord ? ' state-win' : '');
 
   const talkback = isTalkBack();
   const ann = document.getElementById('sl-announce');
-  if (talkback && ann) {
-    ann.textContent = '';
-    setTimeout(() => {
-      ann.textContent = msg;
-      ann.focus();
-    }, 500);
-    stopSpeech();
-    setTimeout(() => speak(msg), 100);
-  } else {
-    stopSpeech();
-    setTimeout(() => speak(msg), 100);
-  }
+
+  slAnnounce(msg);
 }
-
-
-
 
 
 // ── Custom Picker Menus (αντί για <select>) ──────────────────────────────
@@ -8245,7 +8636,6 @@ function closeCategoryMenu() {
   if (btn)  btn.focus();
 }
 
-function closeSettingsMenu() { closeSharedSettingsMenu(); }
 
 
 // ── Touch input listener ─────────────────────────────────────────────────
@@ -8259,8 +8649,8 @@ document.addEventListener('DOMContentLoaded', () => {
   inp.addEventListener('blur',  () => inp.setAttribute('aria-label', LABEL_CLOSED));
 
   // Καθυστερήσεις πληκτρολογίου αφής (ανεξάρτητες από τις υπόλοιπες)
-  const TOUCH_TTS_DELAY  = 0; // ms — καθυστέρηση TTS για συντομεύσεις αφής
-  const TOUCH_LIVE_DELAY = 0; // ms — καθυστέρηση live region για συντομεύσεις αφής
+  const TOUCH_TTS_DELAY  = 150; // ms — καθυστέρηση TTS για συντομεύσεις αφής
+  const TOUCH_LIVE_DELAY = 150; // ms — καθυστέρηση live region για συντομεύσεις αφής
 
   inp.addEventListener('input', () => {
     const raw = inp.value;
@@ -8479,152 +8869,19 @@ window.addEventListener('load', () => {
   }
   document.getElementById('start-screen').hidden = false;
   document.title = 'Παιχνίδια γνώσεων';
-  setTimeout(() => document.getElementById('start-subtitle').focus(), 500);
+  // Πυροδότηση aria-live subtitle αφού φορτώσει η οθόνη
+  const sub = document.getElementById('start-subtitle');
+  if (sub) {
+    sub.textContent = '';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTimeout(() => { sub.textContent = 'Καλωσόρισες στα παιχνίδια γνώσεων'; }, 300);
+      });
+    });
+  }
   updateSettingsBtnText(); // καλείται τελευταίο, αφού έχουν φορτωθεί όλες οι ρυθμίσεις
 });
 </script>
 
-<!-- Κοινό μενού γενικών ρυθμίσεων — εκτός όλων των screens -->
-    <div id="start-settings-menu" role="group" aria-label="Γενικές ρυθμίσεις" hidden aria-hidden="true">
-    <button type="button" class="toggle-row" id="ss-sound-toggle"
-        data-sync="sound"
-      role="switch"
-      aria-checked="true"
-      aria-label="Ήχοι"
-      onclick="toggleSound()">
-      <span class="toggle-label" aria-hidden="true">🔊 Ήχοι</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-sound-state" aria-hidden="true">Ενεργοί</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-speech-toggle"
-        data-sync="speech"
-      role="switch"
-      aria-checked="false"
-      aria-label="Φωνητική καθοδήγηση"
-      onclick="toggleSpeech()">
-      <span class="toggle-label" aria-hidden="true">🗣️ Φωνητική καθοδήγηση</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-speech-state" aria-hidden="true">Ανενεργή</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-hint-toggle"
-        data-sync="hint"
-      role="switch"
-      aria-checked="false"
-      aria-label="Υποδείξεις λέξεων"
-      onclick="toggleHint()">
-      <span class="toggle-label" aria-hidden="true">💡 Υποδείξεις λέξεων</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-hint-state" aria-hidden="true">Ανενεργές</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-posinfo-toggle"
-        data-sync="posinfo"
-      role="switch" aria-checked="true"
-      aria-label="Περιγραφή θέσεις σωστών γραμμάτων και κενών"
-      onclick="togglePosInfo()">
-      <span class="toggle-label" aria-hidden="true">📍 Περιγραφή θέσεις σωστών γραμμάτων και κενών</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-posinfo-state" aria-hidden="true">Ενεργή</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-quips-toggle"
-        data-sync="quips"
-      role="switch" aria-checked="false"
-      aria-label="Ατάκες παιχνιδιού"
-      onclick="toggleQuips()">
-      <span class="toggle-label" aria-hidden="true">💬 Ατάκες παιχνιδιού</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-quips-state" aria-hidden="true">Ανενεργές</span>
-    </button>
-
-    <div id="ss-section-kbtype" role="group" aria-labelledby="ss-kbtype-title">
-    <div class="settings-title" id="ss-kbtype-title" style="margin-top:0.5rem;">Τύπος πληκτρολογίου</div>
-
-    <button type="button" class="toggle-row" id="ss-kbtype-buttons-toggle"
-      role="switch" aria-checked="true"
-      data-kbtype="buttons"
-      aria-label="Πληκτρολόγιο με κουμπιά"
-      onclick="selectKbType('buttons')">
-      <span class="toggle-label" aria-hidden="true">⌨️ Πληκτρολόγιο με κουμπιά</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-kbtype-buttons-state" aria-hidden="true">Ενεργό</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-kbtype-touch-toggle"
-      role="switch" aria-checked="false"
-      data-kbtype="touch"
-      aria-label="Πληκτρολόγιο αφής"
-      onclick="selectKbType('touch')">
-      <span class="toggle-label" aria-hidden="true">👆 Πληκτρολόγιο αφής</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-kbtype-touch-state" aria-hidden="true">Ανενεργό</span>
-    </button>
-    </div>
-
-    <div role="group" aria-labelledby="ss-theme-title">
-    <div class="settings-title" id="ss-theme-title" style="margin-top:0.5rem;">Επιλογές εμφάνισης παιχνιδιού</div>
-
-    <button type="button" class="toggle-row" id="ss-theme-default-toggle"
-      role="switch" aria-checked="true"
-      aria-label="Προεπιλεγμένη εμφάνιση"
-      onclick="selectTheme('default')">
-      <span class="toggle-label" aria-hidden="true">🎨 Προεπιλεγμένη εμφάνιση</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-theme-default-state" aria-hidden="true">Ενεργή</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-theme-dark-toggle"
-      role="switch" aria-checked="false"
-      aria-label="Μαύρο φόντο με λευκά γράμματα"
-      onclick="selectTheme('dark')">
-      <span class="toggle-label" aria-hidden="true">🌑 Μαύρο φόντο με λευκά γράμματα</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-theme-dark-state" aria-hidden="true">Ανενεργό</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-theme-light-toggle"
-      role="switch" aria-checked="false"
-      aria-label="Λευκό φόντο με μαύρα γράμματα"
-      onclick="selectTheme('light')">
-      <span class="toggle-label" aria-hidden="true">☀️ Λευκό φόντο με μαύρα γράμματα</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-theme-light-state" aria-hidden="true">Ανενεργό</span>
-    </button>
-    </div>
-
-    <div role="group" aria-labelledby="ss-font-title">
-    <div class="settings-title" id="ss-font-title" style="margin-top:0.5rem;">Μέγεθος γραμματοσειράς</div>
-
-    <button type="button" class="toggle-row" id="ss-font-normal-toggle"
-      role="switch" aria-checked="true"
-      aria-label="Κανονικό μέγεθος γραμματοσειράς"
-      onclick="selectFont('normal')">
-      <span class="toggle-label" aria-hidden="true">🅰️ Κανονικό μέγεθος γραμματοσειράς</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-font-normal-state" aria-hidden="true">Ενεργή</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-font-large-toggle"
-      role="switch" aria-checked="false"
-      aria-label="Μεγάλη γραμματοσειρά"
-      onclick="selectFont('large')">
-      <span class="toggle-label" aria-hidden="true">🔠 Μεγάλη γραμματοσειρά</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-font-large-state" aria-hidden="true">Ανενεργή</span>
-    </button>
-
-    <button type="button" class="toggle-row" id="ss-font-xlarge-toggle"
-      role="switch" aria-checked="false"
-      aria-label="Πολύ μεγάλη γραμματοσειρά"
-      onclick="selectFont('xlarge')">
-      <span class="toggle-label" aria-hidden="true">🔡 Πολύ μεγάλη γραμματοσειρά</span>
-      <span class="toggle-track" aria-hidden="true" role="presentation"><span class="toggle-thumb" aria-hidden="true" role="presentation"></span></span>
-      <span class="toggle-state-label" id="ss-font-xlarge-state" aria-hidden="true">Ανενεργή</span>
-    </button>
-    </div>
-    <button type="button" class="menu-close-btn" id="start-settings-close-btn" aria-label="Κλείσιμο μενού γενικών ρυθμίσεων" onclick="closeStartSettingsMenu()">✕ Κλείσιμο μενού</button>
-    </div>
 </body>
 </html>
