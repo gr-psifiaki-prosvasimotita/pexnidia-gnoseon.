@@ -7952,7 +7952,7 @@ function guess(letter, fromTouch = false) {
 
       document.getElementById('category-label').setAttribute('aria-hidden', 'true');
       document.getElementById('category-label').setAttribute('tabindex', '-1');
-      disableAll();
+      setTimeout(() => disableAll(), 150);
       setTimeout(() => btn.setAttribute('aria-label', `${letter}, σωστό`), 250);
       setTimeout(() => announce(winMsg, 300, 300, 'win'), 0);
     } else {
