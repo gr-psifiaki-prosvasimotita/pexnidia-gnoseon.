@@ -815,6 +815,7 @@
     box-shadow: 0 6px 32px rgba(196,168,255,0.4), 0 2px 8px rgba(0,0,0,0.4);
     position: relative;
     overflow: hidden;
+    z-index: 1;
     animation: btnStartPulse 2.5s ease-in-out infinite;
   }
   .btn-start::after {
@@ -837,6 +838,7 @@
     .start-section { width: min(480px, 90vw); }
     .btn-start { width: min(480px, 90vw); }
     .btn-new { width: min(480px, 90vw); }
+    .btn-install { width: min(480px, 90vw); }
     #keyboard { max-width: 620px; }
     .key-btn { width: clamp(48px, 6vw, 58px); height: clamp(48px, 6vw, 58px); }
 
@@ -876,6 +878,14 @@
     .info-bar { margin-bottom: 0.6rem; padding: 0.3rem 1rem; }
     .announce-box { margin-bottom: 0.8rem; min-height: 2.5rem; }
     #status-live { margin-bottom: 0.5rem; min-height: 1.2rem; }
+    #start-screen { padding: 1rem 1rem 2rem; }
+    #start-screen h1 { font-size: clamp(1.6rem, 5vw, 2.4rem); margin-bottom: 0.1rem; }
+    #start-screen .subtitle { margin-bottom: 0.6rem; }
+    .btn-start { margin-top: 0.8rem; padding: 0.7rem 1.5rem; }
+    .btn-info-start { margin-top: 0.6rem; padding: 0.5rem 1.5rem; }
+    .btn-close-start { margin-top: 0.6rem; padding: 0.5rem 1.5rem; }
+    .btn-install { padding: 0.6rem 1.5rem; margin-bottom: 0.6rem; }
+    .start-section { margin-bottom: 0.6rem; }
   }
 
 
@@ -1024,7 +1034,7 @@
     padding: 0.6rem 1.8rem;
     cursor: pointer;
     width: min(420px, 95vw);
-    margin-top: 0.75rem;
+    margin-top: 1.2rem;
     text-align: center;
     transition: color var(--transition), border-color var(--transition), background var(--transition);
   }
@@ -1044,7 +1054,7 @@
     padding: 0.6rem 1.8rem;
     cursor: pointer;
     width: min(420px, 95vw);
-    margin-top: 0.75rem;
+    margin-top: 1.2rem;
     text-align: center;
     transition: color var(--transition), border-color var(--transition), background var(--transition);
   }
@@ -1595,12 +1605,12 @@
       <button type="button" class="picker-option selected" data-picker="games" data-value="kremala"
         aria-pressed="true"
         onclick="selectPickerOption('games','kremala','Κρεμάλα')">
-        🎯 Κρεμάλα
+        <span aria-hidden="true">🎯</span> Κρεμάλα
       </button>
       <button type="button" class="picker-option" data-picker="games" data-value="sosto-lathos"
         aria-pressed="false"
         onclick="selectPickerOption('games','sosto-lathos','Σωστό ή λάθος')">
-        ✅ Σωστό ή λάθος
+        <span aria-hidden="true">✅</span> Σωστό ή λάθος
       </button>
       <button type="button" class="menu-close-btn" id="games-close-btn" aria-label="Κλείσιμο μενού λίστας παιχνιδιών" onclick="closePickerMenu('games')">✕ Κλείσιμο μενού</button>
     </div>
@@ -1622,17 +1632,17 @@
       <button type="button" class="picker-option" data-picker="difficulty" data-value="easy"
         aria-pressed="false"
         onclick="selectPickerOption('difficulty','easy','Εύκολο — Λέξεις έως 6 γράμματα')">
-        🟢 Εύκολο — Λέξεις έως 6 γράμματα
+        <span aria-hidden="true">🟢</span> Εύκολο — Λέξεις έως 6 γράμματα
       </button>
       <button type="button" class="picker-option selected" data-picker="difficulty" data-value="medium"
         aria-pressed="true"
         onclick="selectPickerOption('difficulty','medium','Μέτριο — Όλες οι λέξεις')">
-        🟡 Μέτριο — Όλες οι λέξεις
+        <span aria-hidden="true">🟡</span> Μέτριο — Όλες οι λέξεις
       </button>
       <button type="button" class="picker-option" data-picker="difficulty" data-value="hard"
         aria-pressed="false"
         onclick="selectPickerOption('difficulty','hard','Δύσκολο — Λέξεις 9 γράμματα και πάνω')">
-        🔴 Δύσκολο — Λέξεις 9 γράμματα και πάνω
+        <span aria-hidden="true">🔴</span> Δύσκολο — Λέξεις 9 γράμματα και πάνω
       </button>
       <button type="button" class="menu-close-btn" id="difficulty-close-btn" aria-label="Κλείσιμο μενού επιπέδου δυσκολίας" onclick="closePickerMenu('difficulty')">✕ Κλείσιμο μενού</button>
     </div>
@@ -1654,17 +1664,17 @@
       <button type="button" class="picker-option" data-picker="maxwrong" data-value="4"
         aria-pressed="false"
         onclick="selectPickerOption('maxwrong','4','4 λάθη — Πιο δύσκολο')">
-        🔴 4 λάθη — Πιο δύσκολο
+        <span aria-hidden="true">🔴</span> 4 λάθη — Πιο δύσκολο
       </button>
       <button type="button" class="picker-option selected" data-picker="maxwrong" data-value="6"
         aria-pressed="true"
         onclick="selectPickerOption('maxwrong','6','6 λάθη — Κλασικό')">
-        🟡 6 λάθη — Κλασικό
+        <span aria-hidden="true">🟡</span> 6 λάθη — Κλασικό
       </button>
       <button type="button" class="picker-option" data-picker="maxwrong" data-value="8"
         aria-pressed="false"
         onclick="selectPickerOption('maxwrong','8','8 λάθη — Πιο εύκολο')">
-        🟢 8 λάθη — Πιο εύκολο
+        <span aria-hidden="true">🟢</span> 8 λάθη — Πιο εύκολο
       </button>
       <button type="button" class="menu-close-btn" id="maxwrong-close-btn" aria-label="Κλείσιμο μενού επιτρεπόμενων λαθών" onclick="closePickerMenu('maxwrong')">✕ Κλείσιμο μενού</button>
     </div>
@@ -1847,7 +1857,7 @@
 
   <!-- Κουμπί Πληροφοριών -->
   <button type="button" class="btn-info-start" aria-label="Πληροφορίες" onclick="openInfoModal()">
-    ℹ️ Πληροφορίες
+    <span aria-hidden="true">ℹ️</span> Πληροφορίες
   </button>
 
   <button type="button" class="btn-close-start" aria-label="Κλείσιμο"
@@ -2037,13 +2047,13 @@
 <button type="button" class="btn-new" id="btn-new"
   aria-label="Έναρξη νέου παιχνιδιού"
   hidden aria-hidden="true" tabindex="-1"
-  onclick="newGame(true)">🔄 Νέο παιχνίδι</button>
+  onclick="newGame(true)"><span aria-hidden="true">🔄</span> Νέο παιχνίδι</button>
 
 <button type="button" class="btn-new" id="btn-home"
   aria-label="Μετάβαση στην αρχική οθόνη"
   hidden aria-hidden="true" tabindex="-1"
   style="background:var(--surface);color:var(--accent);border:1.5px solid var(--accent);margin-top:0.75rem;"
-  onclick="goHome()">🏠 Μετάβαση στην αρχική οθόνη</button>
+  onclick="goHome()"><span aria-hidden="true">🏠</span> Μετάβαση στην αρχική οθόνη</button>
 
 <button type="button" class="btn-new" id="btn-close-game"
   aria-label="Κλείσιμο"
@@ -2155,13 +2165,13 @@
     aria-label="Σωστό"
     onclick="slAnswer(true)"
     style="flex:1;padding:0.9rem;font-size:1.1rem;font-weight:700;border-radius:12px;border:2px solid var(--border);background:var(--surface);color:var(--fg);cursor:pointer;transition:background 0.15s;">
-    ✅ Σωστό
+    <span aria-hidden="true">✅</span> Σωστό
   </button>
   <button type="button" id="sl-btn-false"
     aria-label="Λάθος"
     onclick="slAnswer(false)"
     style="flex:1;padding:0.9rem;font-size:1.1rem;font-weight:700;border-radius:12px;border:2px solid var(--border);background:var(--surface);color:var(--fg);cursor:pointer;transition:background 0.15s;">
-    ❌ Λάθος
+    <span aria-hidden="true">❌</span> Λάθος
   </button>
 </div>
 
@@ -2172,14 +2182,14 @@
   onclick="slNewGame(true)"
   class="btn-new"
   style="margin-top:0.75rem;">
-  🔄 Έναρξη νέου παιχνιδιού
+  <span aria-hidden="true">🔄</span> Έναρξη νέου παιχνιδιού
 </button>
 
 <button type="button" class="btn-new" id="sl-btn-home"
   aria-label="Μετάβαση στην αρχική οθόνη"
   hidden aria-hidden="true"
   style="background:var(--surface);color:var(--accent);border:1.5px solid var(--accent);margin-top:0.75rem;"
-  onclick="goHome()">🏠 Μετάβαση στην αρχική οθόνη</button>
+  onclick="goHome()"><span aria-hidden="true">🏠</span> Μετάβαση στην αρχική οθόνη</button>
 
 <button type="button" class="btn-new" id="sl-btn-close"
   aria-label="Κλείσιμο"
@@ -8334,7 +8344,10 @@ function toggleCategoryMenu() {
   menu.setAttribute('aria-hidden', String(!open));
   btn.setAttribute('aria-expanded', String(open));
   updateCategoryBtnText();
-  if (open) document.getElementById('cb-all').focus();
+  if (open) {
+    const cbAll = document.getElementById('cb-all');
+    if (cbAll) cbAll.focus();
+  }
 }
 
 function updateCategoryBtnText() {
@@ -9251,17 +9264,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 
-// Αν εγκατασταθεί, καθαρίζουμε το prompt
+// Αν εγκατασταθεί, καθαρίζουμε το prompt και κρύβουμε το κουμπί
 window.addEventListener('appinstalled', () => {
   pwaInstallPrompt = null;
   soundTick && soundTick();
-  const btn = document.getElementById('btn-install-shortcut');
-  if (btn) {
-    btn.setAttribute('aria-label', 'Η εφαρμογή έχει εγκατασταθεί');
-    btn.querySelector('span:last-child').textContent = 'ΕΓΚΑΤΑΣΤΆΘΗΚΕ ✓';
-    btn.disabled = true;
-    btn.style.opacity = '0.6';
-  }
+  hideInstallBtn();
 });
 
 function hideInstallBtn() {
